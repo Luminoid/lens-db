@@ -82,7 +82,7 @@
   <meta name="twitter:image" content="{page.url.origin}/og.png" />
 </svelte:head>
 
-<main class="mx-auto max-w-7xl px-4 py-6">
+<main id="main-content" tabindex="-1" class="mx-auto max-w-7xl px-4 py-6">
   <header class="mb-4 flex flex-wrap items-center justify-between gap-3">
     <div>
       <h1 class="text-2xl font-semibold tracking-tight">{t(locale, 'compare.heading')}</h1>

@@ -13,13 +13,24 @@
   const year = new Date().getFullYear();
 </script>
 
+<!-- Skip link: first focusable element, visible only when focused, jumps past the header to the
+     page's <main id="main-content">. -->
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-[var(--color-border)] focus:bg-[var(--color-bg-elevated)] focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-[var(--color-text)]"
+>
+  {t(locale, 'a11y.skipToContent')}
+</a>
+
 <header class="mx-auto flex max-w-7xl items-center justify-between px-4 pt-4">
-  <a
-    href={localePath(locale, '/')}
-    class="text-sm font-semibold tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)]"
-  >
-    LensDB
-  </a>
+  <nav aria-label={t(locale, 'a11y.siteNav')}>
+    <a
+      href={localePath(locale, '/')}
+      class="text-sm font-semibold tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)]"
+    >
+      LensDB
+    </a>
+  </nav>
   <div class="flex items-center gap-2">
     <ThemeToggle {locale} />
     <LangSwitch {locale} />

@@ -45,11 +45,13 @@
   let roamDetach: (() => void) | undefined;
   let lastStructureKey: string | undefined;
 
-  // ECharts is imported dynamically so it never runs during prerender (it needs the DOM).
+  // ECharts is imported dynamically so it never runs during prerender (it needs the DOM). The
+  // import is the tree-shaken `$lib/chart/echarts` build (only the series/components we use), not
+  // the full `echarts` package, which roughly halves the chart bundle.
   onMount(() => {
     let disposed = false;
-    import('echarts').then((m) => {
-      if (!disposed) echartsMod = m;
+    import('$lib/chart/echarts').then((m) => {
+      if (!disposed) echartsMod = m.default;
     });
     return () => {
       disposed = true;

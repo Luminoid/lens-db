@@ -100,7 +100,7 @@
   <meta name="twitter:image" content="{page.url.origin}/og.png" />
 </svelte:head>
 
-<main class="mx-auto max-w-5xl px-4 py-6">
+<main id="main-content" tabindex="-1" class="mx-auto max-w-5xl px-4 py-6">
   <p class="mb-4 text-sm">
     <a href={localePath(locale, '/')} class="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]">{t(locale, 'compare.back')}</a>
   </p>

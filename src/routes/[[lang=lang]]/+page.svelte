@@ -189,7 +189,7 @@
   }}
 />
 
-<main class="mx-auto max-w-7xl px-4 py-6">
+<main id="main-content" tabindex="-1" class="mx-auto max-w-7xl px-4 py-6">
   <header class="mb-4">
     <h1 class="text-2xl font-semibold tracking-tight">LensDB</h1>
     <p class="mt-1 max-w-3xl text-sm text-[var(--color-text-muted)]">

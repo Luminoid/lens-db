@@ -221,6 +221,18 @@ const en: Dict = {
   'method.coverageField': 'Field',
   'method.coveragePct': 'Populated',
   'method.coverageCaption': 'Percentage of lenses with a value for each field.',
+
+  // Accessibility chrome
+  'a11y.skipToContent': 'Skip to content',
+  'a11y.siteNav': 'Main',
+
+  // Error / not-found page
+  'error.title404': 'Page not found · LensDB',
+  'error.titleGeneric': 'Something went wrong · LensDB',
+  'error.heading404': 'Page not found',
+  'error.headingGeneric': 'Something went wrong',
+  'error.lead404': "That page doesn't exist. It may have moved, or the link may be wrong.",
+  'error.leadGeneric': 'An unexpected error occurred. Try again, or head back to the chart.',
 };
 
 const zh: Dict = {
@@ -419,6 +431,18 @@ const zh: Dict = {
   'method.coverageField': '字段',
   'method.coveragePct': '填充率',
   'method.coverageCaption': '各字段有数值的镜头所占百分比。',
+
+  // Accessibility chrome
+  'a11y.skipToContent': '跳到主要内容',
+  'a11y.siteNav': '主导航',
+
+  // Error / not-found page
+  'error.title404': '页面未找到 · LensDB',
+  'error.titleGeneric': '出错了 · LensDB',
+  'error.heading404': '页面未找到',
+  'error.headingGeneric': '出错了',
+  'error.lead404': '该页面不存在，可能已移动或链接有误。',
+  'error.leadGeneric': '发生了意外错误。请重试，或返回图表。',
 };
 
 const dict: Record<Locale, Dict> = { en, zh };

@@ -1,9 +1,16 @@
 // ECharts color palette per UI theme. ECharts paints to a canvas, so its colors can't come from CSS
 // custom properties (the canvas doesn't inherit the cascade); they're resolved here from the active
 // theme and threaded into the option builder. Values mirror the semantic palette in app.css so the
-// chart chrome matches the surrounding page in both themes. Categorical brand colors (brandColors.ts)
-// are theme-independent for now; refining them for light-mode contrast is a v1.1 item.
+// chart chrome matches the surrounding page in both themes. The categorical group palette + fallback
+// (brandColors.ts) are theme-specific: the light palette is darkened to clear WCAG non-text contrast
+// on the light chart background (see brandColors.ts).
 import type { Theme } from '$lib/theme.svelte';
+import {
+  PALETTE_DARK,
+  PALETTE_LIGHT,
+  FALLBACK_DARK,
+  FALLBACK_LIGHT,
+} from './brandColors';
 
 export interface ChartTheme {
   axisName: string; // axis title + tick label text (muted)
@@ -18,6 +25,8 @@ export interface ChartTheme {
   legendInactive: string; // toggled-off legend item
   accent: string; // pin ring + detail locator accent point
   faint: string; // detail locator "all other lenses" dots
+  palette: string[]; // categorical group colors (legend/marks), in stable group order
+  fallback: string; // color for groups past the palette length
 }
 
 const dark: ChartTheme = {
@@ -33,6 +42,8 @@ const dark: ChartTheme = {
   legendInactive: '#3a414c',
   accent: '#4dd0c4',
   faint: '#3a414c',
+  palette: PALETTE_DARK,
+  fallback: FALLBACK_DARK,
 };
 
 const light: ChartTheme = {
@@ -48,6 +59,8 @@ const light: ChartTheme = {
   legendInactive: '#b0b8c0',
   accent: '#0f766e',
   faint: '#c4ccd4',
+  palette: PALETTE_LIGHT,
+  fallback: FALLBACK_LIGHT,
 };
 
 export const CHART_THEME: Record<Theme, ChartTheme> = { dark, light };

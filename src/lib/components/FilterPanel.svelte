@@ -21,6 +21,36 @@
     filters[key] = cur.includes(v) ? cur.filter((x) => x !== v) : [...cur, v];
   }
 
+  // Focus AF/MF is an ARIA radiogroup: a single tab stop (the checked radio) with arrow keys moving
+  // selection, per the WAI-ARIA radio pattern. Roving tabindex + element refs implement that.
+  const FOCUS_VALUES = ['all', 'af', 'mf'] as const;
+  let focusRadios = $state<HTMLButtonElement[]>([]);
+  function onFocusKeydown(e: KeyboardEvent) {
+    const cur = FOCUS_VALUES.indexOf(filters.focus);
+    let next = cur;
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        next = (cur + 1) % FOCUS_VALUES.length;
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        next = (cur - 1 + FOCUS_VALUES.length) % FOCUS_VALUES.length;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = FOCUS_VALUES.length - 1;
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+    filters.focus = FOCUS_VALUES[next];
+    focusRadios[next]?.focus();
+  }
+
   const chipBase =
     'rounded-full border px-2.5 py-1 text-xs transition-colors focus-visible:border-[var(--color-accent)]';
   const chipOn = 'border-[var(--color-accent)] bg-[var(--color-accent)]/15 text-[var(--color-text)]';
@@ -121,17 +151,21 @@
     <div
       role="radiogroup"
       aria-label={t(locale, 'colorBy.focus')}
+      tabindex="-1"
       class="inline-flex w-fit overflow-hidden rounded-md border border-[var(--color-border)] text-xs"
+      onkeydown={onFocusKeydown}
     >
-      {#each [['all', t(locale, 'filter.focusAll')], ['af', 'AF'], ['mf', 'MF']] as [val, lbl] (val)}
+      {#each FOCUS_VALUES as val, i (val)}
         <button
+          bind:this={focusRadios[i]}
           type="button"
           role="radio"
+          tabindex={filters.focus === val ? 0 : -1}
           class="px-3 py-1.5 {filters.focus === val
             ? 'bg-[var(--color-accent)]/20 text-[var(--color-text)]'
             : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}"
           aria-checked={filters.focus === val}
-          onclick={() => (filters.focus = val as typeof filters.focus)}>{lbl}</button
+          onclick={() => (filters.focus = val)}>{val === 'all' ? t(locale, 'filter.focusAll') : val.toUpperCase()}</button
         >
       {/each}
     </div>

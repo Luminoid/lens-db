@@ -1,6 +1,6 @@
 {
   "name": "lens-db",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "LensDB: interactive camera-lens comparison chart for modern mirrorless systems (lens.luminoid.dev). SvelteKit 5 + ECharts over a versioned JSON lens database.",
   "type": "module",

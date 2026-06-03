@@ -8,7 +8,7 @@
 import { focalLabel, apertureLabel, type Lens } from '../data/types';
 import { lenses } from '../data/lenses';
 import { AXES, COLOR_BY, groupOrder, type AxisKey, type ColorByKey } from './axes';
-import { paletteMap, FALLBACK_COLOR } from './brandColors';
+import { paletteMap } from './brandColors';
 import type { ChartTheme } from './chartTheme';
 import { layoutTags, APERTURE_STOPS, FOCAL_TICKS, TAG_FONT_SIZE, TAG_FONT_FAMILY, type PlacedTag } from './tagLayout';
 import type { TagDetail } from '$lib/filters/types';
@@ -64,12 +64,22 @@ function renderItem(_params: unknown, api: any) {
   };
 }
 
+// The lens DB is build-time, schema-validated, and maintainer-controlled, so these strings are not
+// an injection vector today; escaping anyway is cheap defense-in-depth, since the formatter returns
+// raw HTML to ECharts and the data fields (model, mounts) could one day carry an `&`/`<`/`>`.
+const esc = (s: string): string =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
 function makeTooltipFormatter(locale: Locale, theme: ChartTheme) {
   return (p: any): string => {
     const l: Lens | undefined = p?.data?.lens;
     if (!l) return '';
     const row = (label: string, val: string) =>
-      `<div style="display:flex;justify-content:space-between;gap:16px"><span style="color:${theme.tooltipMuted}">${label}</span><span>${val}</span></div>`;
+      `<div style="display:flex;justify-content:space-between;gap:16px"><span style="color:${theme.tooltipMuted}">${esc(label)}</span><span>${esc(val)}</span></div>`;
     const rows: string[] = [
       row(t(locale, 'filter.mount'), l.mounts.join(', ')),
       row(t(locale, 'filter.type'), `${tFormat(locale, l.format)} · ${tType(locale, l.lensType)}`),
@@ -80,8 +90,8 @@ function makeTooltipFormatter(locale: Locale, theme: ChartTheme) {
     if (l.year != null) rows.push(row(t(locale, 'axis.year'), String(l.year)));
     return (
       `<div style="max-width:280px">` +
-      `<div style="font-weight:600;margin-bottom:2px">${tBrand(locale, l.brand)} ${l.model}</div>` +
-      `<div style="color:${theme.tooltipSecondary};margin-bottom:6px">${focalLabel(l)} ${apertureLabel(l)}</div>` +
+      `<div style="font-weight:600;margin-bottom:2px">${esc(`${tBrand(locale, l.brand)} ${l.model}`)}</div>` +
+      `<div style="color:${theme.tooltipSecondary};margin-bottom:6px">${esc(`${focalLabel(l)} ${apertureLabel(l)}`)}</div>` +
       `<div style="display:flex;flex-direction:column;gap:2px;font-size:12px">${rows.join('')}</div>` +
       `</div>`
     );
@@ -116,7 +126,7 @@ export function buildChartOption(data: Lens[], opts: ChartOpts, locale: Locale, 
 
   // Color order/palette is derived from the FULL dataset so a group keeps its color while filtered.
   const order = groupOrder(colorDef, lenses);
-  const colors = paletteMap(order);
+  const colors = paletteMap(order, theme.palette);
 
   // Bucket the (filtered) data by color group; keep every group as a series in stable order so
   // index-aligned merges preserve legend toggles + zoom when only the filter changes.
@@ -141,7 +151,7 @@ export function buildChartOption(data: Lens[], opts: ChartOpts, locale: Locale, 
     clip: true,
     renderItem,
     encode: { x: [0, 2], y: [1, 3] },
-    itemStyle: { color: colors[g] ?? FALLBACK_COLOR },
+    itemStyle: { color: colors[g] ?? theme.fallback },
     emphasis: { focus: 'series' as const },
     data: byGroup.get(g) ?? [],
   }));
@@ -329,13 +339,13 @@ export function buildTagChartOption(
 ): { option: Record<string, unknown>; height: number } {
   const colorDef = COLOR_BY[opts.color];
   const order = groupOrder(colorDef, lenses);
-  const colors = paletteMap(order);
+  const colors = paletteMap(order, theme.palette);
   const xDef = AXES[opts.x];
   const yDef = AXES[opts.y];
 
   const inputs = data
     .filter((l) => plottable(l, opts.x, opts.y))
-    .map((l) => ({ lens: l, group: colorDef.group(l), color: colors[colorDef.group(l)] ?? FALLBACK_COLOR }));
+    .map((l) => ({ lens: l, group: colorDef.group(l), color: colors[colorDef.group(l)] ?? theme.fallback }));
 
   // Pack inside the content rect (canvas width minus the axis/legend margins) so the synthetic axes
   // map 1:1 to the grid's content rect, and the canvas total height = content height + margins.

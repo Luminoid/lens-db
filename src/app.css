@@ -76,6 +76,12 @@ body {
   outline-offset: 2px;
 }
 
+/* The skip-link target receives programmatic focus; a 2px ring around the whole <main> is just
+ * noise, so suppress it (id specificity beats the :focus-visible rule above). */
+#main-content:focus {
+  outline: none;
+}
+
 ::selection {
   background-color: var(--color-accent);
   color: var(--color-bg);

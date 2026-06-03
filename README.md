@@ -15,9 +15,9 @@ Target domain **lens.luminoid.dev** · part of the Lumi workspace.
 - [x] Filters + axis pickers + shareable URL state: 12-spec X/Y axes (per-axis log/linear), color-by, faceted filters, compact round-tripping URLs
 - [x] Compare + detail pages: click-to-pin tray, `/compare` (spec table, best-in-row, CSV, `?pin=` shareable), prerendered `/lens/[id]` (specs, locator chart, similar lenses)
 - [x] EN/ZH i18n: `[[lang=lang]]` routing (EN at `/`, ZH at `/zh/`), prerendered per locale (680×2 lens pages), `t()` dictionary, locale-prefixed links, language switch that keeps filter state, per-locale `<html lang>` / hreflang / canonical / OG
-- [x] Dark/light theme toggle: FOUC-free pre-paint resolver ([`static/theme-init.js`](static/theme-init.js)), runtime `[data-theme]` palette, themed ECharts that re-colors on switch ([`src/lib/chart/chartTheme.ts`](src/lib/chart/chartTheme.ts)), WCAG-AA light palette, `prefers-reduced-motion` guard
+- [x] Dark/light theme toggle: FOUC-free pre-paint resolver ([`static/theme-init.js`](static/theme-init.js)), runtime `[data-theme]` palette, themed ECharts that re-colors on switch ([`src/lib/chart/chartTheme.ts`](src/lib/chart/chartTheme.ts)), WCAG-AA light UI palette plus a per-theme categorical chart palette ([`src/lib/chart/brandColors.ts`](src/lib/chart/brandColors.ts)) whose light variant clears the 3:1 non-text-contrast bar, `prefers-reduced-motion` guard
 - [x] Tags / Dots view toggle: tag view renders every lens as a labelled chip (none hidden, none overlapping) via a custom 2D de-overlap packer ([`src/lib/chart/tagLayout.ts`](src/lib/chart/tagLayout.ts)) on an arbitrarily tall scrollable SVG canvas, with standard focal-length ticks on X and discrete f-stop rows on Y (every lens bucketed by its max aperture); dynamic tag text (brand when multi-brand + focal/aperture + series badge + optional spec); URL-persisted (`?view=tags&tag=price`)
-- [x] Launch polish: off-canvas mobile filter drawer (focus-managed, Escape/backdrop close); accessible chart data-table fallback (collapsed, reachable with no JS); prerendered EN/ZH methodology page linked from a global footer; OG preview image + favicons (SVG + 16/32 + apple-touch); Cloudflare security headers ([`static/_headers`](static/_headers)) + a meta CSP in hash mode (script-src `'self'` + the bootstrap hash, no script `unsafe-inline`)
+- [x] Launch polish: off-canvas mobile filter drawer (focus-managed, Escape/backdrop close); skip-to-content link + ARIA radiogroup keyboard nav; accessible chart data-table fallback (collapsed, reachable with no JS); themed 404 / error page; prerendered EN/ZH methodology page linked from a global footer; OG preview image + favicons (SVG + 16/32 + apple-touch); `robots.txt` + a prerendered `sitemap.xml` (one entry per page per locale, with `hreflang` alternates); tree-shaken ECharts ([`src/lib/chart/echarts.ts`](src/lib/chart/echarts.ts), only the series/components used); Cloudflare security headers ([`static/_headers`](static/_headers)) + a meta CSP in hash mode (script-src `'self'` + the bootstrap hash, no script `unsafe-inline`)
 - [ ] Deploy to Cloudflare Pages at **lens.luminoid.dev** (manual, needs the account): connect the repo for PR previews, or `npx wrangler pages deploy build`
 
 ### Database at a glance (v0)
@@ -45,7 +45,7 @@ scripts/
   validate.mjs  # schema + sanity checks (CI gate); build-meta.mjs; oneshot/ (archived)
 src/
   lib/data/        # typed loader + Lens type (mirrors schema.json) + shared spec rows
-  lib/chart/       # axis registry, ECharts option builder, colors, per-theme palette (chartTheme.ts), tag-view 2D packing (tagLayout.ts)
+  lib/chart/       # axis registry, ECharts option builder, per-theme palettes (chartTheme.ts + brandColors.ts), tag-view 2D packing (tagLayout.ts), tree-shaken ECharts entry (echarts.ts)
   lib/filters/     # reactive filter store (incl. pins), pure filtering, URL <-> state
   lib/i18n/        # EN/ZH dictionary + t() + locale path helpers
   lib/theme.svelte.ts  # reactive dark/light theme store (persists to localStorage + data-theme)
@@ -53,9 +53,12 @@ src/
   params/lang.ts   # [[lang=lang]] route matcher (zh only)
   hooks.server.ts  # per-locale <html lang> at prerender time
   routes/[[lang=lang]]/  # / + /zh: chart, /compare, /lens/[id], /methodology; all prerendered per locale
+  routes/+error.svelte   # themed 404 / error boundary (also the static fallback)
+  routes/sitemap.xml/    # prerendered sitemap endpoint (all pages, both locales, hreflang)
 static/
   theme-init.js   # pre-paint theme resolver (localStorage / OS preference) so there's no flash
   _headers        # Cloudflare security + cache headers (script/style CSP is a meta tag; see svelte.config.js)
+  robots.txt      # allow-all + Sitemap: pointer
   favicon.svg     # + favicon-16.png / favicon-32.png / apple-touch-icon.png
   og.png          # 1200x630 social preview card
 ```
@@ -124,10 +127,9 @@ to stamp a fresh price-check date.
 
 ## Roadmap (v1.1 ideas)
 
-Optical-performance axis (a defensible review aggregate, kept sparse until then), a light-mode
-categorical chart palette (the shared brand palette is low-contrast on the light chart background;
-identity is carried by the legend and tooltip meanwhile), lens thumbnails, and more brands plus
-DSLR / medium-format coverage.
+Optical-performance axis (a defensible review aggregate, kept sparse until then), brand-signature
+chart colors (Canon red, Nikon yellow, ...), lens thumbnails, and more brands plus DSLR /
+medium-format coverage.
 
 ## License
 
