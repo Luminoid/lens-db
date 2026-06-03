@@ -1,0 +1,33 @@
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+
+Copyright (c) 2026 Luminoid
+
+You are free to:
+  Share — copy and redistribute the material in any medium or format
+  Adapt — remix, transform, and build upon the material
+
+Under the following terms:
+  Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made.
+
+  NonCommercial — You may not use the material for commercial purposes.
+
+  ShareAlike — If you remix, transform, or build upon the material, you must
+  distribute your contributions under the same license as the original.
+
+No additional restrictions — You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license permits.
+
+Full license text: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+----
+
+Note on the lens data (data/lenses.json, data/meta.json)
+
+The lens specifications are factual data compiled from public manufacturer
+specification pages, B&H, and DPReview, with per-segment provenance recorded in
+data/sources.md. Individual facts (focal length, weight, price, etc.) are not
+themselves copyrightable; the license above applies to this particular curated
+compilation, schema, and presentation. No paywalled or proprietary review data
+(for example, full DXOMark or lab test datasets) is reproduced. Where a value
+could not be reliably sourced it is left null rather than guessed.

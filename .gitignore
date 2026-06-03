@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# SvelteKit / Vite build output
+.svelte-kit/
+.vite/
+/build/
+/dist/
+/.vercel/
+/.output/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# data verification scratch (regenerated per workflow run; see scripts/oneshot/)
+data/_audit/
+
+# OS / editor
+.DS_Store
+*.log

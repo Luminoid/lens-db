@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lens.luminoid.dev/schema/lens.json",
+  "title": "LensDB lens record",
+  "description": "One optical design (a lens) in the LensDB comparison database. One row per optical design, not per mount: a lens sold in several mounts lists them all in `mounts`. Numeric fields use null when a value cannot be reliably sourced, never a guessed number.",
+  "type": "object",
+  "required": ["id", "brand", "model", "mounts", "format", "lensType", "focalMin", "focalMax", "apertureMaxWide"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Globally-unique kebab-case slug = brand + model, no mount. e.g. 'sigma-24-70mm-f28-dg-dn-art'."
+    },
+    "brand": { "type": "string", "description": "Manufacturer, e.g. 'Sony', 'Canon', 'Sigma'." },
+    "model": { "type": "string", "description": "Full marketing name including aperture and series, e.g. 'FE 24-70mm F2.8 GM II'." },
+    "series": {
+      "type": ["string", "null"],
+      "description": "Product line / grade, e.g. GM, G, RF L, S-Line, Art, Sport, Contemporary, PRO, S, S-Pro, Batis, XF, GF."
+    },
+    "mounts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["Sony E", "Canon RF", "Nikon Z", "L-Mount", "Fujifilm X", "Micro Four Thirds", "Leica M"]
+      },
+      "minItems": 1,
+      "description": "Every mount this exact optical design ships in. L-Mount covers the whole Leica/Panasonic/Sigma alliance (Leica SL/TL bodies included); it is a single physical mount, so Leica-native L lenses use 'L-Mount' too."
+    },
+    "format": {
+      "type": "string",
+      "enum": ["Full Frame", "APS-C", "MFT", "Medium Format"],
+      "description": "Image circle the lens is designed to cover."
+    },
+    "lensType": { "type": "string", "enum": ["Prime", "Zoom"] },
+
+    "focalMin": { "type": "number", "description": "mm. For primes equals focalMax." },
+    "focalMax": { "type": "number", "description": "mm." },
+    "apertureMaxWide": { "type": "number", "description": "Widest aperture (smallest f-number) at the wide end, e.g. 2.8." },
+    "apertureMaxTele": { "type": ["number", "null"], "description": "Widest aperture at tele end; equals wide for constant-aperture zooms and primes." },
+    "apertureMin": { "type": ["number", "null"], "description": "Minimum aperture (largest f-number), e.g. 22." },
+
+    "stabilization": { "type": ["boolean", "null"], "description": "In-lens OIS/OSS/VC/IS." },
+    "weatherSealed": { "type": ["boolean", "null"] },
+    "autofocus": { "type": ["boolean", "null"], "description": "true = autofocus, false = manual-focus only." },
+
+    "weight": { "type": ["number", "null"], "description": "grams." },
+    "length": { "type": ["number", "null"], "description": "mm." },
+    "diameter": { "type": ["number", "null"], "description": "mm, max barrel diameter." },
+    "filterThread": { "type": ["number", "null"], "description": "Front filter thread in mm; null if rear/none/bulb." },
+    "minFocusDistance": { "type": ["number", "null"], "description": "Closest focusing distance in meters." },
+    "maxMagnification": { "type": ["number", "null"], "description": "Max reproduction ratio as a decimal, e.g. 0.5 for 1:2." },
+    "elements": { "type": ["integer", "null"] },
+    "groups": { "type": ["integer", "null"] },
+    "apertureBlades": { "type": ["integer", "null"] },
+
+    "priceUSD": { "type": ["number", "null"], "description": "Current US street price (or MSRP if no street price) in USD." },
+    "priceMSRPUSD": { "type": ["number", "null"], "description": "Original launch MSRP in USD." },
+    "year": { "type": ["integer", "null"], "description": "Release year." },
+    "discontinued": { "type": ["boolean", "null"] },
+
+    "dxomarkScore": { "type": ["number", "null"], "description": "DXOMark overall lens score if known (body-dependent; treat as indicative only)." },
+    "productUrl": { "type": ["string", "null"], "description": "Manufacturer product page." }
+  }
+}

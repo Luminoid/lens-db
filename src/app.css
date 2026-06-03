@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+}
+
+/*
+ * Palette lives as runtime custom properties (NOT in @theme, which is build-static) so the
+ * dark/light toggle can swap it live by flipping `data-theme` on <html>. Every component
+ * references these via `var(--color-...)` arbitrary-value utilities, so both themes are covered
+ * without touching markup. Dark is the default (matches the no-JS / pre-hydration HTML); the
+ * static/theme-init.js script sets data-theme before first paint to avoid a flash.
+ */
+:root,
+:root[data-theme='dark'] {
+  --color-bg: #0e1116;
+  --color-bg-elevated: #161b22;
+  --color-bg-card: #1a2029;
+  --color-border: #2a313c;
+  --color-text: #e6edf3;
+  --color-text-muted: #8b949e;
+  --color-text-secondary: #b8c0c9;
+  --color-accent: #4dd0c4;
+  --color-accent-hover: #6fe0d5;
+}
+
+:root[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-bg-elevated: #f6f8fa;
+  --color-bg-card: #eef1f4;
+  --color-border: #d0d7de;
+  --color-text: #1f2328;
+  --color-text-muted: #656d76; /* ~4.6:1 on white (WCAG AA) */
+  --color-text-secondary: #424a53;
+  --color-accent: #0f766e; /* teal-700, ~5:1 on white for link/interactive text */
+  --color-accent-hover: #115e59; /* teal-800: hover darkens on light bg, ~7:1 so white-on-accent buttons + link-hover text both clear AA */
+}
+
+html {
+  /* Reserve scrollbar space so dynamic content height doesn't shift the layout */
+  overflow-y: scroll;
+  color-scheme: dark;
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Respect reduced-motion: kill non-essential transitions/animations. The chart already runs with
+ * ECharts animation disabled, so this only governs CSS-driven motion (e.g. <details> reveals). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

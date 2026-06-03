@@ -1,0 +1,16 @@
+# Cloudflare Pages security + caching headers. Copied verbatim to the build root by adapter-static.
+# The Content-Security-Policy that governs scripts/styles is delivered as a <meta> tag by SvelteKit
+# (hash mode; see svelte.config.js). frame-ancestors can only be enforced via an HTTP header, so it
+# lives here alongside X-Frame-Options for older browsers.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Content-Security-Policy: frame-ancestors 'none'
+  Cross-Origin-Opener-Policy: same-origin
+
+# Fingerprinted build assets never change content; cache them hard.
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable
