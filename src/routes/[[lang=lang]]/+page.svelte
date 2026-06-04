@@ -6,6 +6,7 @@
   import FilterPanel from '$lib/components/FilterPanel.svelte';
   import AxisControls from '$lib/components/AxisControls.svelte';
   import CompareTray from '$lib/components/CompareTray.svelte';
+  import TagAxis from '$lib/components/TagAxis.svelte';
   import { buildChartOption, buildTagChartOption, plottable, DOTS_GRID } from '$lib/chart/chartOption';
   import { AXES } from '$lib/chart/axes';
   import { CHART_THEME } from '$lib/chart/chartTheme';
@@ -74,10 +75,13 @@
         theme,
       ),
       height: undefined as number | undefined,
+      axis: undefined,
     };
   });
   const option = $derived(built.option);
   const canvasHeight = $derived(built.height);
+  // Floating focal axis metadata (tag view only); undefined in dot view.
+  const tagAxis = $derived(built.axis);
 
   // Chart shape: when this changes we replace rather than merge (see LensChart). In dot view, locale
   // and theme are included so a switch fully re-labels/re-colors. In tag view the whole layout
@@ -273,6 +277,10 @@
             ? t(locale, 'chart.ariaTags', { count: shown })
             : t(locale, 'chart.aria', { count: shown, x: xLabel, y: yLabel })}
         />
+        <!-- Tag view: the focal axis floats at the bottom of the (tall, page-scrolled) chart box. -->
+        {#if filters.mode === 'tags' && tagAxis}
+          <TagAxis axis={tagAxis} width={layoutWidth} {locale} />
+        {/if}
       </div>
 
       <!-- Accessible text equivalent of the chart: the visible set as a real, navigable table.

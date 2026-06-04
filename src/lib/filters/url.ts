@@ -61,7 +61,8 @@ export function filtersToSearch(f: FilterState): string {
   if (f.yLog !== AXES[f.y].defaultLog) p.set('ys', f.yLog ? 'log' : 'lin');
   if (f.color !== 'brand') p.set('color', f.color);
 
-  if (f.mode !== 'dots') p.set('view', f.mode);
+  // Tags is the default view, so a clean tags view stays a bare URL; dots is the explicit param.
+  if (f.mode !== 'tags') p.set('view', f.mode);
   if (f.tagDetail !== 'none') p.set('tag', f.tagDetail);
 
   if (f.brands.length) p.set('brand', encodeMulti(f.brands));
@@ -108,7 +109,10 @@ export function parseSearch(search: string): FilterState {
   const color = p.get('color');
   if (color && isColorByKey(color)) f.color = color;
 
-  if (p.get('view') === 'tags') f.mode = 'tags';
+  // Default is tags; `view=dots` selects the scatter view. Legacy `view=tags` still loads tags.
+  const view = p.get('view');
+  if (view === 'dots') f.mode = 'dots';
+  else if (view === 'tags') f.mode = 'tags';
   const tag = p.get('tag');
   if (tag && isTagDetail(tag)) f.tagDetail = tag;
 

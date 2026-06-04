@@ -98,7 +98,16 @@ function makeTooltipFormatter(locale: Locale, theme: ChartTheme) {
   };
 }
 
-function axisConfig(def: (typeof AXES)[AxisKey], log: boolean, locale: Locale, theme: ChartTheme) {
+function axisConfig(
+  def: (typeof AXES)[AxisKey],
+  log: boolean,
+  locale: Locale,
+  theme: ChartTheme,
+  customValues?: number[],
+) {
+  // Pin ticks/gridlines to the "important" focal lengths / f-stops (same set the tag view uses) so
+  // both views read off the same scale; omitted for other specs, which keep ECharts' auto ticks.
+  const cv = customValues ? { customValues } : {};
   return {
     type: log ? ('log' as const) : ('value' as const),
     logBase: def.logBase,
@@ -108,15 +117,34 @@ function axisConfig(def: (typeof AXES)[AxisKey], log: boolean, locale: Locale, t
     nameLocation: 'middle' as const,
     nameGap: 34,
     nameTextStyle: { color: theme.axisName },
-    axisLabel: { color: theme.axisName, formatter: (v: number) => def.fmt(v) },
+    axisLabel: { color: theme.axisName, formatter: (v: number) => def.fmt(v), hideOverlap: true, ...cv },
     axisLine: { lineStyle: { color: theme.axisLine } },
-    splitLine: { lineStyle: { color: theme.splitLine } },
+    axisTick: { lineStyle: { color: theme.axisLine }, ...cv },
+    splitLine: { lineStyle: { color: theme.splitLine }, ...cv },
   };
 }
 
 /** A lens is plottable only if both axes have a non-null wide value. */
 export function plottable(l: Lens, x: AxisKey, y: AxisKey): boolean {
   return AXES[x].wide(l) != null && AXES[y].wide(l) != null;
+}
+
+/** [min, max] of the plottable set on `key`, over wide AND tele ends (so segments are covered). */
+function axisDomain(data: Lens[], key: AxisKey, x: AxisKey, y: AxisKey): [number, number] | undefined {
+  const def = AXES[key];
+  let lo = Infinity;
+  let hi = -Infinity;
+  for (const l of data) {
+    if (!plottable(l, x, y)) continue;
+    const w = def.wide(l);
+    if (w == null) continue;
+    const tl = def.tele(l) ?? w;
+    if (w < lo) lo = w;
+    if (w > hi) hi = w;
+    if (tl < lo) lo = tl;
+    if (tl > hi) hi = tl;
+  }
+  return lo <= hi ? [lo, hi] : undefined;
 }
 
 export function buildChartOption(data: Lens[], opts: ChartOpts, locale: Locale, theme: ChartTheme) {
@@ -201,8 +229,8 @@ export function buildChartOption(data: Lens[], opts: ChartOpts, locale: Locale, 
       textStyle: { color: theme.tooltipText },
       formatter: makeTooltipFormatter(locale, theme),
     },
-    xAxis: axisConfig(xDef, opts.xLog, locale, theme),
-    yAxis: axisConfig(yDef, opts.yLog, locale, theme),
+    xAxis: axisConfig(xDef, opts.xLog, locale, theme, meaningfulTicks(opts.x, axisDomain(data, opts.x, opts.x, opts.y))),
+    yAxis: axisConfig(yDef, opts.yLog, locale, theme, meaningfulTicks(opts.y, axisDomain(data, opts.y, opts.x, opts.y))),
     dataZoom: [
       { type: 'inside', xAxisIndex: 0, filterMode: 'none' },
       { type: 'inside', yAxisIndex: 0, filterMode: 'none' },
@@ -272,10 +300,22 @@ export interface TagChartOpts {
   pins?: Set<string>;
 }
 
-// Grid margins for tag view: room for the reference axes (left/bottom) and the legend (top). The tag
-// layout packs INSIDE the resulting content rect, so the synthetic 1:1 pixel axes still map straight
-// to canvas pixels (content-rect px width == synthetic xAxis max, height likewise).
-const TAG_GRID = { left: 56, right: 16, top: 44, bottom: 42 };
+// Grid margins for tag view: room for the left (f-stop / Y) reference axis and the legend (top). The
+// X (focal) axis is NOT drawn inside the canvas; it floats at the viewport bottom (see TagAxis.svelte),
+// so only a little breathing room is reserved below the last row. The tag layout packs INSIDE the
+// resulting content rect, so the synthetic 1:1 pixel axes still map straight to canvas pixels.
+const TAG_GRID = { left: 56, right: 16, top: 44, bottom: 16 };
+
+/** Axis metadata the floating focal axis (TagAxis.svelte) needs to draw a scale aligned to the chips. */
+export interface TagAxisMeta {
+  domainX: [number, number];
+  xLog: boolean;
+  xKey: AxisKey;
+  /** ECharts grid insets (px) and the synthetic x-axis max (== layout pixel width the chips ride). */
+  gridLeft: number;
+  gridRight: number;
+  synthWidth: number;
+}
 
 /** Guard an axis domain so a single distinct value (or an inverted pair) yields a valid, centred range. */
 function safeAxisRange([lo, hi]: [number, number], log: boolean): [number, number] {
@@ -323,11 +363,47 @@ function tagDisplayAxis(
 }
 
 /** Meaningful tick values for the focal / aperture reference axes (standard focals / f-stops). */
-function meaningfulTicks(key: AxisKey, [lo, hi]: [number, number]): number[] | undefined {
+export function meaningfulTicks(key: AxisKey, domain: [number, number] | undefined): number[] | undefined {
+  if (!domain) return undefined;
+  const [lo, hi] = domain;
   const src = key === 'focal' ? FOCAL_TICKS : key === 'aperture' ? APERTURE_STOPS : null;
   if (!src) return undefined;
   const within = src.filter((v) => v >= lo * 0.999 && v <= hi * 1.001);
   return within.length ? within : undefined;
+}
+
+/** A "nice" step (1/2/5 × 10^k) near `raw`, for generated linear ticks. */
+function niceStep(raw: number): number {
+  if (!(raw > 0)) return 1;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const norm = raw / mag;
+  const nice = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10;
+  return nice * mag;
+}
+
+/**
+ * Reference ticks for an axis over `domain`: the meaningful focal/f-stop set when applicable, else a
+ * generated 1/2/5 ladder (log) or evenly-spaced nice steps (linear). Used by the floating tag axis,
+ * which draws its own scale outside ECharts.
+ */
+export function axisTicks(key: AxisKey, domain: [number, number] | undefined, log: boolean): number[] {
+  if (!domain) return [];
+  const meaningful = meaningfulTicks(key, domain);
+  if (meaningful) return meaningful;
+  const [lo, hi] = domain;
+  if (!(hi > lo)) return [lo];
+  const out: number[] = [];
+  if (log && lo > 0) {
+    for (let e = Math.floor(Math.log10(lo)); e <= Math.ceil(Math.log10(hi)); e++)
+      for (const m of [1, 2, 5]) {
+        const v = m * 10 ** e;
+        if (v >= lo * 0.999 && v <= hi * 1.001) out.push(v);
+      }
+  } else {
+    const step = niceStep((hi - lo) / 5);
+    for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(Math.round(v * 1e6) / 1e6);
+  }
+  return out.length ? out : [lo, hi];
 }
 
 /** Build the tag-view option. Returns the option plus the computed canvas height (the page scrolls). */
@@ -336,11 +412,10 @@ export function buildTagChartOption(
   opts: TagChartOpts,
   locale: Locale,
   theme: ChartTheme,
-): { option: Record<string, unknown>; height: number } {
+): { option: Record<string, unknown>; height: number; axis: TagAxisMeta } {
   const colorDef = COLOR_BY[opts.color];
   const order = groupOrder(colorDef, lenses);
   const colors = paletteMap(order, theme.palette);
-  const xDef = AXES[opts.x];
   const yDef = AXES[opts.y];
 
   const inputs = data
@@ -372,11 +447,9 @@ export function buildTagChartOption(
   const xLogEff = opts.xLog && layout.domainX[0] > 0 && layout.domainX[1] > 0;
   const yLogEff = opts.yLog && layout.domainY[0] > 0 && layout.domainY[1] > 0;
 
-  // X: synthetic (hidden, series ride it) + a real focal/aperture reference with meaningful ticks.
-  const xAxis: Record<string, unknown>[] = [
-    { type: 'value', min: 0, max: layout.width, show: false, position: 'top' },
-    tagDisplayAxis(xDef, xLogEff, layout.domainX, locale, theme, 'bottom', meaningfulTicks(opts.x, layout.domainX)),
-  ];
+  // X: only the synthetic (hidden) pixel axis the chips ride. The visible focal scale is the floating
+  // axis (TagAxis.svelte), drawn outside ECharts so it can stay pinned to the viewport bottom.
+  const xAxis: Record<string, unknown>[] = [{ type: 'value', min: 0, max: layout.width, show: false, position: 'top' }];
 
   // Y: in bucket mode the chips ride a single VISIBLE pixel axis labelled per f-stop row (ticks at the
   // row band centres). Otherwise it mirrors X: hidden synthetic + a real reference with nice ticks.
@@ -455,5 +528,16 @@ export function buildTagChartOption(
     series,
   };
 
-  return { option, height: canvasHeight };
+  return {
+    option,
+    height: canvasHeight,
+    axis: {
+      domainX: layout.domainX,
+      xLog: xLogEff,
+      xKey: opts.x,
+      gridLeft: TAG_GRID.left,
+      gridRight: TAG_GRID.right,
+      synthWidth: layout.width,
+    },
+  };
 }

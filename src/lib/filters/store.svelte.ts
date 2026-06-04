@@ -61,7 +61,7 @@ export function defaultFilters(): FilterState {
     xLog: AXES.focal.defaultLog,
     yLog: AXES.aperture.defaultLog,
     color: 'brand',
-    mode: 'dots',
+    mode: 'tags',
     tagDetail: 'none',
   };
 }

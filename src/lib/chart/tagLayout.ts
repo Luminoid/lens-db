@@ -164,7 +164,8 @@ const MIN_HEIGHT = 360;
 // Small inset within the content rect so tags don't touch the reference-axis lines. The legend and
 // the axes themselves live in the grid margins (set in chartOption), not inside this packing area.
 const PAD_TOP = 8;
-const PAD_X_EDGE = 8;
+/** Horizontal inset of the packed chips within the content rect; exported so the floating axis aligns. */
+export const PAD_X_EDGE = 8;
 const BUCKET_GAP = 10; // vertical gap between f-stop rows in bucket mode
 const STEP = TAG_HEIGHT + GAP_Y; // ~21px vertical granularity for the relief search
 const MAX_RING = 100;
@@ -179,8 +180,8 @@ interface Rect {
 const intersects = (a: Rect, b: Rect): boolean =>
   a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
-/** Map a value to a 0..1 fraction along an axis (log or linear). */
-function frac(v: number, lo: number, hi: number, log: boolean): number {
+/** Map a value to a 0..1 fraction along an axis (log or linear). Exported for the floating axis. */
+export function frac(v: number, lo: number, hi: number, log: boolean): number {
   if (hi <= lo) return 0.5;
   if (log && lo > 0 && hi > 0) return (Math.log(v) - Math.log(lo)) / (Math.log(hi) - Math.log(lo));
   return (v - lo) / (hi - lo);
@@ -219,16 +220,27 @@ export function layoutTags(
 
   if (items.length === 0) return { placed: [], width: W, height: MIN_HEIGHT, domainX: [0, 1], domainY: [0, 1] };
 
-  // Domain over the visible set's wide values.
+  // "Ranged" X (focal/aperture): some lens has tele != wide, so its tag draws as a bar spanning
+  // [wide, tele] on X (e.g. a zoom's start..end focal). Scalar X has no span -> point chips.
+  const spanX = items.some((it) => {
+    const w = xDef.wide(it.lens);
+    const tl = xDef.tele(it.lens);
+    return w != null && tl != null && tl !== w;
+  });
+  const xWideOf = (l: Lens): number => xDef.wide(l)!;
+  const xTeleOf = (l: Lens): number => (spanX ? (xDef.tele(l) ?? xDef.wide(l)!) : xDef.wide(l)!);
+
+  // Domain over the visible set; for ranged X it must cover tele ends too so the longest bar fits.
   let xLo = Infinity;
   let xHi = -Infinity;
   let yLo = Infinity;
   let yHi = -Infinity;
   for (const it of items) {
-    const xv = xDef.wide(it.lens)!;
+    const xw = xWideOf(it.lens);
+    const xt = xTeleOf(it.lens);
     const yv = yDef.wide(it.lens)!;
-    if (xv < xLo) xLo = xv;
-    if (xv > xHi) xHi = xv;
+    if (Math.min(xw, xt) < xLo) xLo = Math.min(xw, xt);
+    if (Math.max(xw, xt) > xHi) xHi = Math.max(xw, xt);
     if (yv < yLo) yLo = yv;
     if (yv > yHi) yHi = yv;
   }
@@ -280,16 +292,28 @@ export function layoutTags(
   });
   const fracX = (v: number) => PAD_X_EDGE + frac(v, xLo, xHi, opts.xLog) * innerW;
 
+  // Bar geometry on X: the chip spans [wide, tele] in pixels, widened to fit its label. When the
+  // label is wider than the span it stays centred on the span midpoint (still covering the range).
+  // `left`/`right` are the DRAWN box edges (clamped, label-widened), which is what collides.
+  const spanGeom = (tg: Tag): { left: number; right: number; w: number; cx: number } => {
+    const a = fracX(xWideOf(tg.lens));
+    const b = fracX(xTeleOf(tg.lens));
+    const w = Math.max(tg.w, Math.abs(b - a));
+    const cx = clampX((a + b) / 2, w / 2);
+    return { left: cx - w / 2, right: cx + w / 2, w, cx };
+  };
+
   const placed: PlacedTag[] = [];
-  const record = (tg: Tag, cx: number, cy: number) => {
-    insert(rectFor(tg, cx, cy));
-    placed.push({ lens: tg.lens, group: tg.group, color: tg.color, text: tg.text, cx, cy, w: tg.w, h: tg.h, pinned: tg.pinned });
+  const record = (tg: Tag, cx: number, cy: number, w: number = tg.w) => {
+    insert(rectFor({ w, h: tg.h }, cx, cy));
+    placed.push({ lens: tg.lens, group: tg.group, color: tg.color, text: tg.text, cx, cy, w, h: tg.h, pinned: tg.pinned });
   };
 
   // ---- Bucketed rows (aperture on Y): one discrete f-stop row per bucket ---------------------
-  // Every lens with the same snapped max aperture shares a row, ordered left-to-right by the X spec
-  // (focal). Rows stack brightest-first; within a row tags only ever move down/sideways, so a busy
-  // row's band grows taller but never bleeds into the brighter row above. Nothing is hidden.
+  // Every lens with the same snapped max aperture shares a row. Each tag is a bar spanning its X
+  // range (a zoom's start..end focal; a prime is a short box). Within a row, bars are lane-packed:
+  // sorted by left edge, each drops into the topmost lane it doesn't horizontally overlap (interval-
+  // graph greedy -> minimal lanes, no overlap, X stays exact). Busy rows grow taller; nothing hides.
   if (opts.bucketY) {
     const byStop = new Map<number, Tag[]>();
     for (const tg of measured) {
@@ -300,50 +324,26 @@ export function layoutTags(
     }
     const stops = [...byStop.keys()].sort((a, b) => a - b); // ascending f-number -> brightest at top
     const yBuckets: { value: number; centerCy: number }[] = [];
+    const laneH = TAG_HEIGHT + GAP_Y;
     let bandTop = PAD_TOP;
     for (const stop of stops) {
-      const bucket = byStop.get(stop)!.sort((a, b) => {
-        if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-        return xDef.wide(a.lens)! - xDef.wide(b.lens)! || (a.lens.id < b.lens.id ? -1 : 1);
-      });
-      let bandBottom = bandTop;
-      for (const tg of bucket) {
-        const halfW = tg.w / 2;
-        const halfH = tg.h / 2;
-        const sx = clampX(fracX(xDef.wide(tg.lens)!), halfW);
-        const sy = bandTop + halfH;
-        let cx = sx;
-        let cy = sy;
-        let ok = !collides(rectFor(tg, cx, cy));
-        for (let ring = 1; ring <= MAX_RING && !ok; ring++) {
-          const d = ring * STEP;
-          const cands: [number, number][] = [
-            [sx, sy + d],
-            [sx - d, sy],
-            [sx + d, sy],
-            [sx - d, sy + d],
-            [sx + d, sy + d],
-          ];
-          for (const [tx, ty] of cands) {
-            const px = clampX(tx, halfW);
-            const py = Math.max(sy, ty);
-            if (!collides(rectFor(tg, px, py))) {
-              cx = px;
-              cy = py;
-              ok = true;
-              break;
-            }
-          }
-        }
-        if (!ok) {
-          cx = sx;
-          cy = bandBottom + halfH + GAP_Y;
-        }
-        record(tg, cx, cy);
-        bandBottom = Math.max(bandBottom, cy + halfH);
+      const bars = byStop
+        .get(stop)!
+        .map((tg) => ({ tg, ...spanGeom(tg) }))
+        .sort((a, b) => a.left - b.left || (a.tg.lens.id < b.tg.lens.id ? -1 : 1));
+      const laneRight: number[] = []; // rightmost occupied x (incl. gap) per lane
+      for (const bar of bars) {
+        let lane = 0;
+        while (lane < laneRight.length && bar.left < laneRight[lane]) lane++;
+        if (lane === laneRight.length) laneRight.push(bar.right + GAP_X);
+        else laneRight[lane] = bar.right + GAP_X;
+        record(bar.tg, bar.cx, bandTop + lane * laneH + TAG_HEIGHT / 2, bar.w);
       }
-      yBuckets.push({ value: stop, centerCy: Math.round((bandTop + bandBottom) / 2) });
-      bandTop = bandBottom + BUCKET_GAP;
+      const laneCount = Math.max(1, laneRight.length);
+      const firstCenter = bandTop + TAG_HEIGHT / 2;
+      const lastCenter = bandTop + (laneCount - 1) * laneH + TAG_HEIGHT / 2;
+      yBuckets.push({ value: stop, centerCy: Math.round((firstCenter + lastCenter) / 2) });
+      bandTop = lastCenter + TAG_HEIGHT / 2 + BUCKET_GAP;
     }
     return {
       placed,
@@ -355,7 +355,56 @@ export function layoutTags(
     };
   }
 
-  // ---- Continuous free 2D packing (default) -------------------------------------------------
+  // ---- Continuous, ranged X (focal/aperture): bars at their true X, stacked vertically ----------
+  // X encodes the lens's range, so a tag never moves horizontally; a collision pushes it straight
+  // down (then up) to the nearest free slot, and otherwise below everything placed so far. The
+  // canvas grows downward, so placement never fails and nothing is hidden.
+  if (spanX) {
+    const bars = [...measured].sort((a, b) => {
+      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+      const ay = yDef.wide(a.lens)!;
+      const by = yDef.wide(b.lens)!;
+      if (ay !== by) return by - ay;
+      return a.lens.id < b.lens.id ? -1 : 1;
+    });
+    const estRows = Math.ceil(bars.length / Math.max(1, Math.floor(W / 120)));
+    let H = Math.min(MAX_HEIGHT, Math.max(MIN_HEIGHT, Math.round(estRows * STEP * 1.6) + PAD_TOP));
+    const innerH = Math.max(40, H - PAD_TOP - 16);
+    let maxBottom = PAD_TOP;
+    for (const tg of bars) {
+      const halfH = tg.h / 2;
+      const { cx, w } = spanGeom(tg);
+      const fyRaw = frac(yDef.wide(tg.lens)!, yLo, yHi, opts.yLog);
+      const fy = yDef.inverse ? fyRaw : 1 - fyRaw; // small cy = top of canvas
+      const idealY = PAD_TOP + fy * innerH;
+      let cy = Math.max(halfH + PAD_TOP, idealY);
+      let ok = !collides(rectFor({ w, h: tg.h }, cx, cy));
+      for (let ring = 1; ring <= MAX_RING && !ok; ring++) {
+        const d = ring * STEP;
+        for (const ty of [idealY + d, idealY - d]) {
+          const py = Math.max(halfH + PAD_TOP, ty);
+          if (!collides(rectFor({ w, h: tg.h }, cx, py))) {
+            cy = py;
+            ok = true;
+            break;
+          }
+        }
+      }
+      if (!ok) cy = maxBottom + halfH + GAP_Y;
+      record(tg, cx, cy, w);
+      maxBottom = Math.max(maxBottom, cy + halfH);
+      if (cy + halfH + 16 > H) H = cy + halfH + 16;
+    }
+    return {
+      placed,
+      width: W,
+      height: Math.min(MAX_HEIGHT, Math.max(MIN_HEIGHT, maxBottom + 16)),
+      domainX: [xLo, xHi],
+      domainY: [yLo, yHi],
+    };
+  }
+
+  // ---- Continuous free 2D packing (scalar X) ------------------------------------------------
   const tags = [...measured].sort((a, b) => {
     if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
     const ay = yDef.wide(a.lens)!;
