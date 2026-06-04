@@ -1,8 +1,20 @@
 # Data sources & verification notes
 
-Generated 2026-06-01 · 680 lenses across 20 brands.
+Generated 2026-06-01 · last full re-verification 2026-06-04 · 680 lenses across 20 brands.
 
 Assembled by a fan-out workflow: per brand/format segment, a gather pass (model knowledge) followed by an adversarial verify pass that web-checked completeness and filled price/weight/year from manufacturer pages, B&H, and DPReview. Per-field nulls mean "not reliably sourced," never a guess.
+
+## Open follow-ups (data)
+
+Ambiguous / completeness items surfaced by verification but left unchanged, pending a manual call. Living checklist; tick when resolved. Full reasoning under the 2026-06-04 pass below.
+
+- [ ] **Voigtländer Nokton Classic 35mm F1.4** (`voigtlander-nokton-classic-35mm-f14-z`): add the Canon RF mount or split into two rows (CP+ 2026 announced both RF and Nikon Z; DB lists only Z).
+- [ ] **Laowa 12mm f/2.8 Zero-D** (`laowa-12mm-f28-zero-d`): `mounts` likely incomplete (only `Sony E`; mirrorless Canon RF / Nikon Z versions exist).
+- [ ] **Laowa 85mm f/5.6 2x Ultra Macro APO** (`laowa-85mm-f56-2x-ultra-macro-apo`): may be missing `L-Mount` (Venus Optics added it after the launch set).
+- [ ] **Sigma 35mm F1.4 DG DN Art** and **45mm F2.8 DG DN Contemporary**: confirm discontinued vs non-DN successors before flipping `discontinued` (Sigma USA pages still load).
+- [ ] **Leica APO-Telyt-M 135mm f/3.4** (`leica-apo-telyt-m-135mm-f34`) and **Tamron 70-180mm F2.8 A056** (`tamron-70-180mm-f28-di-iii-vxd`): confirm end-of-production; official pages still resolve, so `discontinued` left as-is.
+- [ ] **Samyang V-AF 20mm / 24mm**: resolve `weatherSealed` conflict (DB `false` vs Samyang US spec "Yes"); sources disagree across the V-AF line.
+- [ ] **New lenses to consider adding**: Meike AF 85mm f/1.4 II (MIX, 2026) and AF 56mm f/1.7 (X/E/Z).
 
 ## Verification + expansion pass (2026-06-01)
 
@@ -12,6 +24,45 @@ A second per-brand fan-out (one agent per existing brand, plus gather + adversar
 - **Spec corrections:** 147 web-sourced field fixes across the 13 original brands, mostly element/group/blade counts, dimensions, max magnification, and current US prices. No lens existence, focal-length, max-aperture, or mount errors were found in the original set.
 - **New brands (143 lenses):** Viltrox, Laowa, 7Artisans, TTArtisan, Yongnuo, Meike, Tokina, each gathered then adversarially web-verified for existence and core specs.
 - **T-stops:** the Samyang V-AF cine primes store T-stops in the aperture fields, so they plot marginally brighter than their f-number on the aperture axis. This is intentional, not an error.
+
+## Verification pass (2026-06-04)
+
+A full second web-verification pass over **all 680 lenses**, run as a 46-segment workflow fan-out: one web-research agent per brand/format/type segment proposed field corrections against manufacturer pages + B&H + DPReview, then an **independent recheck agent** re-verified every proposed change against a *different* source before it was applied. Conflicts and unconfirmable proposals were rejected, not applied. Per-field nulls left null where no reliable source existed (never guessed).
+
+**Outcome:** 251 field corrections applied (100 null-fills + 151 value-changes), 70 `productUrl` links written (43 filled from null + 27 dead-link repairs), **8 proposed changes rejected by the recheck stage**, 1 no-op skipped. The recheck also declined 23 `productUrl` swaps that were lateral churn of still-working manufacturer links (see URL policy below).
+
+**Coverage after this pass:** `productUrl` 94% → **100%** (679/680; only `samyang-mf-35mm-f12-apsc` stays null, no reliable page found). `weight` 99→100% · `length` 94→97% · `diameter` 92→95% · `maxMagnification` 82→87% · `apertureBlades` 96→97% · `priceMSRPUSD` 97→98%.
+
+**Corrections by field:** maxMagnification 61 · priceUSD 32 · diameter 29 · length 27 · priceMSRPUSD 16 · weight 14 · apertureBlades 13 · minFocusDistance 13 · discontinued 13 · groups 9 · elements 9 · apertureMin 7 · filterThread 5 · mounts 2 · year 1
+
+**Corrections by brand:** Leica 67 · Viltrox 38 · Sigma 24 · Meike 16 · Panasonic 14 · 7Artisans 14 · Samyang 10 · Sony 9 · Canon 9 · TTArtisan 9 · Tokina 9 · Nikon 8 · Yongnuo 8 · Voigtländer 7 · Laowa 4 · Olympus 3 · Fujifilm 2
+
+Identity fields (focal length, max aperture, format, lensType) were not changed; the only `mounts` edits were two well-sourced additive expansions (TTArtisan 23mm F1.4 gained L-Mount + Canon RF; TTArtisan 50mm F1.2 gained L-Mount). Leica M primes accounted for the most refinements (obscure blade/aperture/dimension specs from the original assembly).
+
+### productUrl policy (reachability-gated)
+
+Every proposed `productUrl` (fill or repair) was HTTP-tested. A **fill** (null → URL) was written only if the new page loaded; a **replacement** of an existing link was written only when the old link was genuinely dead (404) **and** the new one loaded. Working manufacturer links were never swapped for retailer links: 23 such lateral changes were declined. This caught a batch of stale NIKKOR Z product-page IDs (old slugs 404, corrected to live ones) and an OM System slug change, while keeping bot-blocked-but-live manufacturer pages (Sony, B&H return 403 to scripted fetches) untouched.
+
+### Rejected by the recheck stage (kept at original values)
+
+- **Sony FE 135mm F1.8 GM**: `priceMSRPUSD` proposed `1898`, **rejected** (kept original). REJECTED. The proposer treated the launch-day announcement price ($1,898) as canonical, but missed that Sony OFFICIALLY raised the MSRP from $1,898 to exactly $2,098 in August 2019 (PetaPixel: 'raising the price from $1,898 to $2,098 overnight'; corroborated by Sony Addict and Im
+- **Sony FE 135mm F1.8 GM**: `priceUSD` proposed `1898`, **rejected** (kept original). REJECTED. The proposer's claim that the current US street price 'remains $1,898' is false. Independent sources (SonyPriceWatch aggregating B&H, Adorama, and PROCAM; plus Best Buy/Adorama search snippets) show the current 2026 price at $2,248 across authorized retailers. The price
+- **Canon RF 16-28mm F2.8 IS STM**: `minFocusDistance` proposed `0.11`, **rejected** (kept original). REJECTED: proposer conflated magnification with focus distance. Confirmed via OpticalLimits, B&H spec summary, and Canon Europe summary that closest focusing distance is 0.2m (at 28mm) / 0.25m (at 16mm). The 0.11 figure is the MAXIMUM MAGNIFICATION at 16mm (with 0.26x at 28mm), N
+- **OM System M.Zuiko Digital ED 40-150mm F4.0 PRO**: `elements` proposed `19`, **rejected** (kept original). Could NOT independently confirm 19; evidence strongly supports the original DB value of 15. The proposed 19 appears ONLY on OM System's US official page (explore.omsystem.com/us/en/...), which is almost certainly the page the proposer used. OM System's own UK official page (explo
+- **Olympus M.Zuiko Digital 25mm F1.8**: `priceUSD` proposed `319.99`, **rejected** (kept original). Cannot independently confirm $319.99. The only source for the clearance markdown is the same OM System -black page the proposer used, and that listing is OUT OF STOCK (soft price). Independent sources (Backscatter, search) show the original 25mm F1.8 at its $399.99 MSRP and marke
+- **Leica APO-Summicron-M 75mm f/2 ASPH.**: `minFocusDistance` proposed `0.77`, **rejected** (kept original). Official Leica technical datasheet (PDF) states 'Focusing range: 0.7 m to Infinity'. Phoblographer, Leica wiki, Matt Osborne blog and Leica's own marketing copy ('minimum range of 0.7m') all agree on 0.7m. The proposed 0.77m comes only from a Leica Store Miami listing and is not 
+- **Yongnuo YN 25mm F1.7 M**: `priceMSRPUSD` proposed `99`, **rejected** (kept original). REJECTED. The proposal's note misquotes its own source: the cited PetaPixel article actually says the lens would 'retail for under $150' (NOT 'under $100'), and PetaPixel explicitly notes pricing was not part of the official announcement. Other sources cluster differently: Radozh
+- **Tokina SZ SUPER TELE 500mm F8 Reflex MF**: `priceUSD` proposed `359`, **rejected** (kept original). The $359 figure is a transient sale price appearing only on Tokina USA (the proposer's own source). No independent retailer or review corroborates this specific number; launch articles (DPReview, Sony Addict) explicitly did not disclose pricing. A sale price single-sourced to the
+
+### Flagged for manual follow-up (not auto-applied)
+
+- **Voigtländer Nokton Classic 35mm F1.4** (`voigtlander-nokton-classic-35mm-f14-z`): announced at CP+ 2026 for **both** Canon RF and Nikon Z; the DB row lists only Nikon Z. Either add the Canon RF mount or split into two rows. Mounts left unchanged pending a decision.
+- **Laowa 12mm f/2.8 Zero-D** (`laowa-12mm-f28-zero-d`): `mounts` is `["Sony E"]` only; the design also shipped in mirrorless Canon RF / Nikon Z (and legacy SLR mounts, out of scope). Likely incomplete for the mirrorless scope. Left as-is (could not confirm exact current mirrorless mount set).
+- **Laowa 85mm f/5.6 2x Ultra Macro APO** (`laowa-85mm-f56-2x-ultra-macro-apo`): Venus Optics added an L-Mount version after the Nov-2021 launch set; DB mounts may be missing `L-Mount`. Left as-is.
+- **Sigma 35mm F1.4 DG DN Art** and **45mm F2.8 DG DN Contemporary**: Feb-2026 press suggests replacement by non-DN successors (35mm F1.4 DG II, 45mm F2.8 DG). `discontinued` left `false` because Sigma USA product pages still load; verify manually. (The six DG DN primes whose discontinuation is unambiguous were flipped to `true` this pass.)
+- **Leica APO-Telyt-M 135mm f/3.4** (`leica-apo-telyt-m-135mm-f34`) and **Tamron 70-180mm F2.8 (A056)** (`tamron-70-180mm-f28-di-iii-vxd`): both likely end-of-production (superseded), but the official pages still resolve, so `discontinued` was left unchanged. Ambiguous; worth a manual call.
+- **Samyang V-AF 20mm / 24mm**: DB has `weatherSealed: false`, but Samyang’s US V-AF spec page states weather sealing "Yes". Sources disagree across the V-AF line; left `false`. Verify against a current spec sheet.
+- **Newly-announced lenses not yet in the DB** (out of "make existing correct" scope, flagged for a future add): Meike AF 85mm f/1.4 II (MIX, May 2026) and AF 56mm f/1.7 (X/E/Z); Sony 2026 zoom roadmap (16-28 F2 GM, 50-150 F2 GM, 100-400 F4 GM) already partially present.
 
 ## sony-fe-prime: 28 lenses
 
