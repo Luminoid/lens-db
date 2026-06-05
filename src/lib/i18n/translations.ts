@@ -38,10 +38,10 @@ const en: Dict = {
   'home.metaDesc':
     'LensDB: plot every modern mirrorless lens on a configurable focal length by aperture chart. Filter by brand, mount, and format.',
   'home.intro':
-    '{count} mirrorless lenses across {brands} brands. Pick any two specs for the axes, color by brand or category, and filter the set. A prime is a point; a zoom is a segment (it slopes when both axes vary across the range). Hover for specs, scroll or pinch to zoom, click a lens to pin it for side-by-side comparison.',
+    '{count} mirrorless lenses across {brands} brands. Pick any two specs for the axes, color by brand or category, and filter the set. A prime is a point; a zoom is a segment (it slopes when both axes vary across the range). Hover for specs, scroll or pinch to zoom, and click a lens to open its details. Turn on "Tap to compare" to pin lenses for side-by-side comparison instead.',
   'home.coverage': '{shown} of {count} lenses shown.',
   'home.coverageHidden': '{shown} of {count} lenses shown, {hidden} hidden (missing {x} or {y}).',
-  'home.priceNote': 'Prices approximate, as of {date}. Specs web-verified; nulls over guesses.',
+  'home.priceNote': 'Prices approximate, as of {date}.',
 
   // Filter panel
   'filter.title': 'Filters',
@@ -56,6 +56,10 @@ const en: Dict = {
   'filter.focusAll': 'All',
   'filter.stabilized': 'Stabilized only',
   'filter.weatherSealed': 'Weather-sealed only',
+  'filter.hide': 'Hide filters',
+  'filter.show': 'Show filters',
+  'mode.compare': 'Tap to compare',
+  'mode.compareHint': 'On: tap pins lenses to compare. Off: tap opens lens details.',
 
   // Range slider
   'range.min': 'Min',
@@ -141,6 +145,7 @@ const en: Dict = {
   'spec.groups': 'Groups',
   'spec.price': 'Price (USD)',
   'spec.msrp': 'MSRP (USD)',
+  'spec.source': 'Source',
 
   // Compare page
   'compare.title': 'Compare lenses · LensDB',
@@ -162,12 +167,16 @@ const en: Dict = {
   'tray.remove': 'Remove {name} from comparison',
   'tray.clear': 'Clear',
   'tray.compare': 'Compare →',
+  'tray.heading': 'Compare',
+  'tray.empty': 'Click lenses in the chart to pin them here.',
 
   // Lens detail
   'detail.metaDesc':
     '{name}: {focal} {aperture} {type} for {mounts} ({format}). Specs and comparison on LensDB.',
   'detail.pin': 'Pin to compare',
   'detail.pinned': 'Pinned ✓',
+  'detail.back': '← Back to chart',
+  'detail.backToCompare': '← Back to compare',
   'detail.specs': 'Specifications',
   'detail.manufacturer': 'Manufacturer page ↗',
   'detail.whereItSits': 'Where it sits',
@@ -249,10 +258,10 @@ const zh: Dict = {
   'home.metaDesc':
     'LensDB：将每一支现代无反镜头绘制在可自定义的焦距-光圈图表上，可按品牌、卡口和画幅筛选。',
   'home.intro':
-    '{count} 支无反镜头，覆盖 {brands} 个品牌。任选两项规格作为坐标轴，按品牌或类别着色，并筛选镜头集合。定焦是一个点，变焦是一条线段（当两个坐标轴都随焦段变化时线段会倾斜）。悬停查看规格，滚动或双指缩放，点击镜头可将其固定以便并排对比。',
+    '{count} 支无反镜头，覆盖 {brands} 个品牌。任选两项规格作为坐标轴，按品牌或类别着色，并筛选镜头集合。定焦是一个点，变焦是一条线段（当两个坐标轴都随焦段变化时线段会倾斜）。悬停查看规格，滚动或双指缩放，点击镜头查看其详情；开启「点选对比」后，点击镜头则会将其固定以便并排对比。',
   'home.coverage': '已显示 {count} 支镜头中的 {shown} 支。',
   'home.coverageHidden': '已显示 {count} 支镜头中的 {shown} 支，{hidden} 支因缺少{x}或{y}数据未显示。',
-  'home.priceNote': '价格为约值，截至 {date}。规格已网络核验；缺失数据留空，绝不臆测。',
+  'home.priceNote': '价格为约值，截至 {date}。',
 
   // Filter panel
   'filter.title': '筛选',
@@ -267,6 +276,10 @@ const zh: Dict = {
   'filter.focusAll': '全部',
   'filter.stabilized': '仅防抖',
   'filter.weatherSealed': '仅防尘防滴',
+  'filter.hide': '隐藏筛选',
+  'filter.show': '显示筛选',
+  'mode.compare': '点选对比',
+  'mode.compareHint': '开启时：点选镜头加入对比；关闭时：点击镜头查看详情。',
 
   // Range slider
   'range.min': '最小',
@@ -352,6 +365,7 @@ const zh: Dict = {
   'spec.groups': '镜组数',
   'spec.price': '价格 (USD)',
   'spec.msrp': '建议零售价 (USD)',
+  'spec.source': '来源',
 
   // Compare page
   'compare.title': '镜头对比 · LensDB',
@@ -373,11 +387,15 @@ const zh: Dict = {
   'tray.remove': '从对比中移除 {name}',
   'tray.clear': '清除',
   'tray.compare': '对比 →',
+  'tray.heading': '对比',
+  'tray.empty': '点击图中的镜头即可固定到此处以便对比。',
 
   // Lens detail
   'detail.metaDesc': '{name}：{focal} {aperture} {type}，适用于 {mounts}（{format}）。规格与对比尽在 LensDB。',
   'detail.pin': '固定以对比',
   'detail.pinned': '已固定 ✓',
+  'detail.back': '← 返回图表',
+  'detail.backToCompare': '← 返回对比',
   'detail.specs': '规格参数',
   'detail.manufacturer': '厂商页面 ↗',
   'detail.whereItSits': '在图中的位置',

@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/state';
+  import { goto } from '$app/navigation';
   import LensChart from '$lib/components/LensChart.svelte';
   import FilterPanel from '$lib/components/FilterPanel.svelte';
   import AxisControls from '$lib/components/AxisControls.svelte';
@@ -11,7 +12,7 @@
   import { AXES } from '$lib/chart/axes';
   import { CHART_THEME } from '$lib/chart/chartTheme';
   import { lenses, meta } from '$lib/data/lenses';
-  import { filters, togglePin, FULL, rangeNarrowed } from '$lib/filters/store.svelte';
+  import { filters, togglePin, FULL, rangeNarrowed, ui } from '$lib/filters/store.svelte';
   import { themeState } from '$lib/theme.svelte';
   import { applyFilters } from '$lib/filters/apply';
   import { filtersToSearch } from '$lib/filters/url';
@@ -100,6 +101,13 @@
   };
   const xLabel = $derived(axisLabel(filters.x));
   const yLabel = $derived(axisLabel(filters.y));
+
+  // A chart click opens the lens detail page by default; in compare mode it pins/unpins the lens
+  // for side-by-side comparison instead.
+  function handlePick(id: string) {
+    if (ui.compareMode) togglePin(id);
+    else goto(localePath(locale, `/lens/${id}/`));
+  }
 
   // Mirror the live state into the URL (debounced so slider drags don't thrash history). The
   // pathname carries the locale prefix already, so we keep it and only rewrite the query.
@@ -240,7 +248,7 @@
       aria-label={t(locale, 'filter.title')}
       class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] transform overflow-y-auto bg-[var(--color-bg)] p-4 transition-transform lg:static lg:z-auto lg:w-72 lg:max-w-none lg:transform-none lg:overflow-visible lg:bg-transparent lg:p-0 lg:shrink-0 {drawerOpen
         ? 'translate-x-0'
-        : '-translate-x-full lg:translate-x-0'}"
+        : '-translate-x-full lg:translate-x-0'} {ui.filtersCollapsed ? 'lg:hidden' : ''}"
     >
       <div class="mb-3 flex items-center justify-between lg:hidden">
         <span class="text-sm font-semibold">{t(locale, 'filter.title')}</span>
@@ -262,6 +270,34 @@
     </aside>
 
     <section class="min-w-0 flex-1">
+      <div class="mb-3 flex flex-wrap items-center gap-2">
+        <!-- Desktop-only sidebar toggle: collapses the filter panel so the chart spans full width.
+             On small screens the off-canvas drawer button above handles this instead. -->
+        <button
+          type="button"
+          class="hidden items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)] lg:inline-flex"
+          aria-pressed={ui.filtersCollapsed}
+          onclick={() => (ui.filtersCollapsed = !ui.filtersCollapsed)}
+        >
+          {ui.filtersCollapsed ? t(locale, 'filter.show') : t(locale, 'filter.hide')}
+        </button>
+        <!-- Compare mode: when on, clicking a lens pins it for comparison instead of opening its
+             detail page. Available on every viewport (it changes the core chart gesture). -->
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium {ui.compareMode
+            ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/15 text-[var(--color-text)]'
+            : 'border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)]'}"
+          aria-pressed={ui.compareMode}
+          title={t(locale, 'mode.compareHint')}
+          onclick={() => (ui.compareMode = !ui.compareMode)}
+        >
+          {t(locale, 'mode.compare')}
+        </button>
+      </div>
+
+      <CompareTray {locale} />
+
       <div
         bind:clientWidth={chartBoxWidth}
         class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2"
@@ -272,7 +308,7 @@
           heightPx={canvasHeight}
           renderer={filters.mode === 'tags' ? 'svg' : 'canvas'}
           touchRoam={filters.mode === 'tags' ? undefined : DOTS_GRID}
-          onPick={togglePin}
+          onPick={handlePick}
           ariaLabel={filters.mode === 'tags'
             ? t(locale, 'chart.ariaTags', { count: shown })
             : t(locale, 'chart.aria', { count: shown, x: xLabel, y: yLabel })}
@@ -329,8 +365,6 @@
           </table>
         </div>
       </details>
-
-      <CompareTray {locale} />
     </section>
   </div>
 

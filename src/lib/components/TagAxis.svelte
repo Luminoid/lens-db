@@ -11,7 +11,7 @@
 
   let { axis, width, locale }: { axis: TagAxisMeta; width: number; locale: Locale } = $props();
 
-  const HEIGHT = 36;
+  const HEIGHT = 44;
 
   const def = $derived(AXES[axis.xKey]);
   const contentPx = $derived(Math.max(1, width - axis.gridLeft - axis.gridRight));
@@ -32,7 +32,7 @@
     let lastX = -Infinity;
     for (const v of ticks) {
       const x = px(v);
-      if (x - lastX < 30) continue;
+      if (x - lastX < 42) continue;
       out.push({ x, text: def.fmt(v) });
       lastX = x;
     }
@@ -47,11 +47,11 @@
 >
   <svg {width} height={HEIGHT} class="block" role="presentation">
     {#each marks as x (x)}
-      <line x1={x} y1="0" x2={x} y2="5" stroke="var(--color-border)" stroke-width="1" />
+      <line x1={x} y1="0" x2={x} y2="6" stroke="var(--color-border)" stroke-width="1" />
     {/each}
     {#each labels as l (l.x)}
-      <text x={l.x} y="17" text-anchor="middle" fill="var(--color-text-muted)" font-size="10">{l.text}</text>
+      <text x={l.x} y="22" text-anchor="middle" fill="var(--color-text-muted)" font-size="14">{l.text}</text>
     {/each}
-    <text x={width / 2} y="31" text-anchor="middle" fill="var(--color-text-muted)" font-size="10">{t(locale, def.titleKey)}</text>
+    <text x={width / 2} y="39" text-anchor="middle" fill="var(--color-text-muted)" font-size="12">{t(locale, def.titleKey)}</text>
   </svg>
 </div>

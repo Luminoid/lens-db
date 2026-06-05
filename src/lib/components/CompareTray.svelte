@@ -1,6 +1,8 @@
 <script lang="ts">
-  // Shows the pinned lenses as removable chips with a link to the /compare table. Pins live in the
-  // shared filter store; the Compare link carries ?pin= so it also works on a fresh load / new tab.
+  // The compare entry bar: pinned lenses as removable chips plus the persistent link into the
+  // /compare table. Always rendered (even with nothing pinned) so it is a stable entry point that
+  // sits above the chart. Pins live in the shared filter store; the Compare link carries ?pin= so
+  // it also works on a fresh load / new tab.
   import { filters, togglePin, clearPins, MAX_PINS } from '$lib/filters/store.svelte';
   import { lensById } from '$lib/data/lenses';
   import { t, tBrand, localePath, type Locale } from '$lib/i18n/translations';
@@ -8,13 +10,17 @@
   let { locale }: { locale: Locale } = $props();
 
   const pinned = $derived(filters.pins.map((id) => lensById.get(id)).filter((l) => l != null));
-  const compareHref = $derived(`${localePath(locale, '/compare/')}?pin=${filters.pins.join(',')}`);
+  const compareHref = $derived(
+    filters.pins.length
+      ? `${localePath(locale, '/compare/')}?pin=${filters.pins.join(',')}`
+      : localePath(locale, '/compare/'),
+  );
 </script>
 
-{#if pinned.length > 0}
-  <div
-    class="mt-4 flex flex-wrap items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-3"
-  >
+<div
+  class="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-3"
+>
+  {#if pinned.length > 0}
     <span class="text-xs font-medium text-[var(--color-text-muted)]">
       {t(locale, 'tray.count', { n: pinned.length, max: MAX_PINS })}
     </span>
@@ -44,5 +50,14 @@
         {t(locale, 'tray.compare')}
       </a>
     </div>
-  </div>
-{/if}
+  {:else}
+    <span class="text-xs font-medium text-[var(--color-text-muted)]">{t(locale, 'tray.heading')}</span>
+    <span class="text-xs text-[var(--color-text-muted)]">{t(locale, 'tray.empty')}</span>
+    <a
+      href={compareHref}
+      class="ml-auto rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)]"
+    >
+      {t(locale, 'tray.compare')}
+    </a>
+  {/if}
+</div>

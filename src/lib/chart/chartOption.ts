@@ -27,7 +27,13 @@ export interface ChartOpts {
 // Grid insets (px) for the dot chart. Exported so the touch-roam controller (touchRoam.ts) can map
 // finger pixels to the plot rect without reaching into ECharts internals; the rect is
 // [left, width-right] × [top, height-bottom].
-export const DOTS_GRID = { top: 52, left: 70, right: 28, bottom: 56 };
+export const DOTS_GRID = { top: 52, left: 80, right: 28, bottom: 62 };
+
+// Axis text sizes (px). Bumped above ECharts' 12px default so the tick captions (f/0.95, 16 mm, …)
+// and axis names read clearly. The tag view's floating focal axis lives in TagAxis.svelte and
+// carries a matching size of its own.
+const AXIS_LABEL_FONT = 14;
+const AXIS_NAME_FONT = 13;
 
 // Accent ring drawn around pinned lenses. Value layout: [x, y]. The ring color is theme-dependent,
 // so this is built as a closure over the active accent rather than a module-level constant.
@@ -89,7 +95,7 @@ function makeTooltipFormatter(locale: Locale, theme: ChartTheme) {
     if (l.priceUSD != null) rows.push(row(t(locale, 'axis.price'), `$${l.priceUSD.toLocaleString('en-US')}`));
     if (l.year != null) rows.push(row(t(locale, 'axis.year'), String(l.year)));
     return (
-      `<div style="max-width:280px">` +
+      `<div style="max-width:360px">` +
       `<div style="font-weight:600;margin-bottom:2px">${esc(`${tBrand(locale, l.brand)} ${l.model}`)}</div>` +
       `<div style="color:${theme.tooltipSecondary};margin-bottom:6px">${esc(`${focalLabel(l)} ${apertureLabel(l)}`)}</div>` +
       `<div style="display:flex;flex-direction:column;gap:2px;font-size:12px">${rows.join('')}</div>` +
@@ -115,9 +121,9 @@ function axisConfig(
     scale: !log,
     name: t(locale, def.titleKey),
     nameLocation: 'middle' as const,
-    nameGap: 34,
-    nameTextStyle: { color: theme.axisName },
-    axisLabel: { color: theme.axisName, formatter: (v: number) => def.fmt(v), hideOverlap: true, ...cv },
+    nameGap: 40,
+    nameTextStyle: { color: theme.axisName, fontSize: AXIS_NAME_FONT },
+    axisLabel: { color: theme.axisName, fontSize: AXIS_LABEL_FONT, formatter: (v: number) => def.fmt(v), hideOverlap: true, ...cv },
     axisLine: { lineStyle: { color: theme.axisLine } },
     axisTick: { lineStyle: { color: theme.axisLine }, ...cv },
     splitLine: { lineStyle: { color: theme.splitLine }, ...cv },
@@ -304,7 +310,7 @@ export interface TagChartOpts {
 // X (focal) axis is NOT drawn inside the canvas; it floats at the viewport bottom (see TagAxis.svelte),
 // so only a little breathing room is reserved below the last row. The tag layout packs INSIDE the
 // resulting content rect, so the synthetic 1:1 pixel axes still map straight to canvas pixels.
-const TAG_GRID = { left: 56, right: 16, top: 44, bottom: 16 };
+const TAG_GRID = { left: 68, right: 16, top: 44, bottom: 16 };
 
 /** Axis metadata the floating focal axis (TagAxis.svelte) needs to draw a scale aligned to the chips. */
 export interface TagAxisMeta {
@@ -353,9 +359,9 @@ function tagDisplayAxis(
     position,
     name: t(locale, def.titleKey),
     nameLocation: 'middle' as const,
-    nameGap: position === 'left' ? 42 : 26,
-    nameTextStyle: { color: theme.axisName },
-    axisLabel: { color: theme.axisName, formatter: (v: number) => def.fmt(v), hideOverlap: true, ...cv },
+    nameGap: position === 'left' ? 50 : 26,
+    nameTextStyle: { color: theme.axisName, fontSize: AXIS_NAME_FONT },
+    axisLabel: { color: theme.axisName, fontSize: AXIS_LABEL_FONT, formatter: (v: number) => def.fmt(v), hideOverlap: true, ...cv },
     axisLine: { lineStyle: { color: theme.axisLine } },
     axisTick: { lineStyle: { color: theme.axisLine }, ...cv },
     splitLine: { show: true, lineStyle: { color: theme.splitLine }, ...cv },
@@ -468,9 +474,9 @@ export function buildTagChartOption(
         position: 'left',
         name: t(locale, yDef.titleKey),
         nameLocation: 'middle',
-        nameGap: 44,
-        nameTextStyle: { color: theme.axisName },
-        axisLabel: { color: theme.axisName, customValues: centers, formatter: (cy: number) => labelByCenter.get(Math.round(cy)) ?? '', hideOverlap: true },
+        nameGap: 50,
+        nameTextStyle: { color: theme.axisName, fontSize: AXIS_NAME_FONT },
+        axisLabel: { color: theme.axisName, fontSize: AXIS_LABEL_FONT, customValues: centers, formatter: (cy: number) => labelByCenter.get(Math.round(cy)) ?? '', hideOverlap: true },
         axisTick: { customValues: centers, lineStyle: { color: theme.axisLine } },
         axisLine: { lineStyle: { color: theme.axisLine } },
         splitLine: { show: boundaries.length > 0, customValues: boundaries, lineStyle: { color: theme.splitLine } },

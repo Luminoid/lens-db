@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { afterNavigate } from '$app/navigation';
   import LensChart from '$lib/components/LensChart.svelte';
   import { lenses } from '$lib/data/lenses';
   import { filters, togglePin } from '$lib/filters/store.svelte';
@@ -16,6 +17,23 @@
   const chartTheme = $derived(CHART_THEME[themeState.value]);
 
   const pinned = $derived(filters.pins.includes(lens.id));
+
+  // Context-aware back link. If the user arrived from the compare table, "back" returns there (with
+  // the current pins in the query so the table rebuilds on a reload); otherwise it goes to the chart.
+  // afterNavigate only fires on client navigations, so a fresh / prerendered load defaults to the
+  // chart. The locale prefix is preserved either way, so a language switch keeps the back link valid.
+  let cameFromCompare = $state(false);
+  afterNavigate((nav) => {
+    cameFromCompare = /\/compare\/?$/.test(nav.from?.url.pathname ?? '');
+  });
+  const backHref = $derived(
+    cameFromCompare
+      ? filters.pins.length
+        ? `${localePath(locale, '/compare/')}?pin=${filters.pins.join(',')}`
+        : localePath(locale, '/compare/')
+      : localePath(locale, '/'),
+  );
+  const backLabel = $derived(cameFromCompare ? t(locale, 'detail.backToCompare') : t(locale, 'detail.back'));
 
   // Spec rows that actually have a value (brand lives in the header).
   const rows = $derived(
@@ -102,7 +120,7 @@
 
 <main id="main-content" tabindex="-1" class="mx-auto max-w-5xl px-4 py-6">
   <p class="mb-4 text-sm">
-    <a href={localePath(locale, '/')} class="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]">{t(locale, 'compare.back')}</a>
+    <a href={backHref} class="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]">{backLabel}</a>
   </p>
 
   <header class="mb-6">

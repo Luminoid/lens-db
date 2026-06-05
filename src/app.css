@@ -41,6 +41,10 @@ html {
   /* Reserve scrollbar space so dynamic content height doesn't shift the layout */
   overflow-y: scroll;
   color-scheme: dark;
+  /* Bump the root size so every rem-based font (all Tailwind text-* utilities) scales up
+   * proportionally, leading and spacing along with it. Chart canvas text is px-based and tuned
+   * separately, so it is unaffected. */
+  font-size: 112.5%;
 }
 
 html[data-theme='light'] {

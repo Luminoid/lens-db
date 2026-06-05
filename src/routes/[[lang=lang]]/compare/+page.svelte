@@ -136,6 +136,16 @@
               {/each}
             </tr>
           {/each}
+          <tr class="border-b border-[var(--color-border)] last:border-0">
+            <th class="sticky left-0 z-10 bg-[var(--color-bg)] p-3 text-left font-normal text-[var(--color-text-muted)]">{t(locale, 'spec.source')}</th>
+            {#each pinned as l (l.id)}
+              <td class="p-3 text-[var(--color-text-secondary)]">
+                {#if l.productUrl}
+                  <a href={l.productUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]">{t(locale, 'detail.manufacturer')}</a>
+                {:else}—{/if}
+              </td>
+            {/each}
+          </tr>
         </tbody>
       </table>
     </div>

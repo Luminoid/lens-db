@@ -68,6 +68,17 @@ export function defaultFilters(): FilterState {
 
 export const filters: FilterState = $state(defaultFilters());
 
+/**
+ * View chrome that should survive client-side navigation but is NOT part of the shareable filter
+ * state (so it stays out of the URL). `filtersCollapsed` hides the desktop sidebar to give the
+ * chart full width. `compareMode` switches what a chart click does: off (default) opens the lens
+ * detail page, on adds the lens to the comparison set.
+ */
+export const ui: { filtersCollapsed: boolean; compareMode: boolean } = $state({
+  filtersCollapsed: false,
+  compareMode: false,
+});
+
 /** Max lenses pinnable into the comparison tray. */
 export const MAX_PINS = 6;
 
