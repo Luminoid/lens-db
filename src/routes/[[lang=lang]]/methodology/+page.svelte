@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Static methodology + sources page: explains scope, sourcing, the nulls-over-guesses policy,
+  // Static "about the data" page: explains scope, sources, the nulls-over-guesses policy,
   // pricing, optical-performance stance, field coverage (from meta.json), and the data license.
   // Prerendered per locale; linked from the global footer.
   import { page } from '$app/state';

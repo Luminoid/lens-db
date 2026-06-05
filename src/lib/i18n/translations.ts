@@ -196,37 +196,37 @@ const en: Dict = {
 
   // Site footer
   'footer.copyright': '© {year} Luminoid',
-  'footer.methodology': 'Methodology & sources',
+  'footer.methodology': 'About the data',
 
   // Methodology page
-  'method.title': 'Methodology & sources · LensDB',
+  'method.title': 'About the data · LensDB',
   'method.metaDesc':
-    'How the LensDB lens database is sourced, verified, and kept accurate: nulls over guesses, per-brand web verification, and an open data policy.',
-  'method.heading': 'Methodology & sources',
+    "What LensDB's specs cover, where they come from, and how far to trust them: scope, sources, the nulls-over-guesses policy, pricing, and the data license.",
+  'method.heading': 'About the data',
   'method.lead':
-    'LensDB plots {count} mirrorless lenses on a configurable chart. The database is a curated, versioned JSON file; this page explains where the numbers come from and how far to trust them.',
+    'LensDB plots {count} mirrorless lenses on a configurable chart. This page explains where the numbers come from and how far to trust them.',
   'method.h.scope': 'Scope',
   'method.scope':
     'Coverage is mirrorless, current and recent (roughly 2014 onward), plus iconic rangefinder and classic primes that adapt to mirrorless bodies. First-party lines from Sony, Canon, Nikon, Fujifilm, Panasonic, OM System / Olympus, and Leica sit alongside third-party makers including Sigma, Tamron, Zeiss, Samyang, Voigtländer, Viltrox, Laowa, 7Artisans, TTArtisan, Yongnuo, Meike, and Tokina, across Full Frame, APS-C, and Micro Four Thirds. One row is one optical design: a lens sold in several mounts lists them all and appears once.',
-  'method.h.sourcing': 'How the data is assembled',
+  'method.h.sourcing': 'Sources',
   'method.sourcing':
-    'The database was machine-assembled with a language-model fan-out, then verified per brand against manufacturer specification pages, B&H, and DPReview. Each brand segment carries its own provenance and correction notes in the source file.',
+    'Specifications are verified against manufacturer specification pages, B&H, and DPReview.',
   'method.h.nulls': 'Nulls over guesses',
   'method.nulls':
     'A null is correct; a guessed number is a bug. Where a value could not be confirmed against a reliable source it is left empty rather than estimated, so a blank cell means "not reliably sourced", never "roughly this".',
   'method.h.price': 'Prices',
   'method.price':
-    'Prices are approximate US figures and move over time. The database stores the date of the last price check, and the chart shows prices as of that date. Both current street price and original MSRP are recorded where available.',
+    'Prices are approximate US figures and move over time. The chart shows each price as of the last price-check date, and both current street price and original MSRP are recorded where available.',
   'method.h.performance': 'Optical performance',
   'method.performance':
-    'Optical-quality scores are deliberately sparse. DXOMark and similar scores are body-dependent and not comparable across mounts, so no sharpness or distortion ranking is presented as authoritative in this version. A defensible review aggregate may be added later.',
+    'Optical-quality scores are deliberately omitted. DXOMark and similar scores are body-dependent and not comparable across mounts, so no sharpness or distortion ranking is presented here.',
   'method.h.coverage': 'Field coverage',
   'method.coverage':
     'How completely each field is populated across the database. Lower numbers reflect specs that manufacturers publish inconsistently, left null rather than guessed.',
   'method.h.license': 'Data & license',
   'method.license':
-    'The code and this curated compilation are released under CC BY-NC-SA 4.0. The specifications themselves are factual data drawn from public manufacturer pages, B&H, and DPReview; no paywalled review data is reproduced, and unsourced values are left null.',
-  'method.updated': 'Database generated {date}. {count} lenses across {brands} brands.',
+    'This compilation is released under CC BY-NC-SA 4.0. The specifications are factual data drawn from public manufacturer pages, B&H, and DPReview; no paywalled review data is reproduced, and unsourced values are left null.',
+  'method.updated': 'Data last updated {date}. {count} lenses across {brands} brands.',
   'method.coverageField': 'Field',
   'method.coveragePct': 'Populated',
   'method.coverageCaption': 'Percentage of lenses with a value for each field.',
@@ -415,37 +415,37 @@ const zh: Dict = {
 
   // Site footer
   'footer.copyright': '© {year} Luminoid',
-  'footer.methodology': '方法与来源',
+  'footer.methodology': '关于数据',
 
   // Methodology page
-  'method.title': '方法与来源 · LensDB',
+  'method.title': '关于数据 · LensDB',
   'method.metaDesc':
-    'LensDB 镜头数据库的来源、核验与准确性维护方式：缺失数据留空而非臆测、按品牌网络核验、开放的数据政策。',
-  'method.heading': '方法与来源',
+    'LensDB 规格数据涵盖哪些镜头、来自何处，以及可信程度：收录范围、来源、宁缺勿猜原则、价格与数据许可。',
+  'method.heading': '关于数据',
   'method.lead':
-    'LensDB 将 {count} 支无反镜头绘制在可自定义的图表上。该数据库是一份经过整理、带版本的 JSON 文件；本页说明这些数字的来源，以及可信到何种程度。',
+    'LensDB 将 {count} 支无反镜头绘制在可自定义的图表上。本页说明这些数字的来源，以及可信到何种程度。',
   'method.h.scope': '收录范围',
   'method.scope':
     '收录无反系统的现行与近期镜头（大致自 2014 年起），以及可转接到无反机身的经典旁轴与定焦镜头。第一方包括索尼、佳能、尼康、富士、松下、OM System / 奥林巴斯、徕卡；第三方包括适马、腾龙、蔡司、三阳、福伦达、唯卓仕、老蛙、七工匠、铭匠、永诺、美科、图丽，覆盖全画幅、APS-C 与 M4/3。每一行对应一种光学设计：以多卡口销售的镜头会列出全部卡口，并只出现一次。',
-  'method.h.sourcing': '数据如何汇集',
+  'method.h.sourcing': '来源',
   'method.sourcing':
-    '数据库由语言模型分工汇集，随后按品牌对照厂商规格页面、B&H 与 DPReview 进行核验。每个品牌分段在源文件中都附有各自的来源与勘误说明。',
+    '规格数据对照厂商规格页面、B&H 与 DPReview 进行核验。',
   'method.h.nulls': '宁缺勿猜',
   'method.nulls':
     '留空是正确的，臆测的数字才是错误。凡是无法对照可靠来源确认的数值一律留空而非估算，因此空白单元格表示「未能可靠取得」，绝非「大致如此」。',
   'method.h.price': '价格',
   'method.price':
-    '价格为约略的美元数值，且会随时间变动。数据库记录了最近一次价格核对的日期，图表按该日期显示价格。在可得的情况下同时记录当前市场价与原始建议零售价。',
+    '价格为约略的美元数值，且会随时间变动。图表按最近一次价格核对的日期显示价格；在可得的情况下同时记录当前市场价与原始建议零售价。',
   'method.h.performance': '光学表现',
   'method.performance':
-    '光学素质评分有意保持稀疏。DXOMark 等评分依赖机身且无法跨卡口比较，因此本版本不会将任何锐度或畸变排名当作权威呈现。日后可能加入有据可依的评测聚合指标。',
+    '本站有意不提供光学素质评分。DXOMark 等评分依赖机身且无法跨卡口比较，因此不在此呈现任何锐度或畸变排名。',
   'method.h.coverage': '字段覆盖率',
   'method.coverage':
     '各字段在整个数据库中的填充完整度。较低的数值反映厂商公布不一致的规格，这些一律留空而非臆测。',
   'method.h.license': '数据与许可',
   'method.license':
-    '代码及这份整理后的汇编以 CC BY-NC-SA 4.0 发布。规格数据本身为取自公开厂商页面、B&H 与 DPReview 的事实性数据；不复制任何付费评测数据，未经来源核实的数值留空。',
-  'method.updated': '数据库生成于 {date}。共 {count} 支镜头，覆盖 {brands} 个品牌。',
+    '这份整理后的汇编以 CC BY-NC-SA 4.0 发布。规格数据本身为取自公开厂商页面、B&H 与 DPReview 的事实性数据；不复制任何付费评测数据，未经来源核实的数值留空。',
+  'method.updated': '数据最后更新于 {date}。共 {count} 支镜头，覆盖 {brands} 个品牌。',
   'method.coverageField': '字段',
   'method.coveragePct': '填充率',
   'method.coverageCaption': '各字段有数值的镜头所占百分比。',

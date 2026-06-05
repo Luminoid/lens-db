@@ -131,8 +131,8 @@
     "weatherSealed": false,
     "autofocus": false,
     "weight": 570,
-    "length": null,
-    "diameter": null,
+    "length": 95,
+    "diameter": 75,
     "filterThread": null,
     "minFocusDistance": 0.17,
     "maxMagnification": null,
@@ -181,7 +181,7 @@
     "year": 2025,
     "discontinued": false,
     "dxomarkScore": null,
-    "productUrl": "https://7artisans.store/products/14mm-f-2-8-full-frame-wide-angle-lens"
+    "productUrl": "https://7artisans.store/products/14mm-f-2-8-full-frame-wide-angle-lens-for-sony-e-canon-eos-r-nikon-z-panasonic-l"
   },
   {
     "id": "7artisans-mf-18mm-f56",
@@ -306,7 +306,7 @@
     "focalMax": 27,
     "apertureMaxWide": 2.8,
     "apertureMaxTele": 2.8,
-    "apertureMin": null,
+    "apertureMin": 16,
     "stabilization": false,
     "weatherSealed": false,
     "autofocus": true,
@@ -1276,7 +1276,7 @@
     "priceMSRPUSD": 1149,
     "priceUSD": 1149,
     "dxomarkScore": null,
-    "productUrl": "https://www.usa.canon.com/shop/p/rf16-28mm-f2-8-is-stm"
+    "productUrl": "https://www.usa.canon.com/shop/p/rf16-28mm-f2-8-is-stm-lens"
   },
   {
     "id": "canon-rf-16mm-f28-stm",
@@ -1446,7 +1446,7 @@
     "priceMSRPUSD": 1399,
     "priceUSD": 1399,
     "dxomarkScore": null,
-    "productUrl": "https://www.usa.canon.com/shop/p/rf20-50mm-f4-l-is-usm-pz"
+    "productUrl": "https://www.usa.canon.com/shop/p/rf20-50mm-f4-l-is-usm-pz-lens"
   },
   {
     "id": "canon-rf-24mm-f14-l-vcm",
@@ -1582,7 +1582,7 @@
     "priceMSRPUSD": 2299,
     "priceUSD": 2249,
     "dxomarkScore": null,
-    "productUrl": "https://www.usa.canon.com/shop/p/rf24-70mm-f2-8-l-is-usm"
+    "productUrl": "https://www.usa.canon.com/shop/p/rf24-70mm-f2-8l-is-usm"
   },
   {
     "id": "canon-rf-24-105mm-f4-l-is-usm",
@@ -1888,7 +1888,7 @@
     "priceMSRPUSD": 499,
     "priceUSD": 499,
     "dxomarkScore": null,
-    "productUrl": "https://www.usa.canon.com/shop/p/rf35mm-f1-8-is-macro-stm"
+    "productUrl": "https://www.usa.canon.com/shop/p/rf35mm-f1-8-macro-is-stm"
   },
   {
     "id": "canon-rf-45mm-f12-stm",
@@ -2055,7 +2055,7 @@
     "weight": 270,
     "year": 2023,
     "discontinued": false,
-    "priceUSD": 349,
+    "priceUSD": 409,
     "priceMSRPUSD": 349,
     "dxomarkScore": null,
     "productUrl": "https://www.usa.canon.com/shop/p/rf-s55-210mm-f5-7-1-is-stm"
@@ -2516,12 +2516,12 @@
     "focalMax": 400,
     "apertureMaxWide": 2.8,
     "apertureMaxTele": 2.8,
-    "apertureMin": 22,
+    "apertureMin": 32,
     "apertureBlades": 9,
     "elements": 17,
     "groups": 13,
     "minFocusDistance": 2.5,
-    "maxMagnification": 0.16,
+    "maxMagnification": 0.17,
     "filterThread": 52,
     "diameter": 163,
     "length": 367,
@@ -2636,7 +2636,7 @@
     "priceMSRPUSD": 16999,
     "priceUSD": 16999,
     "dxomarkScore": null,
-    "productUrl": "https://www.usa.canon.com/shop/p/rf800mm-f5-6-l-is-usm"
+    "productUrl": "https://www.usa.canon.com/shop/p/rf800mm-f5-6-l-is-usm-lens"
   },
   {
     "id": "canon-rf-800mm-f11-is-stm",
@@ -3923,7 +3923,7 @@
     "diameter": 69.5,
     "length": 111,
     "weight": 375,
-    "year": 2016,
+    "year": 2015,
     "discontinued": false,
     "priceMSRPUSD": 399,
     "priceUSD": 399,
@@ -4326,7 +4326,7 @@
     "stabilization": true,
     "weatherSealed": true,
     "minFocusDistance": 2.75,
-    "maxMagnification": 0.19,
+    "maxMagnification": 0.2,
     "filterThread": 95,
     "diameter": 105,
     "length": 255.5,
@@ -4473,7 +4473,7 @@
     "diameter": null,
     "filterThread": 46,
     "minFocusDistance": 0.12,
-    "maxMagnification": null,
+    "maxMagnification": 0.15,
     "elements": 11,
     "groups": 7,
     "apertureBlades": 5,
@@ -4601,7 +4601,10 @@
     "model": "12mm f/2.8 Zero-D",
     "series": "Zero-D",
     "mounts": [
-      "Sony E"
+      "Sony E",
+      "Canon RF",
+      "Nikon Z",
+      "L-Mount"
     ],
     "format": "Full Frame",
     "lensType": "Prime",
@@ -4655,7 +4658,7 @@
     "diameter": null,
     "filterThread": 77,
     "minFocusDistance": 0.15,
-    "maxMagnification": null,
+    "maxMagnification": 0.4,
     "elements": 15,
     "groups": 11,
     "apertureBlades": 5,
@@ -5016,7 +5019,7 @@
     "autofocus": false,
     "weight": 590,
     "length": 83,
-    "diameter": null,
+    "diameter": 71.5,
     "filterThread": 62,
     "minFocusDistance": 0.35,
     "maxMagnification": null,
@@ -5256,7 +5259,8 @@
       "Sony E",
       "Nikon Z",
       "Canon RF",
-      "Leica M"
+      "Leica M",
+      "L-Mount"
     ],
     "format": "Full Frame",
     "lensType": "Prime",
@@ -5425,7 +5429,7 @@
     "priceMSRPUSD": 2195,
     "priceUSD": 2195,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl/super-vario-elmar-tl-11-23mm-f3-5-4-5-asph"
   },
   {
     "id": "leica-super-vario-elmarit-sl-14-24mm-f28-asph",
@@ -5595,7 +5599,7 @@
     "priceMSRPUSD": 1750,
     "priceUSD": 1750,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl/vario-elmar-tl-18-56mm-f3-5-5-6-asph-black"
   },
   {
     "id": "leica-super-elmar-m-18mm-f38-asph",
@@ -5629,7 +5633,7 @@
     "priceMSRPUSD": 3195,
     "priceUSD": 3195,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/super-elmar-m-18mm-f3-8-asph-black"
   },
   {
     "id": "leica-summilux-m-21mm-f14-asph",
@@ -5661,7 +5665,7 @@
     "discontinued": false,
     "year": 2008,
     "priceMSRPUSD": 8795,
-    "priceUSD": 8795,
+    "priceUSD": 9840,
     "dxomarkScore": null,
     "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/summilux-m-21mm-f1-4-asph-black"
   },
@@ -5731,7 +5735,7 @@
     "priceMSRPUSD": 3195,
     "priceUSD": 3195,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/super-elmar-m-21mm-f3-4-asph-black"
   },
   {
     "id": "leica-summicron-tl-23mm-f2-asph",
@@ -5901,7 +5905,7 @@
     "priceMSRPUSD": 2995,
     "priceUSD": 2995,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/elmar-m-24mm-f3-8-asph-black"
   },
   {
     "id": "leica-summilux-m-28mm-f14-asph",
@@ -5933,7 +5937,7 @@
     "discontinued": false,
     "year": 2015,
     "priceMSRPUSD": 5950,
-    "priceUSD": 5950,
+    "priceUSD": 8555,
     "dxomarkScore": null,
     "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/summilux-m-28mm-f1-4-asph-black"
   },
@@ -5967,7 +5971,7 @@
     "discontinued": false,
     "year": 2021,
     "priceMSRPUSD": 4995,
-    "priceUSD": 4995,
+    "priceUSD": 5650,
     "dxomarkScore": null,
     "productUrl": "https://leicacamerausa.com/leica-apo-summicron-sl-28mm-f-2-asph.html"
   },
@@ -6035,9 +6039,9 @@
     "discontinued": false,
     "year": 2006,
     "priceMSRPUSD": 2695,
-    "priceUSD": 2695,
+    "priceUSD": 3100,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/elmarit-m-28mm-f2-8-asph-black"
   },
   {
     "id": "leica-vario-elmarit-sl-28-70mm-f28-asph",
@@ -6103,7 +6107,7 @@
     "discontinued": false,
     "year": 2016,
     "priceMSRPUSD": 2695,
-    "priceUSD": 2695,
+    "priceUSD": 3600,
     "dxomarkScore": null,
     "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/summaron-m-28mm-f5-6-silver"
   },
@@ -6239,7 +6243,7 @@
     "discontinued": false,
     "year": 2021,
     "priceMSRPUSD": 8195,
-    "priceUSD": 8195,
+    "priceUSD": 9500,
     "dxomarkScore": null,
     "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/apo-summicron-m-35-f2-asph-black-anodized-finish"
   },
@@ -6375,7 +6379,7 @@
     "discontinued": false,
     "year": 2008,
     "priceMSRPUSD": 13195,
-    "priceUSD": 13195,
+    "priceUSD": 14400,
     "dxomarkScore": null,
     "productUrl": "https://leicacamerausa.com/leica-noctilux-m-50mm-f-0-95-asph-black-anodized.html"
   },
@@ -6436,10 +6440,10 @@
     "apertureBlades": 11,
     "filterThread": 46,
     "minFocusDistance": 0.45,
-    "maxMagnification": null,
+    "maxMagnification": 0.156,
     "weight": 337,
-    "length": 52.5,
-    "diameter": 53.5,
+    "length": 59.3,
+    "diameter": 58.6,
     "discontinued": false,
     "year": 2023,
     "priceMSRPUSD": 4495,
@@ -6467,7 +6471,7 @@
     "weatherSealed": true,
     "elements": 11,
     "groups": 9,
-    "apertureBlades": 11,
+    "apertureBlades": 9,
     "filterThread": 82,
     "minFocusDistance": 0.6,
     "maxMagnification": 0.1,
@@ -6579,9 +6583,9 @@
     "discontinued": false,
     "year": 1979,
     "priceMSRPUSD": 2695,
-    "priceUSD": 2695,
+    "priceUSD": 3205,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/summicron-m-50mm-f2-black"
   },
   {
     "id": "leica-summicron-sl-50mm-f2-asph",
@@ -6631,7 +6635,7 @@
     "focalMax": 135,
     "apertureMaxWide": 3.5,
     "apertureMaxTele": 4.5,
-    "apertureMin": 22,
+    "apertureMin": 16,
     "autofocus": true,
     "stabilization": false,
     "weatherSealed": false,
@@ -6649,7 +6653,7 @@
     "priceMSRPUSD": 2450,
     "priceUSD": 2450,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl/apo-vario-elmar-tl-55-135mm-f3-5-4-5-asph-black"
   },
   {
     "id": "leica-apo-macro-elmarit-tl-60mm-f28-asph",
@@ -6679,9 +6683,9 @@
     "length": 89,
     "diameter": 68,
     "discontinued": false,
-    "year": 2015,
-    "priceMSRPUSD": 2095,
-    "priceUSD": 2095,
+    "year": 2016,
+    "priceMSRPUSD": 2995,
+    "priceUSD": 2995,
     "dxomarkScore": null,
     "productUrl": "https://leica-camera.com/en-US/photography/lenses/cl-tl/apo-macro-elmarit-tl-60mm-f2-8-asph-black"
   },
@@ -6846,14 +6850,14 @@
     "minFocusDistance": 1,
     "maxMagnification": 0.114,
     "weight": 1010,
-    "length": 85,
+    "length": 91,
     "diameter": 74,
     "discontinued": false,
     "year": 2018,
     "priceMSRPUSD": 13195,
     "priceUSD": 13195,
     "dxomarkScore": null,
-    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m"
+    "productUrl": "https://leica-camera.com/en-US/photography/lenses/m/summilux-m-90mm-f1-5-asph"
   },
   {
     "id": "leica-apo-summicron-m-90mm-f2-asph",
@@ -7271,7 +7275,7 @@
     "groups": 7,
     "apertureBlades": 13,
     "priceUSD": 259,
-    "priceMSRPUSD": null,
+    "priceMSRPUSD": 259,
     "year": 2022,
     "discontinued": null,
     "dxomarkScore": null,
@@ -7344,7 +7348,7 @@
     "groups": 5,
     "apertureBlades": 13,
     "priceUSD": 250,
-    "priceMSRPUSD": null,
+    "priceMSRPUSD": 250,
     "year": 2022,
     "discontinued": null,
     "dxomarkScore": null,
@@ -7532,6 +7536,42 @@
     "productUrl": "https://meikeglobal.com/products/5518e"
   },
   {
+    "id": "meike-af-56mm-f17",
+    "brand": "Meike",
+    "model": "56mm f/1.7 Air AF",
+    "series": "Air",
+    "mounts": [
+      "Sony E",
+      "Nikon Z",
+      "Fujifilm X"
+    ],
+    "format": "APS-C",
+    "lensType": "Prime",
+    "focalMin": 56,
+    "focalMax": 56,
+    "apertureMaxWide": 1.7,
+    "apertureMaxTele": 1.7,
+    "apertureMin": 16,
+    "stabilization": false,
+    "weatherSealed": false,
+    "autofocus": true,
+    "weight": 190,
+    "length": 66.5,
+    "diameter": null,
+    "filterThread": 52,
+    "minFocusDistance": 0.55,
+    "maxMagnification": null,
+    "elements": 11,
+    "groups": 7,
+    "apertureBlades": 9,
+    "priceUSD": 159,
+    "priceMSRPUSD": 159,
+    "year": 2026,
+    "discontinued": false,
+    "dxomarkScore": null,
+    "productUrl": "https://meikeglobal.com/products/5617e"
+  },
+  {
     "id": "meike-af-85mm-f14-mix",
     "brand": "Meike",
     "model": "85mm f/1.4 MIX AF",
@@ -7568,6 +7608,42 @@
     "productUrl": "https://meikeglobal.com/products/meike-85mm-f1-4-auto-focus-lens"
   },
   {
+    "id": "meike-af-85mm-f14-ii-mix",
+    "brand": "Meike",
+    "model": "85mm f/1.4 II MIX AF",
+    "series": "MIX",
+    "mounts": [
+      "Sony E",
+      "Nikon Z",
+      "L-Mount"
+    ],
+    "format": "Full Frame",
+    "lensType": "Prime",
+    "focalMin": 85,
+    "focalMax": 85,
+    "apertureMaxWide": 1.4,
+    "apertureMaxTele": 1.4,
+    "apertureMin": null,
+    "stabilization": false,
+    "weatherSealed": true,
+    "autofocus": true,
+    "weight": 648,
+    "length": 110,
+    "diameter": 85,
+    "filterThread": 77,
+    "minFocusDistance": 0.81,
+    "maxMagnification": null,
+    "elements": 11,
+    "groups": 8,
+    "apertureBlades": 11,
+    "priceUSD": 498,
+    "priceMSRPUSD": 498,
+    "year": 2026,
+    "discontinued": false,
+    "dxomarkScore": null,
+    "productUrl": "https://meikeglobal.com/products/8514iie"
+  },
+  {
     "id": "meike-af-85mm-f18-stm",
     "brand": "Meike",
     "model": "85mm f/1.8 AF STM",
@@ -7589,7 +7665,7 @@
     "autofocus": true,
     "weight": 386,
     "length": null,
-    "diameter": null,
+    "diameter": 79.5,
     "filterThread": 67,
     "minFocusDistance": 0.85,
     "maxMagnification": null,
@@ -9086,7 +9162,7 @@
     "elements": 25,
     "groups": 19,
     "minFocusDistance": 2.5,
-    "maxMagnification": 0.16,
+    "maxMagnification": 0.17,
     "filterThread": 46,
     "diameter": 156,
     "length": 380,
@@ -9188,7 +9264,7 @@
     "elements": 21,
     "groups": 14,
     "minFocusDistance": 4,
-    "maxMagnification": 0.16,
+    "maxMagnification": 0.15,
     "filterThread": 95,
     "diameter": 106.5,
     "length": 278,
@@ -9371,7 +9447,7 @@
     "priceUSD": 99.99,
     "priceMSRPUSD": 99.99,
     "dxomarkScore": null,
-    "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-9mm-f8-0-fisheye-body-cap"
+    "productUrl": "https://www.four-thirds.org/en/lens/i-bcl-0980-olympus/"
   },
   {
     "id": "olympus-12mm-f20",
@@ -9538,7 +9614,7 @@
     "autofocus": true,
     "year": 2016,
     "discontinued": false,
-    "priceUSD": 1299.99,
+    "priceUSD": 1199.99,
     "priceMSRPUSD": 1299.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-12-100mm-f4-0-is-pro"
@@ -9640,7 +9716,7 @@
     "autofocus": true,
     "year": 2014,
     "discontinued": false,
-    "priceUSD": 349.99,
+    "priceUSD": 299.99,
     "priceMSRPUSD": 349.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-14-42mm-f3-5-5-6-ez"
@@ -9878,7 +9954,7 @@
     "autofocus": true,
     "year": 2014,
     "discontinued": true,
-    "priceUSD": null,
+    "priceUSD": 399.99,
     "priceMSRPUSD": 399.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-25mm-f1-8-black"
@@ -10276,7 +10352,7 @@
     "elements": 12,
     "groups": 8,
     "minFocusDistance": 0.25,
-    "maxMagnification": 0.2,
+    "maxMagnification": 0.1,
     "filterThread": 52,
     "weight": 154,
     "length": 49.3,
@@ -10388,7 +10464,7 @@
     "autofocus": true,
     "year": 2021,
     "discontinued": false,
-    "priceUSD": 799.99,
+    "priceUSD": 649.99,
     "priceMSRPUSD": 799.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-20mm-f1-4-pro"
@@ -10422,7 +10498,7 @@
     "autofocus": true,
     "year": 2025,
     "discontinued": false,
-    "priceUSD": 499.99,
+    "priceUSD": 449.99,
     "priceMSRPUSD": 499.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-25mm-f1-8-ii"
@@ -10490,7 +10566,7 @@
     "autofocus": true,
     "year": 2025,
     "discontinued": false,
-    "priceUSD": 3699.99,
+    "priceUSD": 3399.99,
     "priceMSRPUSD": 3699.99,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-50-200mm-f2-8-is-pro"
@@ -10592,7 +10668,7 @@
     "autofocus": true,
     "year": 2021,
     "discontinued": false,
-    "priceUSD": 7499,
+    "priceUSD": 8599.99,
     "priceMSRPUSD": 7499,
     "dxomarkScore": null,
     "productUrl": "https://explore.omsystem.com/us/en/m-zuiko-ed-150-400mm-f4-5-tc1-25x-is-pro"
@@ -11125,7 +11201,7 @@
     "apertureBlades": 7,
     "autofocus": true,
     "stabilization": true,
-    "weatherSealed": false,
+    "weatherSealed": true,
     "elements": 14,
     "groups": 12,
     "minFocusDistance": 0.3,
@@ -11442,7 +11518,7 @@
     "weatherSealed": true,
     "year": 2022,
     "discontinued": false,
-    "priceMSRPUSD": 799,
+    "priceMSRPUSD": 999,
     "priceUSD": 1049,
     "dxomarkScore": null,
     "productUrl": "https://shop.panasonic.com/products/s-series-18mm-f1-8-l-mount-lens"
@@ -11547,7 +11623,7 @@
     "priceMSRPUSD": 427,
     "priceUSD": 327,
     "dxomarkScore": null,
-    "productUrl": "https://shop.panasonic.com/products/g-series-20mm-f1-7-ii-asph-lens"
+    "productUrl": "https://shop.panasonic.com/products/g-series-20mm-f1-7-asph-lens"
   },
   {
     "id": "panasonic-lumix-s-20-60mm-f35-56",
@@ -11783,9 +11859,9 @@
     "year": 2018,
     "discontinued": false,
     "priceMSRPUSD": 597,
-    "priceUSD": 597,
+    "priceUSD": 700,
     "dxomarkScore": null,
-    "productUrl": "https://shop.panasonic.com/products/g-series-25mm-f1-4-ii-asph-leica-lens"
+    "productUrl": "https://shop.panasonic.com/products/g-series-25mm-f1-4-aph-leica-lens"
   },
   {
     "id": "panasonic-leica-dg-vario-summilux-25-50mm-f17",
@@ -11955,7 +12031,7 @@
     "priceMSRPUSD": 397,
     "priceUSD": 347,
     "dxomarkScore": null,
-    "productUrl": "https://shop.panasonic.com/products/g-series-30mm-f2-8-macro-asph-lens"
+    "productUrl": "https://shop.panasonic.com/products/g-series-30mm-f2-8-asph-lens"
   },
   {
     "id": "panasonic-lumix-s-35mm-f18",
@@ -12261,7 +12337,7 @@
     "priceMSRPUSD": 897,
     "priceUSD": 798,
     "dxomarkScore": null,
-    "productUrl": "https://shop.panasonic.com/products/g-series-45mm-f2-8-macro-asph-leica-lens"
+    "productUrl": "https://shop.panasonic.com/products/g-series-45mm-f2-8-leica-lens"
   },
   {
     "id": "panasonic-lumix-g-vario-45-150mm-f4-56",
@@ -12873,7 +12949,7 @@
     "priceMSRPUSD": 2997,
     "priceUSD": 2997,
     "dxomarkScore": null,
-    "productUrl": "https://shop.panasonic.com/products/g-series-200mm-f2-8-asph-leica-lens"
+    "productUrl": "https://shop.panasonic.com/products/g-series-200mm-f2-8-asph-leica-1-4x-teleconverter"
   },
   {
     "id": "samyang-af-12mm-f2",
@@ -12972,8 +13048,8 @@
     "filterThread": 77,
     "minFocusDistance": 0.18,
     "maxMagnification": 0.26,
-    "weight": 441,
-    "length": 86.8,
+    "weight": 445,
+    "length": 88.8,
     "diameter": 84,
     "year": 2024,
     "discontinued": false,
@@ -13138,7 +13214,7 @@
     "apertureMin": 22,
     "autofocus": true,
     "stabilization": false,
-    "weatherSealed": false,
+    "weatherSealed": true,
     "elements": null,
     "groups": null,
     "apertureBlades": 9,
@@ -13206,7 +13282,7 @@
     "apertureMin": 22,
     "autofocus": true,
     "stabilization": false,
-    "weatherSealed": false,
+    "weatherSealed": true,
     "elements": null,
     "groups": null,
     "apertureBlades": 9,
@@ -13359,7 +13435,7 @@
     "priceMSRPUSD": 499,
     "priceUSD": 429,
     "dxomarkScore": null,
-    "productUrl": null
+    "productUrl": "https://www.lksamyang.com/en/product/product-view.php?seq=186"
   },
   {
     "id": "samyang-af-35mm-f14-fe",
@@ -13795,7 +13871,7 @@
     "apertureBlades": 9,
     "filterThread": 72,
     "minFocusDistance": 0.4,
-    "maxMagnification": 0.15,
+    "maxMagnification": 0.16,
     "weight": 420,
     "length": 89,
     "diameter": 80,
@@ -13933,7 +14009,7 @@
     "apertureBlades": 9,
     "filterThread": 72,
     "minFocusDistance": 0.85,
-    "maxMagnification": 0.11,
+    "maxMagnification": 0.12,
     "weight": 509,
     "length": 99.5,
     "diameter": 83.4,
@@ -14006,7 +14082,7 @@
     "maxMagnification": 0.12,
     "weight": 272,
     "length": 71.5,
-    "diameter": 65,
+    "diameter": 69.8,
     "year": 2025,
     "discontinued": false,
     "priceMSRPUSD": 399,
@@ -14077,8 +14153,8 @@
     "diameter": 93.5,
     "year": 2022,
     "discontinued": false,
-    "priceMSRPUSD": 899,
-    "priceUSD": 899,
+    "priceMSRPUSD": 999,
+    "priceUSD": 479,
     "dxomarkScore": null,
     "productUrl": "https://www.lksamyang.com/en/product/product-view.php?seq=576"
   },
@@ -14500,7 +14576,7 @@
     "weight": 630,
     "diameter": 87.8,
     "length": 111.2,
-    "filterThread": null,
+    "filterThread": 82,
     "minFocusDistance": 0.23,
     "maxMagnification": 0.16,
     "stabilization": false,
@@ -15037,7 +15113,7 @@
     "weatherSealed": true,
     "autofocus": true,
     "year": 2021,
-    "discontinued": false,
+    "discontinued": true,
     "priceMSRPUSD": 899,
     "priceUSD": 899,
     "dxomarkScore": null,
@@ -15142,7 +15218,7 @@
     "weatherSealed": true,
     "autofocus": true,
     "year": 2019,
-    "discontinued": false,
+    "discontinued": true,
     "priceMSRPUSD": 549,
     "priceUSD": 549,
     "dxomarkScore": null,
@@ -15429,7 +15505,7 @@
     "priceMSRPUSD": null,
     "priceUSD": null,
     "dxomarkScore": null,
-    "productUrl": "https://www.sigma-global.com/en/news/"
+    "productUrl": "https://www.sigma-global.com/en/news/2026/02/26/012003/"
   },
   {
     "id": "sigma-85mm-f14-dg-dn-art",
@@ -15774,7 +15850,7 @@
     "weatherSealed": false,
     "autofocus": true,
     "year": 2012,
-    "discontinued": false,
+    "discontinued": true,
     "priceMSRPUSD": 849.99,
     "priceUSD": 798,
     "dxomarkScore": null,
@@ -16523,7 +16599,7 @@
     "autofocus": true,
     "year": 2012,
     "discontinued": true,
-    "priceMSRPUSD": 999.99,
+    "priceMSRPUSD": 1199.99,
     "priceUSD": 1198,
     "dxomarkScore": null,
     "productUrl": "https://www.dpreview.com/products/sony/lenses/sony_e_18-200_pw"
@@ -16592,7 +16668,7 @@
     "year": 2013,
     "discontinued": false,
     "priceMSRPUSD": 599.99,
-    "priceUSD": 648,
+    "priceUSD": 848,
     "dxomarkScore": null,
     "productUrl": "https://electronics.sony.com/imaging/lenses/aps-c-e-mount/p/selp18105g"
   },
@@ -16615,7 +16691,7 @@
     "elements": 18,
     "groups": 15,
     "minFocusDistance": 0.4,
-    "maxMagnification": 0.124,
+    "maxMagnification": 0.122,
     "filterThread": 95,
     "diameter": 110,
     "length": 167.5,
@@ -16921,7 +16997,7 @@
     "elements": 8,
     "groups": 7,
     "filterThread": 49,
-    "minFocusDistance": 0.18,
+    "minFocusDistance": 0.24,
     "maxMagnification": 0.13,
     "stabilization": false,
     "weatherSealed": true,
@@ -17465,7 +17541,7 @@
     "elements": 9,
     "groups": 9,
     "filterThread": 49,
-    "minFocusDistance": 0.25,
+    "minFocusDistance": 0.28,
     "maxMagnification": 0.2,
     "stabilization": false,
     "weatherSealed": true,
@@ -18895,7 +18971,7 @@
     "focalMax": 200,
     "apertureMaxWide": 2.8,
     "apertureMaxTele": 5.6,
-    "apertureMin": 22,
+    "apertureMin": 16,
     "apertureBlades": 7,
     "elements": 18,
     "groups": 14,
@@ -19143,7 +19219,7 @@
     "minFocusDistance": 0.22,
     "maxMagnification": 0.5,
     "filterThread": 67,
-    "diameter": 74,
+    "diameter": 78,
     "length": 150,
     "weight": 665,
     "stabilization": true,
@@ -19178,7 +19254,7 @@
     "minFocusDistance": 0.25,
     "maxMagnification": 0.5,
     "filterThread": 67,
-    "diameter": 84.6,
+    "diameter": 88.5,
     "length": 183.4,
     "weight": 1155,
     "stabilization": true,
@@ -19254,7 +19330,7 @@
     "weatherSealed": true,
     "autofocus": true,
     "year": 2020,
-    "discontinued": false,
+    "discontinued": true,
     "priceUSD": 1199,
     "priceMSRPUSD": 1199,
     "dxomarkScore": null,
@@ -19566,8 +19642,8 @@
     "elements": 9,
     "groups": 7,
     "apertureBlades": 11,
-    "priceUSD": null,
-    "priceMSRPUSD": null,
+    "priceUSD": 359,
+    "priceMSRPUSD": 399,
     "year": 2022,
     "discontinued": false,
     "dxomarkScore": null,
@@ -19708,7 +19784,7 @@
     "elements": 7,
     "groups": 7,
     "apertureBlades": null,
-    "priceUSD": null,
+    "priceUSD": 359,
     "priceMSRPUSD": 399,
     "year": 2022,
     "discontinued": false,
@@ -20581,7 +20657,7 @@
     "weatherSealed": true,
     "autofocus": true,
     "weight": 550,
-    "length": 101,
+    "length": 103,
     "diameter": 85.2,
     "filterThread": 77,
     "minFocusDistance": 0.27,
@@ -20935,12 +21011,12 @@
     "stabilization": false,
     "weatherSealed": false,
     "autofocus": true,
-    "weight": 384,
-    "length": 85,
+    "weight": 340,
+    "length": 89.9,
     "diameter": 70,
     "filterThread": 55,
     "minFocusDistance": 0.4,
-    "maxMagnification": 0.105,
+    "maxMagnification": 0.1,
     "elements": 10,
     "groups": 8,
     "apertureBlades": 9,
@@ -21147,7 +21223,7 @@
     "autofocus": true,
     "weight": 370,
     "length": 76,
-    "diameter": null,
+    "diameter": 69,
     "filterThread": 58,
     "minFocusDistance": 0.43,
     "maxMagnification": 0.16,
@@ -21478,7 +21554,7 @@
     "priceMSRPUSD": 1099,
     "priceUSD": 1099,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/10-mm-15-6-hyper-wide-heliar-aspherical/?lang=en"
   },
   {
     "id": "voigtlander-nokton-10-5mm-f095-aspherical",
@@ -21512,7 +21588,7 @@
     "priceMSRPUSD": 1099,
     "priceUSD": 1099,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/mft/"
+    "productUrl": "https://www.voigtlaender.de/lenses/mft/105-mm-10-95-nokton-asphaerisch/?lang=en"
   },
   {
     "id": "voigtlander-ultra-wide-heliar-12mm-f56-aspherical-iii",
@@ -21581,7 +21657,7 @@
     "priceMSRPUSD": 819,
     "priceUSD": 799,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/15-mm-14-5-super-wide-heliar-aspherical-iii/?lang=en"
   },
   {
     "id": "voigtlander-nokton-17-5mm-f095-aspherical",
@@ -21615,7 +21691,7 @@
     "priceMSRPUSD": 1099,
     "priceUSD": 1099,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/mft/"
+    "productUrl": "https://www.voigtlaender.de/lenses/mft/175-mm-10-95-nokton-asphaerisch/?lang=en"
   },
   {
     "id": "voigtlander-nokton-21mm-f14-aspherical",
@@ -21649,7 +21725,7 @@
     "priceMSRPUSD": 1099,
     "priceUSD": 1099,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/21-mm-11-4-nokton-aspherical/?lang=en"
   },
   {
     "id": "voigtlander-color-skopar-21mm-f35-aspherical",
@@ -21683,7 +21759,7 @@
     "priceMSRPUSD": 699,
     "priceUSD": 699,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/21-mm-135-color-skopar-aspherical/?lang=en"
   },
   {
     "id": "voigtlander-nokton-d23mm-f12-aspherical",
@@ -21751,7 +21827,7 @@
     "priceMSRPUSD": 899,
     "priceUSD": 899,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/mft/"
+    "productUrl": "https://www.voigtlaender.de/lenses/mft/25-mm-10-95-nokton-ii/?lang=en"
   },
   {
     "id": "voigtlander-nokton-28mm-f15-aspherical",
@@ -21845,8 +21921,8 @@
     "maxMagnification": 0.1,
     "filterThread": 62,
     "weight": 703,
-    "length": 82.4,
-    "diameter": 77,
+    "length": 88.9,
+    "diameter": 72.3,
     "autofocus": false,
     "stabilization": false,
     "weatherSealed": false,
@@ -22025,7 +22101,7 @@
     "priceMSRPUSD": 899,
     "priceUSD": 899,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/z-mount/"
+    "productUrl": "https://www.voigtlaender.de/z-mount/35mm-12-apo-lanthar-aspherical/?lang=en"
   },
   {
     "id": "voigtlander-macro-apo-ultron-d35mm-f2",
@@ -22094,7 +22170,7 @@
     "priceMSRPUSD": 999,
     "priceUSD": 999,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/40-mm-112-nokton-se/?lang=en"
   },
   {
     "id": "voigtlander-septon-40mm-f2-aspherical",
@@ -22150,7 +22226,7 @@
     "elements": 11,
     "groups": 8,
     "minFocusDistance": 0.23,
-    "maxMagnification": 0.2,
+    "maxMagnification": 0.25,
     "filterThread": 58,
     "weight": 571,
     "length": 74.6,
@@ -22163,7 +22239,7 @@
     "priceMSRPUSD": 999,
     "priceUSD": 999,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/mft/"
+    "productUrl": "https://www.voigtlaender.de/lenses/mft/425-mm-10-95-nokton/?lang=en"
   },
   {
     "id": "voigtlander-nokton-50mm-f1-aspherical",
@@ -22198,7 +22274,7 @@
     "priceMSRPUSD": 1799,
     "priceUSD": 1599,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/50-mm-11-nokton/?lang=en"
   },
   {
     "id": "voigtlander-nokton-50mm-f12-aspherical",
@@ -22289,7 +22365,7 @@
     "minFocusDistance": 0.45,
     "maxMagnification": null,
     "filterThread": 58,
-    "weight": 364,
+    "weight": 370,
     "length": 64.3,
     "diameter": 68.8,
     "autofocus": false,
@@ -22334,7 +22410,7 @@
     "priceMSRPUSD": 1299,
     "priceUSD": 1299,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/mft/"
+    "productUrl": "https://www.voigtlaender.de/lenses/mft/60mm-10-95-nokton-mft/?lang=en"
   },
   {
     "id": "voigtlander-macro-apo-lanthar-65mm-f2-aspherical",
@@ -22369,7 +22445,7 @@
     "priceMSRPUSD": 999,
     "priceUSD": 999,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/65-mm-12-macro-apo-lanthar-aspherical/?lang=en"
   },
   {
     "id": "voigtlander-nokton-75mm-f15-aspherical",
@@ -22473,7 +22549,7 @@
     "priceMSRPUSD": 1099,
     "priceUSD": 1099,
     "dxomarkScore": null,
-    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/"
+    "productUrl": "https://www.voigtlaender.de/lenses/e-mount/110-mm-12-5-macro-apo-lanthar/?lang=en"
   },
   {
     "id": "yongnuo-yn-11mm-f18-da-dsm-wl",
@@ -22537,7 +22613,7 @@
     "elements": 14,
     "groups": 11,
     "apertureBlades": 7,
-    "priceUSD": 425,
+    "priceUSD": 359,
     "priceMSRPUSD": 425,
     "year": 2023,
     "discontinued": false,
@@ -22749,8 +22825,8 @@
     "elements": 9,
     "groups": 8,
     "apertureBlades": 9,
-    "priceUSD": null,
-    "priceMSRPUSD": null,
+    "priceUSD": 129,
+    "priceMSRPUSD": 129,
     "year": 2025,
     "discontinued": false,
     "dxomarkScore": null,
@@ -22784,7 +22860,7 @@
     "elements": 10,
     "groups": 8,
     "apertureBlades": 7,
-    "priceUSD": null,
+    "priceUSD": 130,
     "priceMSRPUSD": null,
     "year": 2024,
     "discontinued": false,
@@ -23201,7 +23277,7 @@
     "maxMagnification": 0.19,
     "weight": 335,
     "length": 92,
-    "diameter": 78,
+    "diameter": 81,
     "year": 2015,
     "discontinued": true,
     "priceMSRPUSD": 1299,
