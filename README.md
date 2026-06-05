@@ -4,8 +4,8 @@ Interactive camera-lens comparison chart for modern mirrorless systems. Plot eve
 configurable two-axis graph (focal length × aperture by default), filter by brand, mount, or format,
 and compare specs side by side. **682 lenses across 20 brands.**
 
-Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter-static`. Part of
-the Lumi workspace; target domain **lens.luminoid.dev**.
+Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter-static`. Live at
+**lens.luminoid.dev**.
 
 ## Features
 
