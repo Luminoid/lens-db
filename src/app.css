@@ -1,7 +1,9 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* System UI stack: no web font is shipped, so the primary face must be one the OS already has
+   * (no FOUT, no extra request). To switch to Inter, self-host the woff2 and @font-face it here. */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
 }
 

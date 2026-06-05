@@ -92,6 +92,36 @@
   const enUrl = $derived(`${page.url.origin}/lens/${lens.id}/`);
   const zhUrl = $derived(`${page.url.origin}/zh/lens/${lens.id}/`);
   const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
+
+  // Product structured data (JSON-LD) for rich results. Uses canonical Latin names (like the
+  // <title>); emitted as an application/ld+json data block, which is non-executable and therefore
+  // not governed by the strict `script-src` CSP. No `offers` block: the site sells nothing, and the
+  // prices are approximate, so advertising them as live offers would be misleading.
+  const jsonLd = $derived.by(() => {
+    const props: { '@type': 'PropertyValue'; name: string; value: string }[] = [];
+    const add = (name: string, value: string | null | undefined) => {
+      if (value != null && value !== '') props.push({ '@type': 'PropertyValue', name, value });
+    };
+    add('Focal length', focalLabel(lens));
+    add('Maximum aperture', apertureLabel(lens));
+    add('Lens mount', lens.mounts.join(', '));
+    add('Sensor format', lens.format);
+    add('Weight', lens.weight != null ? `${lens.weight} g` : null);
+    add('Filter thread', lens.filterThread != null ? `${lens.filterThread} mm` : null);
+    const data = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: `${lens.brand} ${lens.model}`,
+      brand: { '@type': 'Brand', name: lens.brand },
+      category: 'Camera Lens',
+      url: canonicalUrl,
+      image: `${page.url.origin}/og.png`,
+      description,
+      ...(props.length ? { additionalProperty: props } : {}),
+    };
+    // Escape `<` so a stray value can't terminate the <script> data block early.
+    return JSON.stringify(data).replace(/</g, '\\u003c');
+  });
 </script>
 
 <svelte:head>
@@ -116,6 +146,8 @@
   <meta name="twitter:title" content="{lens.brand} {lens.model} · LensDB" />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content="{page.url.origin}/og.png" />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html `<script type="application/ld+json">${jsonLd}<\/script>`}
 </svelte:head>
 
 <main id="main-content" tabindex="-1" class="mx-auto max-w-5xl px-4 py-6">

@@ -169,6 +169,23 @@
   const enUrl = $derived(`${page.url.origin}/`);
   const zhUrl = $derived(`${page.url.origin}/zh/`);
   const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
+
+  // Dataset structured data (JSON-LD): the home page is the entry point to the curated lens
+  // database. Emitted as an application/ld+json data block (non-executable, so unaffected by the
+  // strict `script-src` CSP). The `<` escape stops a value from closing the <script> early.
+  const jsonLd = $derived(
+    JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Dataset',
+      name: 'LensDB',
+      description: t(locale, 'home.metaDesc'),
+      url: canonicalUrl,
+      license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+      creator: { '@type': 'Person', name: 'Luminoid' },
+      isAccessibleForFree: true,
+      keywords: ['camera lens', 'mirrorless', 'lens comparison', 'focal length', 'aperture'],
+    }).replace(/</g, '\\u003c'),
+  );
 </script>
 
 <svelte:head>
@@ -193,6 +210,8 @@
   <meta name="twitter:title" content={t(locale, 'home.title')} />
   <meta name="twitter:description" content={t(locale, 'home.metaDesc')} />
   <meta name="twitter:image" content="{page.url.origin}/og.png" />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html `<script type="application/ld+json">${jsonLd}<\/script>`}
 </svelte:head>
 
 <svelte:window
