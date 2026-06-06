@@ -197,6 +197,7 @@ const en: Dict = {
   // Site footer
   'footer.copyright': '© {year} Luminoid',
   'footer.methodology': 'About the data',
+  'footer.github': 'Star on GitHub',
 
   // Methodology page
   'method.title': 'About the data · LensDB',
@@ -416,6 +417,7 @@ const zh: Dict = {
   // Site footer
   'footer.copyright': '© {year} Luminoid',
   'footer.methodology': '关于数据',
+  'footer.github': '在 GitHub 加星',
 
   // Methodology page
   'method.title': '关于数据 · LensDB',
