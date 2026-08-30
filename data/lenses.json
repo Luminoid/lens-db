@@ -4588,7 +4588,7 @@
     "priceUSD": 499,
     "priceMSRPUSD": 499,
     "year": 2018,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/9mm/"
   },
@@ -4625,7 +4625,7 @@
     "priceUSD": 799,
     "priceMSRPUSD": 799,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-9mm-f-5-6-ff-rl/"
   },
@@ -4659,7 +4659,7 @@
     "priceUSD": 349,
     "priceMSRPUSD": 349,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-10mm-f-2-zero-d-mft/"
   },
@@ -4771,7 +4771,7 @@
     "priceUSD": 699,
     "priceMSRPUSD": 699,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-11mm-f-4-5-ff-rl/"
   },
@@ -4845,7 +4845,7 @@
     "priceUSD": 849,
     "priceMSRPUSD": 949,
     "year": 2017,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-12mm-f2-8-zero-d/"
   },
@@ -4882,7 +4882,7 @@
     "priceUSD": 649,
     "priceMSRPUSD": 649,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-12-24mm-f-5-6-zoom/"
   },
@@ -4920,7 +4920,7 @@
     "priceUSD": 549,
     "priceMSRPUSD": 549,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/14mm-f4-ff-rl-zero-d/"
   },
@@ -4957,7 +4957,7 @@
     "priceUSD": 749,
     "priceMSRPUSD": null,
     "year": 2017,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-15mm-f2/"
   },
@@ -5031,7 +5031,7 @@
     "priceUSD": 1199,
     "priceMSRPUSD": 1199,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/15mm-f-4-5-zero-d-shift/"
   },
@@ -5144,7 +5144,7 @@
     "priceUSD": 1099,
     "priceMSRPUSD": 1099,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-20mm-f-4-zero-d-shift/"
   },
@@ -5178,7 +5178,7 @@
     "priceUSD": 1499,
     "priceMSRPUSD": 1499,
     "year": 2018,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-24mm-f-14-2x-macro-probe/"
   },
@@ -5212,7 +5212,7 @@
     "priceUSD": 399,
     "priceMSRPUSD": 399,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-argus-25mm-f-0-95-mft-apo/"
   },
@@ -5248,7 +5248,7 @@
     "priceUSD": 399,
     "priceMSRPUSD": 399,
     "year": 2018,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-25mm-f-2-8-2-5-5x-ultra-macro-2/"
   },
@@ -5285,7 +5285,7 @@
     "priceUSD": 599,
     "priceMSRPUSD": 599,
     "year": 2023,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-argus-28mm-f-1-2-ff/"
   },
@@ -5322,7 +5322,7 @@
     "priceUSD": 499,
     "priceMSRPUSD": 499,
     "year": 2021,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-argus-33mm-f-0-95-cf-apo/"
   },
@@ -5358,7 +5358,7 @@
     "priceUSD": 899,
     "priceMSRPUSD": 899,
     "year": 2021,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-argus-35mm-f-0-95-ff/"
   },
@@ -5431,7 +5431,7 @@
     "priceUSD": 799,
     "priceMSRPUSD": 799,
     "year": 2021,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/argus-45mm-f-0-95-ff/"
   },
@@ -5504,7 +5504,7 @@
     "priceUSD": 399,
     "priceMSRPUSD": 399,
     "year": 2020,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-50mm-f-2-8-2x-ultra-macro-apo/"
   },
@@ -5541,7 +5541,7 @@
     "priceUSD": 499,
     "priceMSRPUSD": 499,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/5828-2x-ultra-macro-apo/"
   },
@@ -5578,7 +5578,7 @@
     "priceUSD": 399,
     "priceMSRPUSD": 399,
     "year": 2019,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-65mm-f-2-8-2x-ultra-macro-apo/"
   },
@@ -5616,7 +5616,7 @@
     "priceUSD": 449,
     "priceMSRPUSD": 449,
     "year": 2021,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-85mm-f-5-6-2x-ultra-macro-apo/"
   },
@@ -5653,7 +5653,7 @@
     "priceUSD": 499,
     "priceMSRPUSD": 499,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-90mm-f-2-8-2x-macro-apo/"
   },
@@ -5690,7 +5690,7 @@
     "priceUSD": 449,
     "priceMSRPUSD": 449,
     "year": 2019,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://www.venuslens.net/product/laowa-100mm-f-2-8-2x-macro-apo/"
   },
@@ -7531,7 +7531,7 @@
     "priceUSD": 189,
     "priceMSRPUSD": 189,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/12mm-f2-0-e-x-mft"
   },
@@ -7567,7 +7567,7 @@
     "priceUSD": 290,
     "priceMSRPUSD": 290,
     "year": 2026,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/2314e"
   },
@@ -7603,7 +7603,7 @@
     "priceUSD": 589,
     "priceMSRPUSD": 589,
     "year": 2025,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/2414e"
   },
@@ -7675,7 +7675,7 @@
     "priceUSD": 229,
     "priceMSRPUSD": 229,
     "year": 2024,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/3314"
   },
@@ -7713,7 +7713,7 @@
     "priceUSD": 259,
     "priceMSRPUSD": 259,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/35mm-f0-95x"
   },
@@ -7749,7 +7749,7 @@
     "priceUSD": 199,
     "priceMSRPUSD": 199,
     "year": 2024,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/3520e"
   },
@@ -7786,7 +7786,7 @@
     "priceUSD": 250,
     "priceMSRPUSD": 250,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/meike-50mm-f0-95-aps-c-manual-focus-lens-e-x-m43-efm-z-mount-lens"
   },
@@ -7822,7 +7822,7 @@
     "priceUSD": 250,
     "priceMSRPUSD": null,
     "year": 2021,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/50mm-large-aperture-lens"
   },
@@ -7858,7 +7858,7 @@
     "priceUSD": 130,
     "priceMSRPUSD": null,
     "year": null,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/meike-mk-50mm-f1-7-full-frame-wedding-photography"
   },
@@ -7894,7 +7894,7 @@
     "priceUSD": 159,
     "priceMSRPUSD": 159,
     "year": 2024,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/50mm-f1-8-auto-focus-lens-for-portrait-photography"
   },
@@ -7930,7 +7930,7 @@
     "priceUSD": 199,
     "priceMSRPUSD": 199,
     "year": 2024,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/55mm-f1-4-autofocus-portrait-lens"
   },
@@ -7967,7 +7967,7 @@
     "priceUSD": 329,
     "priceMSRPUSD": 329,
     "year": 2024,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/5518e"
   },
@@ -8039,7 +8039,7 @@
     "priceUSD": 469,
     "priceMSRPUSD": 469,
     "year": 2023,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/meike-85mm-f1-4-auto-focus-lens"
   },
@@ -8111,7 +8111,7 @@
     "priceUSD": 199,
     "priceMSRPUSD": 199,
     "year": 2022,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/85mm-f1-8-full-frame-auto-focus-stm-lens-for-sony-e-mount-cameras"
   },
@@ -8147,7 +8147,7 @@
     "priceUSD": 229,
     "priceMSRPUSD": 229,
     "year": 2025,
-    "discontinued": null,
+    "discontinued": false,
     "dxomarkScore": null,
     "productUrl": "https://meikeglobal.com/products/8518ii-se-e-mount"
   },

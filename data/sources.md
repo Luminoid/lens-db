@@ -44,6 +44,10 @@ Three full web-verification passes have run over the full roster (2026-06-01, 20
 
 Every `productUrl` is HTTP-tested before it is written. A **fill** (null to URL) is written only if the new page loads. A **replacement** is written only when the old link is genuinely dead (404/410) and the new one loads; a working manufacturer link is never swapped for a retailer link. A **specialize** replacement is allowed when the stored URL is a generic category/landing page (e.g. `leica-camera.com/.../lenses/m`) and the proposal is a deeper, lens-specific page on the same domain that loads. Bot-blocked-but-live pages (Sony and B&H commonly return 403 to scripted fetches) are treated as alive and kept. Coverage was 100% (682/682) at the original build (the last null, `samyang-mf-35mm-f12-apsc`, now points to its lksamyang product page); as of 2026-08-30 it is 720/721, with `canon-rf-10-20mm-f4-l-is-stm` nulled after Canon removed the page (see follow-ups).
 
+### Discontinued lenses (latest-info policy)
+
+`discontinued: true` when manufacturer or authorized-dealer evidence shows new production/listing ended. No date field by design: exact end-of-production dates are rarely published, so the dated sections in this file carry when each flag flipped and on what evidence. Rows keep the latest obtainable info: specs stay as the final published values; `priceUSD` is the last verifiable new-stock price and is still updated while run-out or clearance stock sells, nulled only when confirmed unbuyable new; `productUrl` is kept while the page loads.
+
 ### Aperture stored as T-stop (Samyang V-AF)
 
 The Samyang V-AF cine-AF primes store T-stops in the aperture fields, so they plot marginally brighter than their nominal f-number on the aperture axis. This is intentional, not an error.
@@ -630,3 +634,7 @@ All verified manufacturer + 2-5 independent sources:
 - `ttartisan-tilt-shift-100mm-f28-2x-macro` (2023, $389, launched E/RF/Z/X; the official store since added L and MFT, all six recorded). Weight 845g is the launch press figure; TTArtisan publishes an unexplained 836-854g (store: 695-845g) per-mount spread with no Sony E breakout. ttartisan.com dead-redirects to a parked host, so the store page (ttartisan.store/products/ts100, loads correctly) is the productUrl. A ~700g figure floating around belongs to TTArtisan's separate non-tilt AF 100mm macro.
 
 September 2026 re-check cluster (from the hunt, single reminder): Sigma event 9/8 (85/1.2 completion, rumored 20-60mm F2.8-4 and ultra-fast 65mm), Fujifilm X Summit 9/4 (XF 400mm F4.5, XF 50-140mm II), OM System 9/9, Laowa AF 35mm F2.8 macro, Leica Summicron-M 66mm f/2 Elcan limited reissue (~9/3, 660 units, ~$9,000), plus Meike's Aug roadmap (24-70/2.8, 50/1.2, 85/1.2 VCM, 70-180/2.8, 100/2.8 macro), all dev/rumor as of 2026-08-30.
+
+### Discontinued-null resolution pass (2026-08-30, same day)
+
+The 38 rows with `discontinued: null` (23 Laowa, 15 Meike, left unsourced by the original build) were resolved, all to `false`: every Laowa row is live and availableForSale via the official Canadian distributor's storefront (laowalenses.ca sitemap lastmod 2026-08-28, Amplis Shopify API prices), and all 15 Meike rows are in meikeglobal.com's live catalog (the 50mm f/0.95's combined URL split into per-mount pages; the 85mm f/1.8 AF STM E-mount is sold out at Meike but its L/Z variants are in stock and B&H shows a restock date, so sold-out did not flip anything). The 12mm f/2.8 Zero-D question from the original follow-ups is settled: still sold concurrently with the 2025 Lite successor, no end-of-production statement, so `false`. Field coverage is now 721/721 booleans (99 true / 622 false).
