@@ -23,6 +23,7 @@ export interface FilterState {
   focus: FocusFilter;
   stabilized: boolean; // true = only stabilized
   weatherSealed: boolean; // true = only weather-sealed
+  hideDiscontinued: boolean; // true = drop discontinued lenses (null status passes)
 
   // Numeric ranges [min, max]. Equal to the full dataset range = no constraint.
   focalR: Range;

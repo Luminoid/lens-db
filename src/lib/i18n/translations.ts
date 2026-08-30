@@ -16,8 +16,6 @@
 
 export type Locale = 'en' | 'zh';
 
-export const LOCALES: Locale[] = ['en', 'zh'];
-
 export function getLocale(lang?: string): Locale {
   return lang === 'zh' ? 'zh' : 'en';
 }
@@ -56,6 +54,7 @@ const en: Dict = {
   'filter.focusAll': 'All',
   'filter.stabilized': 'Stabilized only',
   'filter.weatherSealed': 'Weather-sealed only',
+  'filter.hideDiscontinued': 'Hide discontinued',
   'filter.hide': 'Hide filters',
   'filter.show': 'Show filters',
   'mode.compare': 'Tap to compare',
@@ -73,14 +72,11 @@ const en: Dict = {
   'axis.colorBy': 'Color by',
   'axis.scaleLog': 'log',
   'axis.scaleLin': 'lin',
-  'axis.logarithmic': 'logarithmic',
-  'axis.linear': 'linear',
-  'axis.scaleAriaX': 'X axis scale: {scale}, toggle',
-  'axis.scaleAriaY': 'Y axis scale: {scale}, toggle',
   'axis.toggleTitleX': 'Toggle X log / linear scale',
   'axis.toggleTitleY': 'Toggle Y log / linear scale',
   'chart.aria': 'Scatter chart of {count} lenses, {x} versus {y}',
   'chart.ariaTags': 'Labelled tag chart of {count} lenses',
+  'chart.noscript': 'The interactive chart requires JavaScript. The data table below lists every lens without it.',
 
   // View mode + tag detail
   'view.label': 'View',
@@ -137,6 +133,8 @@ const en: Dict = {
   'term.yes': 'Yes',
   'term.no': 'No',
   'term.decadeSuffix': 's',
+  'term.discontinued': 'Discontinued',
+  'term.inProduction': 'In production',
 
   // Spec rows (keys not already covered by axis.*)
   'spec.apertureMin': 'Min aperture',
@@ -144,6 +142,9 @@ const en: Dict = {
   'spec.weatherSealed': 'Weather-sealed',
   'spec.groups': 'Groups',
   'spec.price': 'Price (USD)',
+  // Leading space intentional: appended directly after the price amount.
+  'spec.lastKnownSuffix': ' (last known)',
+  'spec.status': 'Status',
   'spec.msrp': 'MSRP (USD)',
   'spec.source': 'Source',
 
@@ -151,6 +152,8 @@ const en: Dict = {
   'compare.title': 'Compare lenses · LensDB',
   'compare.metaDesc': 'Side-by-side specification comparison of selected camera lenses.',
   'compare.heading': 'Compare',
+  'compare.intro':
+    'Pin lenses from the chart or any lens page to compare full specifications side by side, with the better value highlighted per row.',
   'compare.back': '← Back to chart',
   'compare.clearAll': 'Clear all',
   'compare.exportCsv': 'Export CSV',
@@ -183,6 +186,8 @@ const en: Dict = {
   'detail.similar': 'Similar lenses',
   'detail.miniFocal': 'Focal (mm)',
   'detail.miniAperture': 'aperture',
+  'detail.miniAria': 'Chart showing where {name} sits among all lenses by focal length and maximum aperture',
+  'detail.titleSuffix': ' · LensDB',
 
   // Mobile filter drawer
   'filter.open': 'Filters',
@@ -192,6 +197,7 @@ const en: Dict = {
   // Data-table fallback (accessible equivalent of the chart)
   'table.toggle': 'Show data table',
   'table.caption': '{shown} of {count} lenses shown, with key specifications.',
+  'table.truncated': 'Showing the first {shown} of {total} lenses; the full list requires JavaScript.',
   'table.colLens': 'Lens',
 
   // Site footer
@@ -277,6 +283,7 @@ const zh: Dict = {
   'filter.focusAll': '全部',
   'filter.stabilized': '仅防抖',
   'filter.weatherSealed': '仅防尘防滴',
+  'filter.hideDiscontinued': '隐藏已停产',
   'filter.hide': '隐藏筛选',
   'filter.show': '显示筛选',
   'mode.compare': '点选对比',
@@ -294,14 +301,11 @@ const zh: Dict = {
   'axis.colorBy': '着色依据',
   'axis.scaleLog': '对数',
   'axis.scaleLin': '线性',
-  'axis.logarithmic': '对数',
-  'axis.linear': '线性',
-  'axis.scaleAriaX': 'X 轴刻度：{scale}，点击切换',
-  'axis.scaleAriaY': 'Y 轴刻度：{scale}，点击切换',
   'axis.toggleTitleX': '切换 X 轴对数/线性刻度',
   'axis.toggleTitleY': '切换 Y 轴对数/线性刻度',
   'chart.aria': '{count} 支镜头的散点图，横轴为{x}，纵轴为{y}',
   'chart.ariaTags': '{count} 支镜头的标签图',
+  'chart.noscript': '交互式图表需要启用 JavaScript。无需 JavaScript 也可查看下方的数据表格。',
 
   // View mode + tag detail
   'view.label': '视图',
@@ -358,6 +362,8 @@ const zh: Dict = {
   'term.yes': '是',
   'term.no': '否',
   'term.decadeSuffix': '年代',
+  'term.discontinued': '已停产',
+  'term.inProduction': '在产',
 
   // Spec rows
   'spec.apertureMin': '最小光圈',
@@ -365,6 +371,9 @@ const zh: Dict = {
   'spec.weatherSealed': '防尘防滴',
   'spec.groups': '镜组数',
   'spec.price': '价格 (USD)',
+  // 全角括号自带间隔，直接拼接在价格之后。
+  'spec.lastKnownSuffix': '（停产前）',
+  'spec.status': '状态',
   'spec.msrp': '建议零售价 (USD)',
   'spec.source': '来源',
 
@@ -372,6 +381,7 @@ const zh: Dict = {
   'compare.title': '镜头对比 · LensDB',
   'compare.metaDesc': '所选相机镜头的规格并排对比。',
   'compare.heading': '对比',
+  'compare.intro': '从图表或任意镜头页面固定镜头，即可并排对比完整规格，每行的更优值会高亮显示。',
   'compare.back': '← 返回图表',
   'compare.clearAll': '全部清除',
   'compare.exportCsv': '导出 CSV',
@@ -403,6 +413,8 @@ const zh: Dict = {
   'detail.similar': '相似镜头',
   'detail.miniFocal': '焦距 (mm)',
   'detail.miniAperture': '光圈',
+  'detail.miniAria': '图表：{name} 在全部镜头中按焦距与最大光圈所处的位置',
+  'detail.titleSuffix': ' · 规格与对比',
 
   // Mobile filter drawer
   'filter.open': '筛选',
@@ -412,6 +424,7 @@ const zh: Dict = {
   // Data-table fallback (accessible equivalent of the chart)
   'table.toggle': '显示数据表格',
   'table.caption': '已显示 {count} 支镜头中的 {shown} 支，附主要规格。',
+  'table.truncated': '仅显示前 {shown} 支镜头（共 {total} 支），完整列表需要启用 JavaScript。',
   'table.colLens': '镜头',
 
   // Site footer
@@ -525,8 +538,19 @@ export const tFormat = (locale: Locale, v: string): string =>
   FORMAT_KEY[v] ? t(locale, FORMAT_KEY[v]) : v;
 export const tType = (locale: Locale, v: string): string =>
   TYPE_KEY[v] ? t(locale, TYPE_KEY[v]) : v;
-export const tFocus = (locale: Locale, v: string): string =>
+const tFocus = (locale: Locale, v: string): string =>
   FOCUS_KEY[v] ? t(locale, FOCUS_KEY[v]) : v;
+
+/**
+ * Format an ISO `yyyy-mm-dd` date for display in the given locale. Parsed and formatted in UTC so
+ * the build machine's timezone can never shift the calendar day.
+ */
+export function fmtDate(locale: Locale, iso: string): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
+    dateStyle: 'long',
+    timeZone: 'UTC',
+  });
+}
 
 /**
  * Localized brand name for display on UI surfaces. Returns the canonical brand for EN and as the

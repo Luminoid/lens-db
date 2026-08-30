@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { afterNavigate } from '$app/navigation';
   import LensChart from '$lib/components/LensChart.svelte';
+  import Seo from '$lib/components/Seo.svelte';
   import { lenses } from '$lib/data/lenses';
   import { filters, togglePin } from '$lib/filters/store.svelte';
   import { SPEC_ROWS } from '$lib/data/specs';
@@ -89,14 +90,21 @@
     }),
   );
 
-  const enUrl = $derived(`${page.url.origin}/lens/${lens.id}/`);
-  const zhUrl = $derived(`${page.url.origin}/zh/lens/${lens.id}/`);
-  const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
+  const homeUrl = $derived(locale === 'en' ? `${page.url.origin}/` : `${page.url.origin}/zh/`);
+  const canonicalUrl = $derived(
+    locale === 'en' ? `${page.url.origin}/lens/${lens.id}/` : `${page.url.origin}/zh/lens/${lens.id}/`,
+  );
 
-  // Product structured data (JSON-LD) for rich results. Uses canonical Latin names (like the
-  // <title>); emitted as an application/ld+json data block, which is non-executable and therefore
-  // not governed by the strict `script-src` CSP. No `offers` block: the site sells nothing, and the
-  // prices are approximate, so advertising them as live offers would be misleading.
+  // Title: canonical Latin name; the suffix is localized and dropped when the name alone already
+  // approaches the ~60-char SERP display limit (some Panasonic/Leica models run to 70+).
+  const name = $derived(`${lens.brand} ${lens.model}`);
+  const pageTitle = $derived(name.length > 50 ? name : `${name}${t(locale, 'detail.titleSuffix')}`);
+
+  // Product + BreadcrumbList structured data (JSON-LD) for rich results. Uses canonical Latin
+  // names (like the <title>); emitted as an application/ld+json data block, which is
+  // non-executable and therefore not governed by the strict `script-src` CSP. No `offers` block:
+  // the site sells nothing, and the prices are approximate, so advertising them as live offers
+  // would be misleading.
   const jsonLd = $derived.by(() => {
     const props: { '@type': 'PropertyValue'; name: string; value: string }[] = [];
     const add = (name: string, value: string | null | undefined) => {
@@ -108,7 +116,7 @@
     add('Sensor format', lens.format);
     add('Weight', lens.weight != null ? `${lens.weight} g` : null);
     add('Filter thread', lens.filterThread != null ? `${lens.filterThread} mm` : null);
-    const data = {
+    const product = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: `${lens.brand} ${lens.model}`,
@@ -119,34 +127,22 @@
       description,
       ...(props.length ? { additionalProperty: props } : {}),
     };
+    const breadcrumbs = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'LensDB', item: homeUrl },
+        { '@type': 'ListItem', position: 2, name: `${lens.brand} ${lens.model}`, item: canonicalUrl },
+      ],
+    };
     // Escape `<` so a stray value can't terminate the <script> data block early.
-    return JSON.stringify(data).replace(/</g, '\\u003c');
+    return JSON.stringify([product, breadcrumbs]).replace(/</g, '\\u003c');
   });
 </script>
 
+<Seo {locale} title={pageTitle} description={description} path={`/lens/${lens.id}/`} ogType="product" />
+
 <svelte:head>
-  <title>{lens.brand} {lens.model} · LensDB</title>
-  <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
-  <link rel="alternate" hreflang="x-default" href={enUrl} />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="LensDB" />
-  <meta property="og:title" content="{lens.brand} {lens.model} · LensDB" />
-  <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:image" content="{page.url.origin}/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="{lens.brand} {lens.model} · LensDB" />
-  <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
-  <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{lens.brand} {lens.model} · LensDB" />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content="{page.url.origin}/og.png" />
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html `<script type="application/ld+json">${jsonLd}<\/script>`}
 </svelte:head>
 
@@ -158,7 +154,14 @@
   <header class="mb-6">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-semibold tracking-tight">{tBrand(locale, lens.brand)} {lens.model}</h1>
+        <div class="flex flex-wrap items-center gap-2">
+          <h1 class="text-2xl font-semibold tracking-tight">{tBrand(locale, lens.brand)} {lens.model}</h1>
+          {#if lens.discontinued}
+            <span class="rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-text-muted)]">
+              {t(locale, 'term.discontinued')}
+            </span>
+          {/if}
+        </div>
         <p class="mt-1 text-sm text-[var(--color-text-muted)]">
           {focalLabel(lens)} {apertureLabel(lens)} · {tFormat(locale, lens.format)} · {tType(locale, lens.lensType)}{#if lens.series} · {lens.series}{/if}
         </p>
@@ -205,7 +208,12 @@
     <section>
       <h2 class="mb-3 text-sm font-semibold text-[var(--color-text-muted)]">{t(locale, 'detail.whereItSits')}</h2>
       <div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2">
-        <LensChart option={miniOption} structureKey={`detail-mini-${locale}-${themeState.value}`} class="h-56 w-full" />
+        <LensChart
+          option={miniOption}
+          structureKey={`detail-mini-${locale}-${themeState.value}`}
+          class="h-56 w-full"
+          ariaLabel={t(locale, 'detail.miniAria', { name: `${tBrand(locale, lens.brand)} ${lens.model}` })}
+        />
       </div>
     </section>
   </div>

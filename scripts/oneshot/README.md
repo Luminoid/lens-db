@@ -13,6 +13,6 @@ Workflow tool, not Node directly.
 files that were removed after the run), and the live database has since been hand-corrected beyond
 what this workflow produces (147 spec corrections + manual merges). A fresh release-refresh should
 start from a new audit export, not from this script's old inputs. See the main
-[README](../../README.md) (Deploy & maintenance) for the update flow.
+[README](../../README.md) (Data tooling and Deploy sections) for the update flow.
 
 The durable maintenance scripts are one level up: `scripts/validate.mjs` and `scripts/build-meta.mjs`.

@@ -29,7 +29,7 @@
   }
 
   const selectClass =
-    'rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1.5 text-sm text-[var(--color-text)] focus-visible:border-[var(--color-accent)]';
+    'rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-2 py-1.5 text-sm text-[var(--color-text)] focus-visible:border-[var(--color-accent)]';
 </script>
 
 <div class="flex flex-wrap items-end gap-x-4 gap-y-3">
@@ -45,7 +45,7 @@
         type="button"
         class="rounded-md border border-[var(--color-border)] px-2 py-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent)]"
         aria-pressed={filters.xLog}
-        aria-label={t(locale, 'axis.scaleAriaX', { scale: t(locale, filters.xLog ? 'axis.logarithmic' : 'axis.linear') })}
+        aria-label={t(locale, 'axis.toggleTitleX')}
         title={t(locale, 'axis.toggleTitleX')}
         onclick={() => (filters.xLog = !filters.xLog)}
       >
@@ -66,7 +66,7 @@
         type="button"
         class="rounded-md border border-[var(--color-border)] px-2 py-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent)]"
         aria-pressed={filters.yLog}
-        aria-label={t(locale, 'axis.scaleAriaY', { scale: t(locale, filters.yLog ? 'axis.logarithmic' : 'axis.linear') })}
+        aria-label={t(locale, 'axis.toggleTitleY')}
         title={t(locale, 'axis.toggleTitleY')}
         onclick={() => (filters.yLog = !filters.yLog)}
       >
@@ -86,7 +86,7 @@
 
   <div class="flex flex-col gap-1">
     <span class="text-xs font-medium text-[var(--color-text-muted)]">{t(locale, 'view.label')}</span>
-    <div class="flex overflow-hidden rounded-md border border-[var(--color-border)]" role="group" aria-label={t(locale, 'view.label')}>
+    <div class="flex overflow-hidden rounded-md border border-[var(--color-border-strong)]" role="group" aria-label={t(locale, 'view.label')}>
       <button
         type="button"
         class="px-2.5 py-1.5 text-sm {filters.mode === 'dots' ? 'bg-[var(--color-accent)] text-[var(--color-bg)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}"

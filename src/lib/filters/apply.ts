@@ -32,6 +32,7 @@ export function applyFilters(lenses: Lens[], f: FilterState): Lens[] {
     if (f.focus === 'mf' && l.autofocus !== false) return false;
     if (f.stabilized && l.stabilization !== true) return false;
     if (f.weatherSealed && l.weatherSealed !== true) return false;
+    if (f.hideDiscontinued && l.discontinued === true) return false;
 
     if (!rangeOverlaps(f.focalR, FULL.focalR, l.focalMin, l.focalMax)) return false;
     if (!rangeOverlaps(f.apertureR, FULL.apertureR, l.apertureMaxWide, l.apertureMaxTele ?? l.apertureMaxWide)) {

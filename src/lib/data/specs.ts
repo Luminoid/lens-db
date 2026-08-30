@@ -69,10 +69,19 @@ export const SPEC_ROWS: SpecRow[] = [
   {
     key: 'price',
     labelKey: 'spec.price',
-    value: (l) => (l.priceUSD != null ? `$${l.priceUSD.toLocaleString('en-US')}` : null),
+    // On discontinued lenses priceUSD is the last verifiable new-stock price, not a live one.
+    value: (l, loc) =>
+      l.priceUSD != null
+        ? `$${l.priceUSD.toLocaleString('en-US')}${l.discontinued === true ? t(loc, 'spec.lastKnownSuffix') : ''}`
+        : null,
     num: (l) => l.priceUSD,
     better: 'low',
   },
   { key: 'msrp', labelKey: 'spec.msrp', value: (l) => (l.priceMSRPUSD != null ? `$${l.priceMSRPUSD.toLocaleString('en-US')}` : null) },
   { key: 'year', labelKey: 'axis.year', value: (l) => (l.year != null ? `${l.year}` : null), num: (l) => l.year, better: 'high' },
+  {
+    key: 'status',
+    labelKey: 'spec.status',
+    value: (l, loc) => (l.discontinued == null ? null : t(loc, l.discontinued ? 'term.discontinued' : 'term.inProduction')),
+  },
 ];

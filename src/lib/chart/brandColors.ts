@@ -4,8 +4,8 @@
 //
 // One palette per UI theme (selected via CHART_THEME in chartTheme.ts). The dark palette is tuned
 // for the #0e1116 chart background. The light palette uses darker, saturated tones that each clear
-// the WCAG 1.4.11 3:1 non-text-contrast bar against the #f6f8fa light chart background (verified:
-// every entry >= 4.3:1, see scripts/oneshot or the audit), so brand markers stay legible in light
+// the WCAG 1.4.11 3:1 non-text-contrast bar against the #f6f8fa light chart background (verified at
+// authoring time with relative-luminance math: every entry >= 4.3:1), so brand markers stay legible in light
 // mode instead of washing out. Both palettes are interleaved by hue family so adjacent groups
 // (which take adjacent slots) stay distinguishable; identity is also carried by the legend + tooltip.
 

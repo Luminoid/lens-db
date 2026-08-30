@@ -2,7 +2,10 @@
 // bare URL and `?x=weight&y=price&brand=sony,sigma` reproduces an exact view. Multi-select facets
 // use a normalized ASCII token (lowercased, alphanumerics only) mapped back to the canonical value,
 // so URLs stay readable and robust to unknown/legacy tokens (which are simply ignored).
-import { meta, lensById } from '../data/lenses';
+// Imports ../data/meta, NOT ../data/lenses: this module runs in the root layout on every route,
+// and the meta module keeps the full dataset chunk out of that graph. Pin ids are therefore only
+// validated syntactically here; every consumer resolves them via lensById and drops unknowns.
+import { meta } from '../data/meta';
 import { AXES, isAxisKey, isColorByKey, type AxisKey } from '../chart/axes';
 import { isTagDetail } from '../chart/tagLayout';
 import { defaultFilters, FULL, rangeNarrowed, MAX_PINS } from './store.svelte';
@@ -73,6 +76,7 @@ export function filtersToSearch(f: FilterState): string {
   if (f.focus !== 'all') p.set('focus', f.focus);
   if (f.stabilized) p.set('stab', '1');
   if (f.weatherSealed) p.set('seal', '1');
+  if (f.hideDiscontinued) p.set('nodisc', '1');
 
   const focal = encodeRange(f.focalR, FULL.focalR);
   if (focal) p.set('focal', focal);
@@ -93,7 +97,7 @@ export function filtersToSearch(f: FilterState): string {
 }
 
 /** Build a fresh FilterState from a query string (absent params fall back to defaults). */
-export function parseSearch(search: string): FilterState {
+function parseSearch(search: string): FilterState {
   const p = new URLSearchParams(search);
   const f = defaultFilters();
 
@@ -125,6 +129,7 @@ export function parseSearch(search: string): FilterState {
   if (focus === 'af' || focus === 'mf') f.focus = focus as FocusFilter;
   f.stabilized = p.get('stab') === '1';
   f.weatherSealed = p.get('seal') === '1';
+  f.hideDiscontinued = p.get('nodisc') === '1';
 
   f.focalR = decodeRange(p.get('focal'), FULL.focalR);
   f.apertureR = decodeRange(p.get('ap'), FULL.apertureR);
@@ -138,7 +143,7 @@ export function parseSearch(search: string): FilterState {
   if (pin) {
     const seen = new Set<string>();
     for (const id of pin.split(',')) {
-      if (lensById.has(id) && !seen.has(id) && seen.size < MAX_PINS) seen.add(id);
+      if (/^[a-z0-9][a-z0-9._-]*$/.test(id) && !seen.has(id) && seen.size < MAX_PINS) seen.add(id);
     }
     f.pins = [...seen];
   }

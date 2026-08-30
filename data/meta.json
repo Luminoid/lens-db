@@ -133,6 +133,10 @@
     0.8,
     64
   ],
+  "apertureMaxRange": [
+    0.8,
+    14
+  ],
   "priceRange": [
     55,
     22699

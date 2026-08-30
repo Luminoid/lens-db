@@ -2,7 +2,8 @@
 // home, compare, methodology, and one page per lens. Each <url> declares its EN / ZH / x-default
 // hreflang alternates (matching the per-page <link rel="alternate"> in <head>) so search engines
 // index the right language per region. adapter-static writes this to build/sitemap.xml.
-import { lenses, meta } from '$lib/data/lenses';
+import { lenses } from '$lib/data/lenses';
+import { meta } from '$lib/data/meta';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;

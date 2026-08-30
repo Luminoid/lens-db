@@ -12,7 +12,7 @@
 // log axes), then maps the rect edges back to data values and dispatches a `dataZoom` action.
 
 /** Linear/log interpolation from a pixel to a data value, given two known (pixel, value) anchors. */
-export function valueAt(px: number, p0: number, p1: number, v0: number, v1: number, log: boolean): number {
+function valueAt(px: number, p0: number, p1: number, v0: number, v1: number, log: boolean): number {
   if (p1 === p0) return v0;
   const t = (px - p0) / (p1 - p0); // may extrapolate beyond [0,1] when zooming/panning past the edges
   if (log && v0 > 0 && v1 > 0) return Math.exp(Math.log(v0) + t * (Math.log(v1) - Math.log(v0)));
@@ -25,7 +25,7 @@ export function valueAt(px: number, p0: number, p1: number, v0: number, v1: numb
  * `center` and a pan of `pan` px: source = center + (edge - center) / factor - pan. factor > 1 spreads
  * the fingers (zoom in); pan follows the fingers. Output is sorted so startValue <= endValue.
  */
-export function roamAxis(
+function roamAxis(
   edge0: number,
   edge1: number,
   center: number,
@@ -80,8 +80,7 @@ const MAX_FACTOR = 20;
  */
 export function attachTouchRoam(
   el: HTMLElement,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getChart: () => any | undefined,
+  getChart: () => ReturnType<(typeof import('./echarts'))['default']['init']> | undefined,
   grid: GridInsets,
 ): () => void {
   const points = new Map<number, { x: number; y: number }>();
@@ -110,7 +109,8 @@ export function attachTouchRoam(
     const tr = chart.convertFromPixel({ gridIndex: 0 }, [edgeR, edgeT]);
     const bl = chart.convertFromPixel({ gridIndex: 0 }, [edgeL, edgeB]);
     if (!tl || !tr || !bl) return false;
-    const opt = chart.getOption();
+    // getOption()'s ECharts type doesn't expose axis arrays; narrow to the two fields we read.
+    const opt = chart.getOption() as { xAxis?: { type?: string }[]; yAxis?: { type?: string }[] };
     const logX = opt?.xAxis?.[0]?.type === 'log';
     const logY = opt?.yAxis?.[0]?.type === 'log';
     const c = centroidRel(rect);

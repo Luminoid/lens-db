@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import { page } from '$app/state';
+  import Seo from '$lib/components/Seo.svelte';
   import { filters, togglePin, clearPins } from '$lib/filters/store.svelte';
   import { filtersToSearch } from '$lib/filters/url';
   import { lensById } from '$lib/data/lenses';
@@ -49,43 +49,22 @@
     const a = document.createElement('a');
     a.href = url;
     a.download = 'lensdb-compare.csv';
+    // Attach before clicking (Safari can otherwise drop the download) and revoke on the next
+    // task, after the click has been processed; a synchronous revoke races the download start.
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   }
-
-  const enUrl = $derived(`${page.url.origin}/compare/`);
-  const zhUrl = $derived(`${page.url.origin}/zh/compare/`);
-  const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
 </script>
 
-<svelte:head>
-  <title>{t(locale, 'compare.title')}</title>
-  <meta name="description" content={t(locale, 'compare.metaDesc')} />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
-  <link rel="alternate" hreflang="x-default" href={enUrl} />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="LensDB" />
-  <meta property="og:title" content={t(locale, 'compare.title')} />
-  <meta property="og:description" content={t(locale, 'compare.metaDesc')} />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:image" content="{page.url.origin}/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={t(locale, 'compare.title')} />
-  <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
-  <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={t(locale, 'compare.title')} />
-  <meta name="twitter:description" content={t(locale, 'compare.metaDesc')} />
-  <meta name="twitter:image" content="{page.url.origin}/og.png" />
-</svelte:head>
+<Seo {locale} title={t(locale, 'compare.title')} description={t(locale, 'compare.metaDesc')} path="/compare/" />
 
 <main id="main-content" tabindex="-1" class="mx-auto max-w-7xl px-4 py-6">
   <header class="mb-4 flex flex-wrap items-center justify-between gap-3">
     <div>
       <h1 class="text-2xl font-semibold tracking-tight">{t(locale, 'compare.heading')}</h1>
+      <p class="mt-1 max-w-3xl text-sm text-[var(--color-text-muted)]">{t(locale, 'compare.intro')}</p>
       <p class="mt-1 text-sm text-[var(--color-text-muted)]">
         <a href={localePath(locale, '/')} class="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]">{t(locale, 'compare.back')}</a>
       </p>
@@ -111,13 +90,13 @@
       <table class="w-full border-collapse text-sm">
         <thead>
           <tr class="border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
-            <th class="sticky left-0 z-10 bg-[var(--color-bg-elevated)] p-3 text-left font-medium text-[var(--color-text-muted)]">{t(locale, 'compare.specCol')}</th>
+            <th scope="col" class="print:static sticky left-0 z-10 bg-[var(--color-bg-elevated)] p-3 text-left font-medium text-[var(--color-text-muted)]">{t(locale, 'compare.specCol')}</th>
             {#each pinned as l (l.id)}
-              <th class="min-w-44 p-3 text-left align-top">
+              <th scope="col" class="min-w-44 p-3 text-left align-top">
                 <a href={localePath(locale, `/lens/${l.id}/`)} class="font-semibold hover:text-[var(--color-accent)]">{tBrand(locale, l.brand)} {l.model}</a>
                 <button
                   type="button"
-                  class="ml-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+                  class="ml-1 inline-flex size-6 items-center justify-center rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] print:hidden"
                   aria-label={t(locale, 'compare.remove', { name: `${tBrand(locale, l.brand)} ${l.model}` })}
                   onclick={() => togglePin(l.id)}>×</button
                 >
@@ -128,7 +107,7 @@
         <tbody>
           {#each SPEC_ROWS as row (row.key)}
             <tr class="border-b border-[var(--color-border)] last:border-0">
-              <th class="sticky left-0 z-10 bg-[var(--color-bg)] p-3 text-left font-normal text-[var(--color-text-muted)]">{t(locale, row.labelKey)}</th>
+              <th scope="row" class="print:static sticky left-0 z-10 bg-[var(--color-bg)] p-3 text-left font-normal text-[var(--color-text-muted)]">{t(locale, row.labelKey)}</th>
               {#each pinned as l (l.id)}
                 <td class="p-3 {isBest(row, l) ? 'font-semibold text-[var(--color-accent)]' : 'text-[var(--color-text-secondary)]'}">
                   {row.value(l, locale) ?? '—'}
@@ -137,7 +116,7 @@
             </tr>
           {/each}
           <tr class="border-b border-[var(--color-border)] last:border-0">
-            <th class="sticky left-0 z-10 bg-[var(--color-bg)] p-3 text-left font-normal text-[var(--color-text-muted)]">{t(locale, 'spec.source')}</th>
+            <th scope="row" class="print:static sticky left-0 z-10 bg-[var(--color-bg)] p-3 text-left font-normal text-[var(--color-text-muted)]">{t(locale, 'spec.source')}</th>
             {#each pinned as l (l.id)}
               <td class="p-3 text-[var(--color-text-secondary)]">
                 {#if l.productUrl}

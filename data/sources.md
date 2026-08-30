@@ -635,6 +635,13 @@ All verified manufacturer + 2-5 independent sources:
 
 September 2026 re-check cluster (from the hunt, single reminder): Sigma event 9/8 (85/1.2 completion, rumored 20-60mm F2.8-4 and ultra-fast 65mm), Fujifilm X Summit 9/4 (XF 400mm F4.5, XF 50-140mm II), OM System 9/9, Laowa AF 35mm F2.8 macro, Leica Summicron-M 66mm f/2 Elcan limited reissue (~9/3, 660 units, ~$9,000), plus Meike's Aug roadmap (24-70/2.8, 50/1.2, 85/1.2 VCM, 70-180/2.8, 100/2.8 macro), all dev/rumor as of 2026-08-30.
 
+### dxomarkScore nulled (2026-08-30, site audit)
+
+The 5 populated `dxomarkScore` values (2 Yongnuo, 3 Zeiss) were set to null: the field is read by
+no UI code, and the LICENSE / methodology "no proprietary review data" statement is cleaner with
+zero DXOMark numbers in the dataset. The schema field remains for a possible future
+defensible-aggregate axis.
+
 ### Discontinued-null resolution pass (2026-08-30, same day)
 
 The 38 rows with `discontinued: null` (23 Laowa, 15 Meike, left unsourced by the original build) were resolved, all to `false`: every Laowa row is live and availableForSale via the official Canadian distributor's storefront (laowalenses.ca sitemap lastmod 2026-08-28, Amplis Shopify API prices), and all 15 Meike rows are in meikeglobal.com's live catalog (the 50mm f/0.95's combined URL split into per-mount pages; the 85mm f/1.8 AF STM E-mount is sold out at Meike but its L/Z variants are in stock and B&H shows a restock date, so sold-out did not flip anything). The 12mm f/2.8 Zero-D question from the original follow-ups is settled: still sold concurrently with the 2025 Lite successor, no end-of-production statement, so `false`. Field coverage is now 721/721 booleans (99 true / 622 false).

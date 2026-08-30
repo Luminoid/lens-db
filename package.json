@@ -1,10 +1,16 @@
 {
   "name": "lens-db",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "LensDB: interactive camera-lens comparison chart for modern mirrorless systems (lens.luminoid.dev). SvelteKit 5 + ECharts over a versioned JSON lens database.",
   "type": "module",
   "license": "CC-BY-NC-SA-4.0",
+  "author": "Luminoid",
+  "homepage": "https://lens.luminoid.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Luminoid/lens-db.git"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -30,6 +36,6 @@
     "echarts": "^5.5.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

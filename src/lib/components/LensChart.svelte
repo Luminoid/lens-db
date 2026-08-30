@@ -1,3 +1,15 @@
+<script lang="ts" module>
+  import { browser } from '$app/environment';
+
+  // Start fetching the ECharts chunk as soon as this module is evaluated (i.e. while the page is
+  // still hydrating) rather than waiting for onMount — it removes one serial hop before the first
+  // chart paint. Browser-guarded so prerender never evaluates ECharts (it needs the DOM).
+  const echartsImport = browser ? import('$lib/chart/echarts') : undefined;
+
+  type EChartsNS = (typeof import('$lib/chart/echarts'))['default'];
+  type Chart = ReturnType<EChartsNS['init']>;
+</script>
+
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
   import { attachTouchRoam } from '$lib/chart/touchRoam';
@@ -37,10 +49,8 @@
   } = $props();
 
   let el: HTMLDivElement;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let echartsMod: any = $state(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let chart: any = $state(undefined);
+  let echartsMod: EChartsNS | undefined = $state(undefined);
+  let chart: Chart | undefined = $state(undefined);
   let observer: ResizeObserver | undefined;
   let roamDetach: (() => void) | undefined;
   let lastStructureKey: string | undefined;
@@ -50,7 +60,7 @@
   // the full `echarts` package, which roughly halves the chart bundle.
   onMount(() => {
     let disposed = false;
-    import('$lib/chart/echarts').then((m) => {
+    (echartsImport ?? import('$lib/chart/echarts')).then((m) => {
       if (!disposed) echartsMod = m.default;
     });
     return () => {
@@ -77,9 +87,8 @@
     roamDetach = undefined;
     if (prev) prev.dispose();
     const c = m.init(el, null, { renderer: r });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    c.on('click', (p: any) => {
-      const id = p?.data?.lens?.id;
+    c.on('click', (p: unknown) => {
+      const id = (p as { data?: { lens?: { id?: string } } }).data?.lens?.id;
       if (id && onPick) onPick(id);
     });
     observer?.disconnect();

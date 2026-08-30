@@ -1,0 +1,22 @@
+# CI gate: schema-validate the lens database, type-check, and build the static site.
+# Cloudflare Pages deploys independently; this catches data and type regressions on push/PR.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - run: npm run check
+      - run: npm run build

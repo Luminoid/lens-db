@@ -30,9 +30,11 @@
           class="flex items-center gap-1 rounded-full border border-[var(--color-accent)] bg-[var(--color-accent)]/15 py-1 pr-1 pl-2.5 text-xs"
         >
           <span>{tBrand(locale, l.brand)} {l.model}</span>
+          <!-- size-6 with negative vertical margin: a >=24px hit target (WCAG 2.5.8) that doesn't
+               inflate the chip's visual height. -->
           <button
             type="button"
-            class="grid size-4 place-items-center rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-border)] hover:text-[var(--color-text)]"
+            class="-my-1 grid size-6 place-items-center rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-border)] hover:text-[var(--color-text)]"
             aria-label={t(locale, 'tray.remove', { name: `${tBrand(locale, l.brand)} ${l.model}` })}
             onclick={() => togglePin(l.id)}>×</button
           >

@@ -369,7 +369,7 @@ function tagDisplayAxis(
 }
 
 /** Meaningful tick values for the focal / aperture reference axes (standard focals / f-stops). */
-export function meaningfulTicks(key: AxisKey, domain: [number, number] | undefined): number[] | undefined {
+function meaningfulTicks(key: AxisKey, domain: [number, number] | undefined): number[] | undefined {
   if (!domain) return undefined;
   const [lo, hi] = domain;
   const src = key === 'focal' ? FOCAL_TICKS : key === 'aperture' ? APERTURE_STOPS : null;

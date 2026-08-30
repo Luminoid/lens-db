@@ -8,10 +8,16 @@
 
   let { locale }: { locale: Locale } = $props();
 
-  // href is path-only: `page.url.search` is not readable during prerender, and a prerendered page's
-  // query is not part of its identity anyway. The live query (the chart's filter state) is appended
-  // at click time from `location.search`, which is always available on the client.
-  const target = $derived(switchLocalePath(page.url.pathname));
+  // href starts path-only: `page.url.search` is not readable during prerender, and a prerendered
+  // page's query is not part of its identity anyway. The live query (the chart's filter state) is
+  // refreshed into the href on hover/focus/mousedown so middle-click and open-in-new-tab keep the
+  // state too; a normal left-click goes through the goto() handler, which reads it directly.
+  let qs = $state('');
+  const target = $derived(switchLocalePath(page.url.pathname) + qs);
+
+  function syncQuery() {
+    qs = location.search;
+  }
 
   function switchLang(e: MouseEvent) {
     e.preventDefault();
@@ -22,6 +28,9 @@
 <a
   href={target}
   onclick={switchLang}
+  onmouseenter={syncQuery}
+  onmousedown={syncQuery}
+  onfocus={syncQuery}
   aria-label={t(locale, 'lang.aria')}
   class="rounded-md border border-[var(--color-border)] px-2.5 py-1 text-xs font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)]"
 >

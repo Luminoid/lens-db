@@ -8,7 +8,7 @@ export const meta = {
   ],
 }
 
-const ABS = '/Users/luminoid/Projects/lens-db'
+const ABS = new URL('../..', import.meta.url).pathname.replace(/\/$/, '')
 
 const BRANDS = [
   ['Sony', 'Sony.json'], ['Panasonic', 'Panasonic.json'], ['Canon', 'Canon.json'],

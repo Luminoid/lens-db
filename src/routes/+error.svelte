@@ -24,7 +24,24 @@
   <meta name="robots" content="noindex" />
 </svelte:head>
 
-<main class="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center px-4 py-16 text-center">
+<!-- This boundary renders under the ROOT layout (no site chrome), so it carries its own minimal
+     landmarks: a banner with the wordmark home link and a labeled main. -->
+<header class="mx-auto flex max-w-7xl items-center justify-between px-4 pt-4">
+  <nav aria-label={t(locale, 'a11y.siteNav')}>
+    <a
+      href={localePath(locale, '/')}
+      class="text-sm font-semibold tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)]"
+    >
+      LensDB
+    </a>
+  </nav>
+</header>
+
+<main
+  id="main-content"
+  tabindex="-1"
+  class="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center px-4 py-16 text-center"
+>
   <p class="font-mono text-5xl font-semibold text-[var(--color-accent)]">{page.status}</p>
   <h1 class="mt-4 text-2xl font-semibold tracking-tight">{heading}</h1>
   <p class="mt-2 max-w-md text-sm text-[var(--color-text-muted)]">{lead}</p>

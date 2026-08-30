@@ -2,9 +2,9 @@
   // Static "about the data" page: explains scope, sources, the nulls-over-guesses policy,
   // pricing, optical-performance stance, field coverage (from meta.json), and the data license.
   // Prerendered per locale; linked from the global footer.
-  import { page } from '$app/state';
-  import { meta } from '$lib/data/lenses';
-  import { t, localePath, type Locale } from '$lib/i18n/translations';
+  import Seo from '$lib/components/Seo.svelte';
+  import { meta } from '$lib/data/meta';
+  import { t, localePath, fmtDate, type Locale } from '$lib/i18n/translations';
 
   let { data } = $props();
   const locale = $derived(data.locale as Locale);
@@ -42,34 +42,9 @@
     { h: t(locale, 'method.h.performance'), body: t(locale, 'method.performance') },
   ]);
 
-  const enUrl = $derived(`${page.url.origin}/methodology/`);
-  const zhUrl = $derived(`${page.url.origin}/zh/methodology/`);
-  const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
 </script>
 
-<svelte:head>
-  <title>{t(locale, 'method.title')}</title>
-  <meta name="description" content={t(locale, 'method.metaDesc')} />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
-  <link rel="alternate" hreflang="x-default" href={enUrl} />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="LensDB" />
-  <meta property="og:title" content={t(locale, 'method.heading')} />
-  <meta property="og:description" content={t(locale, 'method.metaDesc')} />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:image" content="{page.url.origin}/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={t(locale, 'method.heading')} />
-  <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
-  <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={t(locale, 'method.heading')} />
-  <meta name="twitter:description" content={t(locale, 'method.metaDesc')} />
-  <meta name="twitter:image" content="{page.url.origin}/og.png" />
-</svelte:head>
+<Seo {locale} title={t(locale, 'method.title')} description={t(locale, 'method.metaDesc')} path="/methodology/" ogType="article" />
 
 <main id="main-content" tabindex="-1" class="mx-auto max-w-3xl px-4 py-6">
   <p class="mb-4 text-sm">
@@ -107,7 +82,7 @@
         <tbody>
           {#each coverage as row (row.label)}
             <tr class="border-b border-[var(--color-border)]">
-              <td class="py-1.5 text-[var(--color-text-secondary)]">{row.label}</td>
+              <th scope="row" class="py-1.5 text-left font-normal text-[var(--color-text-secondary)]">{row.label}</th>
               <td class="py-1.5 text-right tabular-nums text-[var(--color-text-secondary)]">{row.pct}%</td>
             </tr>
           {/each}
@@ -121,7 +96,7 @@
     </section>
 
     <p class="mt-2 text-xs text-[var(--color-text-muted)]">
-      {t(locale, 'method.updated', { date: meta.generatedAt, count: meta.count, brands: brandCount })}
+      {t(locale, 'method.updated', { date: fmtDate(locale, meta.generatedAt), count: meta.count, brands: brandCount })}
     </p>
   </div>
 </main>

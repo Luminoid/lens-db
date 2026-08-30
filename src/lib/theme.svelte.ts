@@ -17,7 +17,7 @@ function initialTheme(): Theme {
 
 export const themeState = $state<{ value: Theme }>({ value: initialTheme() });
 
-export function setTheme(theme: Theme): void {
+function setTheme(theme: Theme): void {
   themeState.value = theme;
   if (!browser) return;
   document.documentElement.dataset.theme = theme;

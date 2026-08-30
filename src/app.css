@@ -11,8 +11,11 @@
  * Palette lives as runtime custom properties (NOT in @theme, which is build-static) so the
  * dark/light toggle can swap it live by flipping `data-theme` on <html>. Every component
  * references these via `var(--color-...)` arbitrary-value utilities, so both themes are covered
- * without touching markup. Dark is the default (matches the no-JS / pre-hydration HTML); the
- * static/theme-init.js script sets data-theme before first paint to avoid a flash.
+ * without touching markup. Dark is the default; the inline theme script in app.html sets
+ * data-theme before first paint (saved choice, else OS), and the prefers-color-scheme block
+ * below covers the no-JS / blocked-storage case where no data-theme is ever set.
+ * --color-border-strong exists for form-control edges (inputs, selects, segmented controls),
+ * which need >= 3:1 against their surface (WCAG 1.4.11); --color-border stays decorative.
  */
 :root,
 :root[data-theme='dark'] {
@@ -20,6 +23,7 @@
   --color-bg-elevated: #161b22;
   --color-bg-card: #1a2029;
   --color-border: #2a313c;
+  --color-border-strong: #636d7a; /* >=3.1:1 on bg, bg-elevated, and bg-card */
   --color-text: #e6edf3;
   --color-text-muted: #8b949e;
   --color-text-secondary: #b8c0c9;
@@ -32,6 +36,7 @@
   --color-bg-elevated: #f6f8fa;
   --color-bg-card: #eef1f4;
   --color-border: #d0d7de;
+  --color-border-strong: #767f8a; /* >=3.5:1 on bg, bg-elevated, and bg-card */
   --color-text: #1f2328;
   --color-text-muted: #656d76; /* ~4.6:1 on white (WCAG AA) */
   --color-text-secondary: #424a53;
@@ -39,10 +44,34 @@
   --color-accent-hover: #115e59; /* teal-800: hover darkens on light bg, ~7:1 so white-on-accent buttons + link-hover text both clear AA */
 }
 
+/* No-JS / blocked-storage fallback: the inline theme script never ran, so no data-theme attribute
+ * exists; follow the OS preference. Values MUST mirror :root[data-theme='light'] above. Once the
+ * script sets any data-theme, this block no longer matches and the explicit choice wins. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg: #ffffff;
+    --color-bg-elevated: #f6f8fa;
+    --color-bg-card: #eef1f4;
+    --color-border: #d0d7de;
+    --color-border-strong: #767f8a;
+    --color-text: #1f2328;
+    --color-text-muted: #656d76;
+    --color-text-secondary: #424a53;
+    --color-accent: #0f766e;
+    --color-accent-hover: #115e59;
+  }
+  html:not([data-theme]) {
+    color-scheme: light;
+  }
+}
+
 html {
   /* Reserve scrollbar space so dynamic content height doesn't shift the layout */
   overflow-y: scroll;
   color-scheme: dark;
+  /* Firefox scrollbars (the ::-webkit-scrollbar rules below are WebKit/Blink-only) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-bg);
   /* Bump the root size so every rem-based font (all Tailwind text-* utilities) scales up
    * proportionally, leading and spacing along with it. Chart canvas text is px-based and tuned
    * separately, so it is unaffected. */
@@ -91,6 +120,28 @@ body {
 ::selection {
   background-color: var(--color-accent);
   color: var(--color-bg);
+}
+
+/* Print: force the light palette regardless of the on-screen theme (dark backgrounds knock out
+ * on paper). Chrome elements and sticky columns opt out per-component via print: utilities. */
+@media print {
+  :root,
+  :root[data-theme] {
+    --color-bg: #ffffff;
+    --color-bg-elevated: #ffffff;
+    --color-bg-card: #ffffff;
+    --color-border: #d0d7de;
+    --color-border-strong: #767f8a;
+    --color-text: #1f2328;
+    --color-text-muted: #656d76;
+    --color-text-secondary: #424a53;
+    --color-accent: #0f766e;
+    --color-accent-hover: #115e59;
+  }
+  html,
+  html[data-theme] {
+    color-scheme: light;
+  }
 }
 
 /* Respect reduced-motion: kill non-essential transitions/animations. The chart already runs with

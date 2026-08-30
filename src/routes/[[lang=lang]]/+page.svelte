@@ -8,16 +8,18 @@
   import AxisControls from '$lib/components/AxisControls.svelte';
   import CompareTray from '$lib/components/CompareTray.svelte';
   import TagAxis from '$lib/components/TagAxis.svelte';
+  import Seo from '$lib/components/Seo.svelte';
   import { buildChartOption, buildTagChartOption, plottable, DOTS_GRID } from '$lib/chart/chartOption';
   import { AXES } from '$lib/chart/axes';
   import { CHART_THEME } from '$lib/chart/chartTheme';
-  import { lenses, meta } from '$lib/data/lenses';
+  import { lenses } from '$lib/data/lenses';
+  import { meta } from '$lib/data/meta';
   import { filters, togglePin, FULL, rangeNarrowed, ui } from '$lib/filters/store.svelte';
   import { themeState } from '$lib/theme.svelte';
   import { applyFilters } from '$lib/filters/apply';
   import { filtersToSearch } from '$lib/filters/url';
   import { focalLabel, apertureLabel } from '$lib/data/types';
-  import { t, tFormat, tType, tBrand, localePath, type Locale } from '$lib/i18n/translations';
+  import { t, tFormat, tType, tBrand, localePath, fmtDate, type Locale } from '$lib/i18n/translations';
 
   let { data } = $props();
   const locale = $derived(data.locale as Locale);
@@ -149,6 +151,26 @@
     if (drawerOpen) closeBtn?.focus();
   });
 
+  // While the drawer is a modal (mobile, open), keep Tab cycling inside it; Escape-to-close and
+  // focus restore are handled above. aria-modal tells AT to ignore the page behind the backdrop.
+  function trapDrawerFocus(e: KeyboardEvent) {
+    if (e.key !== 'Tab' || !drawerOpen || isDesktop) return;
+    const drawer = e.currentTarget as HTMLElement;
+    const focusables = drawer.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   // Count of active filter constraints, shown on the mobile drawer trigger.
   const activeCount = $derived(
     filters.brands.length +
@@ -166,51 +188,50 @@
       (rangeNarrowed(filters.yearR, FULL.yearR) ? 1 : 0),
   );
 
-  const enUrl = $derived(`${page.url.origin}/`);
-  const zhUrl = $derived(`${page.url.origin}/zh/`);
-  const canonicalUrl = $derived(locale === 'en' ? enUrl : zhUrl);
+  const canonicalUrl = $derived(locale === 'en' ? `${page.url.origin}/` : `${page.url.origin}/zh/`);
 
-  // Dataset structured data (JSON-LD): the home page is the entry point to the curated lens
-  // database. Emitted as an application/ld+json data block (non-executable, so unaffected by the
-  // strict `script-src` CSP). The `<` escape stops a value from closing the <script> early.
+  // Structured data (JSON-LD): a Dataset node (the home page is the entry point to the curated
+  // lens database) plus a WebSite node whose SearchAction maps to the ?q= filter. Emitted as an
+  // application/ld+json data block (non-executable, so unaffected by the strict `script-src`
+  // CSP). The `<` escape stops a value from closing the <script> early.
   const jsonLd = $derived(
-    JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Dataset',
-      name: 'LensDB',
-      description: t(locale, 'home.metaDesc'),
-      url: canonicalUrl,
-      license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-      creator: { '@type': 'Person', name: 'Luminoid' },
-      isAccessibleForFree: true,
-      keywords: ['camera lens', 'mirrorless', 'lens comparison', 'focal length', 'aperture'],
-    }).replace(/</g, '\\u003c'),
+    JSON.stringify([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Dataset',
+        name: 'LensDB',
+        description: t(locale, 'home.metaDesc'),
+        url: canonicalUrl,
+        license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+        creator: { '@type': 'Person', name: 'Luminoid' },
+        isAccessibleForFree: true,
+        keywords: ['camera lens', 'mirrorless', 'lens comparison', 'focal length', 'aperture'],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'LensDB',
+        url: `${page.url.origin}/`,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${page.url.origin}/?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+    ]).replace(/</g, '\\u003c'),
   );
+
+  // Accessible table: keep the full 721-row list out of the prerendered HTML and the hydration
+  // pass (it was 92% of the page's bytes). The first TABLE_PREVIEW rows are always rendered for
+  // crawlers and no-JS readers; opening the <details> (ontoggle needs JS) renders the rest.
+  const TABLE_PREVIEW = 50;
+  let tableOpen = $state(false);
+  const tableRows = $derived(tableOpen ? visible : visible.slice(0, TABLE_PREVIEW));
 </script>
 
+<Seo {locale} title={t(locale, 'home.title')} description={t(locale, 'home.metaDesc')} path="/" />
+
 <svelte:head>
-  <title>{t(locale, 'home.title')}</title>
-  <meta name="description" content={t(locale, 'home.metaDesc')} />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="zh-Hans" href={zhUrl} />
-  <link rel="alternate" hreflang="x-default" href={enUrl} />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="LensDB" />
-  <meta property="og:title" content={t(locale, 'home.title')} />
-  <meta property="og:description" content={t(locale, 'home.metaDesc')} />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:image" content="{page.url.origin}/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={t(locale, 'home.title')} />
-  <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
-  <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={t(locale, 'home.title')} />
-  <meta name="twitter:description" content={t(locale, 'home.metaDesc')} />
-  <meta name="twitter:image" content="{page.url.origin}/og.png" />
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html `<script type="application/ld+json">${jsonLd}<\/script>`}
 </svelte:head>
 
@@ -243,9 +264,12 @@
   >
     {t(locale, 'filter.open')}
     {#if activeCount > 0}
-      <span class="rounded-full bg-[var(--color-accent)] px-1.5 py-0.5 text-xs font-semibold text-[var(--color-bg)]"
+      <span
+        aria-hidden="true"
+        class="rounded-full bg-[var(--color-accent)] px-1.5 py-0.5 text-xs font-semibold text-[var(--color-bg)]"
         >{activeCount}</span
       >
+      <span class="sr-only">{t(locale, 'filter.activeCount', { n: activeCount })}</span>
     {/if}
   </button>
 
@@ -264,6 +288,9 @@
     <aside
       id="filter-drawer"
       inert={(!isDesktop && !drawerOpen) || undefined}
+      role={!isDesktop && drawerOpen ? 'dialog' : undefined}
+      aria-modal={!isDesktop && drawerOpen ? 'true' : undefined}
+      onkeydown={trapDrawerFocus}
       aria-label={t(locale, 'filter.title')}
       class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] transform overflow-y-auto bg-[var(--color-bg)] p-4 transition-transform lg:static lg:z-auto lg:w-72 lg:max-w-none lg:transform-none lg:overflow-visible lg:bg-transparent lg:p-0 lg:shrink-0 {drawerOpen
         ? 'translate-x-0'
@@ -321,6 +348,9 @@
         bind:clientWidth={chartBoxWidth}
         class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2"
       >
+        <noscript>
+          <p class="p-3 text-sm text-[var(--color-text-muted)]">{t(locale, 'chart.noscript')}</p>
+        </noscript>
         <LensChart
           {option}
           {structureKey}
@@ -339,9 +369,12 @@
       </div>
 
       <!-- Accessible text equivalent of the chart: the visible set as a real, navigable table.
-           Collapsed by default but kept in the DOM, so screen readers and find-in-page reach it and
-           it works with no JavaScript. -->
-      <details class="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+           Collapsed by default; the first TABLE_PREVIEW rows stay in the DOM (screen readers,
+           find-in-page, crawlers, no-JS), the rest render when the disclosure is opened. -->
+      <details
+        class="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+        ontoggle={(e) => (tableOpen = e.currentTarget.open)}
+      >
         <summary class="cursor-pointer px-3 py-2 text-sm text-[var(--color-text-secondary)]"
           >{t(locale, 'table.toggle')}</summary
         >
@@ -361,7 +394,7 @@
               </tr>
             </thead>
             <tbody>
-              {#each visible as l (l.id)}
+              {#each tableRows as l (l.id)}
                 <tr class="border-t border-[var(--color-border)]">
                   <th scope="row" class="py-1.5 pr-3 font-normal">
                     <a
@@ -380,6 +413,15 @@
                   <td class="py-1.5 text-right tabular-nums">{l.year ?? '—'}</td>
                 </tr>
               {/each}
+              {#if !tableOpen && visible.length > TABLE_PREVIEW}
+                <!-- Only reachable without JS (ontoggle otherwise flips tableOpen before this is
+                     visible): tell no-JS readers the list is truncated. -->
+                <tr class="border-t border-[var(--color-border)]">
+                  <td colspan="8" class="py-2 text-[var(--color-text-muted)]">
+                    {t(locale, 'table.truncated', { shown: TABLE_PREVIEW, total: visible.length })}
+                  </td>
+                </tr>
+              {/if}
             </tbody>
           </table>
         </div>
@@ -388,13 +430,14 @@
   </div>
 
   <div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-text-muted)]">
-    <span>
+    <!-- Live region: announces the new result count to screen readers when filters change. -->
+    <span role="status" aria-live="polite" aria-atomic="true">
       {#if hidden > 0}
         {t(locale, 'home.coverageHidden', { shown, count: meta.count, hidden, x: xLabel, y: yLabel })}
       {:else}
         {t(locale, 'home.coverage', { shown, count: meta.count })}
       {/if}
     </span>
-    <span>{t(locale, 'home.priceNote', { date: meta.lastPriceCheck })}</span>
+    <span>{t(locale, 'home.priceNote', { date: fmtDate(locale, meta.lastPriceCheck) })}</span>
   </div>
 </main>

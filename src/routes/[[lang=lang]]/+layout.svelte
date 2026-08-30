@@ -22,7 +22,7 @@
   {t(locale, 'a11y.skipToContent')}
 </a>
 
-<header class="mx-auto flex max-w-7xl items-center justify-between px-4 pt-4">
+<header class="mx-auto flex max-w-7xl items-center justify-between px-4 pt-4 print:hidden">
   <nav aria-label={t(locale, 'a11y.siteNav')}>
     <a
       href={localePath(locale, '/')}
@@ -53,7 +53,7 @@
 
 {@render children()}
 
-<footer class="mx-auto max-w-7xl px-4 pb-6 pt-4 text-xs text-[var(--color-text-muted)]">
+<footer class="mx-auto max-w-7xl px-4 pb-6 pt-4 text-xs text-[var(--color-text-muted)] print:hidden">
   <div
     class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-[var(--color-border)] pt-4"
   >

@@ -1,15 +1,15 @@
 // Module-level reactive filter state. A single shared $state survives client-side navigation
 // (workspace lesson: navigation-surviving UI state belongs in a module store, not component
 // $state). The URL is the persistence layer on top of this (see url.ts + the page).
-import { lenses, meta } from '../data/lenses';
+// Imports ../data/meta, NOT ../data/lenses: this module runs in the root layout on every route,
+// and the meta module keeps the full dataset chunk out of that graph.
+import { meta } from '../data/meta';
 import { AXES } from '../chart/axes';
 import type { FilterState, Range } from './types';
 
 // Slider step per range. The aperture slider filters MAX aperture (apertureMaxWide..tele), whose
 // real extent is ~[0.8, 14], NOT meta.apertureRange [0.8, 64], which also spans MIN aperture.
-const apW = lenses.map((l) => l.apertureMaxWide);
-const apT = lenses.map((l) => l.apertureMaxTele ?? l.apertureMaxWide);
-const apertureMaxExtent: Range = [Math.min(...apW), Math.max(...apT)];
+const apertureMaxExtent: Range = [...meta.apertureMaxRange] as Range;
 
 export const STEP = { focalR: 1, apertureR: 0.1, priceR: 5, weightR: 1, yearR: 1 } as const;
 type RangeKey = keyof typeof STEP;
@@ -49,6 +49,7 @@ export function defaultFilters(): FilterState {
     focus: 'all',
     stabilized: false,
     weatherSealed: false,
+    hideDiscontinued: false,
     focalR: [...FULL.focalR] as Range,
     apertureR: [...FULL.apertureR] as Range,
     priceR: [...FULL.priceR] as Range,
@@ -112,6 +113,7 @@ export function hasActiveFilters(f: FilterState): boolean {
     f.focus !== 'all' ||
     f.stabilized ||
     f.weatherSealed ||
+    f.hideDiscontinued ||
     f.q.trim() !== '' ||
     rangeNarrowed(f.focalR, FULL.focalR) ||
     rangeNarrowed(f.apertureR, FULL.apertureR) ||

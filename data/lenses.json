@@ -24186,7 +24186,7 @@
     "priceMSRPUSD": 200,
     "year": 2020,
     "discontinued": false,
-    "dxomarkScore": 43,
+    "dxomarkScore": null,
     "productUrl": "https://yongnuo.eu/lenses/sony-e/yn35mm-f2s-df-dsm/"
   },
   {
@@ -24431,7 +24431,7 @@
     "priceMSRPUSD": 398,
     "year": 2020,
     "discontinued": false,
-    "dxomarkScore": 51,
+    "dxomarkScore": null,
     "productUrl": "https://yongnuo.eu/lenses/sony-e/yn85mm-f1-8s-df-dsm/"
   },
   {
@@ -24568,7 +24568,7 @@
     "discontinued": true,
     "priceMSRPUSD": 1299,
     "priceUSD": 999,
-    "dxomarkScore": 40,
+    "dxomarkScore": null,
     "productUrl": "https://www.zeiss.com/consumer-products/us/photography/batis/batis-225.html"
   },
   {
@@ -24775,7 +24775,7 @@
     "discontinued": true,
     "priceMSRPUSD": 949,
     "priceUSD": 949,
-    "dxomarkScore": 42,
+    "dxomarkScore": null,
     "productUrl": "https://www.zeiss.com/consumer-products/us/photography/loxia/loxia-250.html"
   },
   {
@@ -24880,7 +24880,7 @@
     "discontinued": true,
     "priceMSRPUSD": 1199,
     "priceUSD": 929,
-    "dxomarkScore": 43,
+    "dxomarkScore": null,
     "productUrl": "https://www.zeiss.com/consumer-products/us/photography/batis/batis-1885.html"
   },
   {

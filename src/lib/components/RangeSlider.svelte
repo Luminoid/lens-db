@@ -48,8 +48,10 @@
     <span class="font-mono text-[var(--color-text-muted)]">{fmt(value[0])} – {fmt(value[1])}</span>
   </legend>
 
+  <!-- aria-valuetext: the inputs step on internal indices, so without it a screen reader would
+       announce the raw index ("157") instead of the real value ("f/16"). -->
   <label class="flex items-center gap-2">
-    <span class="w-7 shrink-0 text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">{t(locale, 'range.min')}</span>
+    <span class="w-7 shrink-0 text-[0.625rem] uppercase tracking-wide text-[var(--color-text-muted)]">{t(locale, 'range.min')}</span>
     <input
       type="range"
       class="w-full accent-[var(--color-accent)]"
@@ -57,12 +59,13 @@
       max={steps}
       step="1"
       aria-label={t(locale, 'range.minAria', { label })}
+      aria-valuetext={fmt(value[0])}
       value={loIdx}
       oninput={(e) => setLo(+e.currentTarget.value)}
     />
   </label>
   <label class="flex items-center gap-2">
-    <span class="w-7 shrink-0 text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">{t(locale, 'range.max')}</span>
+    <span class="w-7 shrink-0 text-[0.625rem] uppercase tracking-wide text-[var(--color-text-muted)]">{t(locale, 'range.max')}</span>
     <input
       type="range"
       class="w-full accent-[var(--color-accent)]"
@@ -70,6 +73,7 @@
       max={steps}
       step="1"
       aria-label={t(locale, 'range.maxAria', { label })}
+      aria-valuetext={fmt(value[1])}
       value={hiIdx}
       oninput={(e) => setHi(+e.currentTarget.value)}
     />

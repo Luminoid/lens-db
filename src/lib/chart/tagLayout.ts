@@ -40,7 +40,7 @@ export const APERTURE_STOPS = [0.95, 1.2, 1.4, 1.8, 2, 2.5, 2.8, 3.5, 4, 4.5, 5.
 export const FOCAL_TICKS = [8, 12, 14, 16, 20, 24, 28, 35, 50, 70, 85, 105, 135, 200, 300, 400, 600, 800];
 
 /** Nearest standard f-stop to a value, by log distance (f-stops are geometric). */
-export function snapStop(v: number, stops: number[]): number {
+function snapStop(v: number, stops: number[]): number {
   let best = stops[0];
   let bd = Infinity;
   for (const s of stops) {
@@ -83,7 +83,7 @@ function detailText(l: Lens, key: AxisKey): string | null {
  * is always shown when present. The full focal/aperture range lives here and in the tooltip. Brand is
  * localized for display via `brandLabel` (identity by default); model/series stay canonical.
  */
-export function tagText(
+function tagText(
   l: Lens,
   opts: { multiBrand: boolean; detail: TagDetail; brandLabel?: (b: string) => string },
 ): string {
@@ -101,7 +101,9 @@ export function tagText(
 // ---- Text measurement (cached; SSR-safe) ---------------------------------------------------
 
 export const TAG_FONT_SIZE = 11;
-export const TAG_FONT_FAMILY = "Inter, system-ui, -apple-system, sans-serif";
+// Matches app.css --font-sans (no web font is shipped, so naming one here would render
+// chart chips in a face the rest of the page never uses on machines that have it installed).
+export const TAG_FONT_FAMILY = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 const TAG_FONT = `${TAG_FONT_SIZE}px ${TAG_FONT_FAMILY}`;
 const PAD_X = 6;
 const PAD_Y = 3;

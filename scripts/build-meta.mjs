@@ -59,6 +59,10 @@ const meta = {
   focalRange: range("focalMin"),
   apertureRange: [Math.min(...lenses.map((l) => l.apertureMaxWide).filter(Number.isFinite)),
     Math.max(...lenses.map((l) => l.apertureMin ?? l.apertureMaxTele ?? l.apertureMaxWide).filter(Number.isFinite))],
+  // Extent of MAX aperture only (the aperture slider's domain); precomputed so the filter store
+  // doesn't need the lens array at runtime.
+  apertureMaxRange: [Math.min(...lenses.map((l) => l.apertureMaxWide).filter(Number.isFinite)),
+    Math.max(...lenses.map((l) => l.apertureMaxTele ?? l.apertureMaxWide).filter(Number.isFinite))],
   priceRange: range("priceUSD"),
   weightRange: range("weight"),
   yearRange: range("year"),

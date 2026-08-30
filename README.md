@@ -16,18 +16,19 @@ Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter
 - **Configurable axes**: pick any two of 12 specs for X and Y, per-axis log or linear, color by
   brand or category.
 - **Faceted filters and search**: brand, mount, format, type, focus, stabilization, weather-sealing,
-  and range sliders. The full view state (filters, axes, color, pins) round-trips to the URL, so any
-  view is a shareable link.
+  hide-discontinued, and range sliders. The full view state (filters, axes, color, pins) round-trips
+  to the URL, so any view is a shareable link.
 - **Compare and detail pages**: click-to-pin tray, a `/compare` spec table with best-in-row
-  highlighting and CSV export, and a prerendered `/lens/[id]` page per lens (specs, locator chart,
-  similar lenses, `Product` structured data).
+  highlighting and CSV export, and a prerendered `/lens/[id]` page per lens (specs incl.
+  production status, locator chart, similar lenses, `Product` + `BreadcrumbList` structured data).
 - **EN/ZH bilingual**: `[[lang=lang]]` routing (EN at `/`, ZH at `/zh/`), every page prerendered per
   locale with its own `<html lang>`, hreflang, canonical, and Open Graph tags.
 - **Dark / light theme**: flash-free pre-paint resolver, runtime palette swap, ECharts re-colors on
   switch, WCAG-AA light palette, `prefers-reduced-motion` honored.
 - **Accessible and static**: skip link, keyboard navigation, a no-JS data-table fallback for the
-  chart, themed 404, `robots.txt`, and a prerendered `sitemap.xml`. No runtime server; ECharts is
-  tree-shaken and loaded only in the browser.
+  chart, a client-rendered themed 404 (the static shell carries a fallback `<title>` + `noindex`),
+  `robots.txt`, and a prerendered `sitemap.xml`. No runtime server; ECharts is tree-shaken and
+  loaded only in the browser.
 - **Hardened headers**: Cloudflare `_headers` plus a meta CSP in hash mode (`script-src 'self'` and
   the bootstrap hash, no script `unsafe-inline`).
 
@@ -40,7 +41,7 @@ Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter
 | Formats | Full Frame 430 · APS-C 191 · MFT 100 |
 | Types | Prime 479 · Zoom 242 (118 variable-aperture, 124 constant) |
 | Focus | 572 autofocus · 149 manual-focus |
-| Coverage | focal / aperture / weight / year 100% · elements / groups / MSRP / min-focus 99% · blades 97% · diameter / price 95% · filter-thread 94% · max-magnification 86% (sparsest) |
+| Coverage | focal / aperture / weight / year 100% · elements / groups / MSRP / min-focus 99% · blades / length 97% · diameter / price 95% · filter-thread / weather-sealing 94% · max-magnification 86% (sparsest) |
 
 Specs are machine-assembled, then web-verified per brand against manufacturer pages, B&H, and
 DPReview. Nulls mean "not reliably sourced," never a guess.
@@ -56,19 +57,19 @@ data/
 scripts/
   validate.mjs  # schema + sanity checks (CI gate); build-meta.mjs; oneshot/ (archived)
 src/
-  lib/data/        # typed loader + Lens type (mirrors schema.json) + shared spec rows
+  lib/data/        # typed loaders (lenses + dataset-free meta) + Lens type (mirrors schema.json) + shared spec rows
   lib/chart/       # axis registry, ECharts option builder, per-theme palettes, tag-view 2D packing, tree-shaken ECharts entry
   lib/filters/     # reactive filter store (incl. pins), pure filtering, URL <-> state
   lib/i18n/        # EN/ZH dictionary + t() + locale path helpers
-  lib/theme.svelte.ts  # reactive dark/light theme store (persists to localStorage + data-theme)
+  lib/theme.svelte.ts  # reactive dark/light theme store (persists to localStorage + data-theme;
+                       #   the pre-paint resolver is a hashed inline script in app.html)
   lib/components/   # LensChart, FilterPanel, AxisControls, RangeSlider, CompareTray, LangSwitch, ThemeToggle, TagAxis
   params/lang.ts   # [[lang=lang]] route matcher (zh only)
-  hooks.server.ts  # per-locale <html lang> at prerender time
+  hooks.server.ts  # per-locale <html lang> + 404-shell <title>/noindex at prerender time
   routes/[[lang=lang]]/  # / + /zh: chart, /compare, /lens/[id], /methodology; all prerendered per locale
   routes/+error.svelte   # themed 404 / error boundary (also the static fallback)
   routes/sitemap.xml/    # prerendered sitemap endpoint (all pages, both locales, hreflang)
 static/
-  theme-init.js   # pre-paint theme resolver (localStorage / OS preference) so there's no flash
   _headers        # Cloudflare security + cache headers (script/style CSP is a meta tag; see svelte.config.js)
   robots.txt      # allow-all + Sitemap: pointer
   favicon.svg     # + favicon-16.png / favicon-32.png / apple-touch-icon.png
@@ -129,8 +130,9 @@ Hosting is **Cloudflare Pages** on `lens.luminoid.dev`. Build with `npm run buil
 into `build/`); connect the repo for automatic PR previews, or push a one-off with
 `npx wrangler pages deploy build`. Security headers ship in [`static/_headers`](static/_headers); the
 script/style content-security policy is delivered as a `<meta>` tag with build-time hashes (hash mode,
-configured in [`svelte.config.js`](svelte.config.js)), so it stays correct without a server. Wire
-`npm run validate` into CI so a malformed database fails the build.
+configured in [`svelte.config.js`](svelte.config.js)), so it stays correct without a server. A GitHub Actions
+workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs `validate` + `check` + `build`
+on every push, so a malformed database fails CI before it can deploy.
 
 ## Roadmap
 

@@ -2,7 +2,7 @@
   // Faceted filter controls bound to the shared filter store. Multi-selects are toggle chips,
   // booleans are checkboxes, numeric facets are RangeSliders. Everything mutates `filters` in
   // place; the page serializes that to the URL.
-  import { meta } from '$lib/data/lenses';
+  import { meta, brandsByCount } from '$lib/data/meta';
   import { filters, resetFilters, hasActiveFilters, FULL, STEP } from '$lib/filters/store.svelte';
   import { t, tFormat, tType, tBrand, type Locale } from '$lib/i18n/translations';
   import RangeSlider from './RangeSlider.svelte';
@@ -10,7 +10,7 @@
   let { locale }: { locale: Locale } = $props();
 
   // Facet value lists (canonical), ordered by lens count where it matters.
-  const brands = Object.keys(meta.brands);
+  const brands = brandsByCount;
   const mounts = Object.keys(meta.mounts);
   const formats = Object.keys(meta.formats);
   const types = Object.keys(meta.lensTypes);
@@ -51,6 +51,17 @@
     focusRadios[next]?.focus();
   }
 
+  // Debounce free-text search: each keystroke re-runs the full filter + tag-packing pipeline, so
+  // commit q to the store only after a short pause. The input shows its own DOM value while the
+  // timer is pending; `value={filters.q}` still resets it when Reset clears the store.
+  let qTimer: ReturnType<typeof setTimeout> | undefined;
+  function onSearchInput(e: Event & { currentTarget: HTMLInputElement }) {
+    const v = e.currentTarget.value;
+    clearTimeout(qTimer);
+    qTimer = setTimeout(() => (filters.q = v), 150);
+  }
+  $effect(() => () => clearTimeout(qTimer));
+
   const chipBase =
     'rounded-full border px-2.5 py-1 text-xs transition-colors focus-visible:border-[var(--color-accent)]';
   const chipOn = 'border-[var(--color-accent)] bg-[var(--color-accent)]/15 text-[var(--color-text)]';
@@ -64,9 +75,11 @@
   <div class="flex items-center justify-between">
     <h2 class="text-sm font-semibold tracking-tight">{t(locale, 'filter.title')}</h2>
     {#if active}
+      <!-- Negative margins keep the visual footprint small while the padded hit target
+           clears the 24px minimum (WCAG 2.5.8). -->
       <button
         type="button"
-        class="text-xs text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+        class="-mx-2 -my-1.5 rounded px-2 py-1.5 text-xs text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
         onclick={resetFilters}>{t(locale, 'filter.reset')}</button
       >
     {/if}
@@ -79,8 +92,9 @@
       id="f-search"
       type="search"
       placeholder={t(locale, 'filter.searchPlaceholder')}
-      bind:value={filters.q}
-      class="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-1.5 text-sm focus-visible:border-[var(--color-accent)]"
+      value={filters.q}
+      oninput={onSearchInput}
+      class="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-2.5 py-1.5 text-sm focus-visible:border-[var(--color-accent)]"
     />
   </div>
 
@@ -152,7 +166,7 @@
       role="radiogroup"
       aria-label={t(locale, 'colorBy.focus')}
       tabindex="-1"
-      class="inline-flex w-fit overflow-hidden rounded-md border border-[var(--color-border)] text-xs"
+      class="inline-flex w-fit overflow-hidden rounded-md border border-[var(--color-border-strong)] text-xs"
       onkeydown={onFocusKeydown}
     >
       {#each FOCUS_VALUES as val, i (val)}
@@ -176,6 +190,10 @@
     <label class="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
       <input type="checkbox" class="accent-[var(--color-accent)]" bind:checked={filters.weatherSealed} />
       {t(locale, 'filter.weatherSealed')}
+    </label>
+    <label class="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+      <input type="checkbox" class="accent-[var(--color-accent)]" bind:checked={filters.hideDiscontinued} />
+      {t(locale, 'filter.hideDiscontinued')}
     </label>
   </fieldset>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
@@ -7,8 +7,16 @@
     <link rel="icon" sizes="16x16" href="%sveltekit.assets%/favicon-16.png" />
     <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="%sveltekit.assets%/theme-init.js"></script>
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1116" />
     %sveltekit.head%
+    <!-- Theme boot: runs synchronously pre-paint so there is no flash of the wrong palette.
+         Placed AFTER %sveltekit.head% so the CSP <meta> is parsed first and governs everything
+         that follows; the script itself is allowed via its sha256 hash in svelte.config.js
+         (csp.directives['script-src']) — if you edit the script, recompute that hash.
+         Resolution: saved choice, else OS preference, else dark. When it cannot run (no JS,
+         blocked storage) no data-theme is set and app.css's prefers-color-scheme fallback applies. -->
+    <script>(function(){try{var s=localStorage.getItem('lensdb-theme');document.documentElement.dataset.theme=s==='light'||s==='dark'?s:window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}catch(e){}})();</script>
   </head>
   <body>
     <div id="app">%sveltekit.body%</div>

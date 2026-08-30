@@ -50,8 +50,8 @@ export interface Lens {
   productUrl: string | null;
 }
 
-export const isPrime = (l: Lens): boolean => l.focalMin === l.focalMax;
-export const isVariableAperture = (l: Lens): boolean =>
+const isPrime = (l: Lens): boolean => l.focalMin === l.focalMax;
+const isVariableAperture = (l: Lens): boolean =>
   l.apertureMaxTele != null && l.apertureMaxWide !== l.apertureMaxTele;
 
 /** "24mm" for a prime, "24-70mm" for a zoom. */
