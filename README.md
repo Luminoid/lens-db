@@ -2,7 +2,7 @@
 
 Interactive camera-lens comparison chart for modern mirrorless systems. Plot every lens on a
 configurable two-axis graph (focal length × aperture by default), filter by brand, mount, or format,
-and compare specs side by side. **682 lenses across 20 brands.**
+and compare specs side by side. **721 lenses across 20 brands.**
 
 Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter-static`. Live at
 **lens.luminoid.dev**.
@@ -35,12 +35,12 @@ Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter
 
 | | |
 |---|---|
-| Lenses | 682 |
-| Brands (20) | Sony 81 · Panasonic 66 · Canon 54 · Leica 50 · Fujifilm 48 · Nikon 47 · Sigma 47 · Samyang 35 · Voigtländer 30 · Laowa 29 · Olympus 29 · Viltrox 29 · Tamron 25 · 7Artisans 24 · TTArtisan 19 · Meike 17 · Yongnuo 17 · Zeiss 13 · OM System 12 · Tokina 10 |
-| Formats | Full Frame 406 · APS-C 177 · MFT 99 |
-| Types | Prime 446 · Zoom 236 (115 variable-aperture, 121 constant) |
-| Focus | 555 autofocus · 127 manual-focus |
-| Coverage | focal / aperture / weight / year / min-focus 100% · elements / groups / MSRP 99% · blades 97% · diameter 96% · filter-thread / price 95% · max-magnification 87% (sparsest) |
+| Lenses | 721 |
+| Brands (20) | Sony 82 · Panasonic 66 · Canon 55 · Leica 52 · Fujifilm 48 · Sigma 48 · Nikon 47 · Voigtländer 40 · Samyang 36 · Laowa 35 · Viltrox 33 · Olympus 29 · 7Artisans 26 · Tamron 26 · TTArtisan 24 · Meike 18 · Yongnuo 17 · Zeiss 16 · OM System 12 · Tokina 11 |
+| Formats | Full Frame 430 · APS-C 191 · MFT 100 |
+| Types | Prime 479 · Zoom 242 (118 variable-aperture, 124 constant) |
+| Focus | 572 autofocus · 149 manual-focus |
+| Coverage | focal / aperture / weight / year 100% · elements / groups / MSRP / min-focus 99% · blades 97% · diameter / price 95% · filter-thread 94% · max-magnification 86% (sparsest) |
 
 Specs are machine-assembled, then web-verified per brand against manufacturer pages, B&H, and
 DPReview. Nulls mean "not reliably sourced," never a guess.
