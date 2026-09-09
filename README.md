@@ -1,11 +1,18 @@
 # LensDB
 
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
+
 Interactive camera-lens comparison chart for modern mirrorless systems. Plot every lens on a
 configurable two-axis graph (focal length × aperture by default), filter by brand, mount, or format,
 and compare specs side by side. **721 lenses across 20 brands.**
 
-Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter-static`. Live at
-**lens.luminoid.dev**.
+**Live**: [lens.luminoid.dev](https://lens.luminoid.dev) (EN) · [lens.luminoid.dev/zh/](https://lens.luminoid.dev/zh/) (中文)
+
+<p align="center">
+  <a href="https://lens.luminoid.dev"><img src="static/og.png" alt="LensDB: mirrorless camera lens comparison chart plotting focal length against aperture" width="720"></a>
+</p>
+
+Built with SvelteKit 5, Tailwind 4, and ECharts; fully prerendered with `adapter-static`.
 
 ## Features
 

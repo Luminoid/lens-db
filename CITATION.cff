@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use the lens database or the chart, please cite it as below."
+type: dataset
+title: "LensDB: a curated specification database of mirrorless camera lenses"
+abstract: >-
+  Focal length, aperture, weight, size, filter thread, mount, format, focus and stabilization
+  specs, production status, and last known price for 721 lenses across 20 brands, compiled from
+  public manufacturer pages with per-segment provenance, and an interactive comparison chart
+  built on it.
+authors:
+  - name: "Luminoid"
+    website: "https://luminoid.dev"
+date-released: 2026-08-30
+license: CC-BY-NC-SA-4.0
+repository-code: "https://github.com/Luminoid/lens-db"
+url: "https://lens.luminoid.dev"
+keywords:
+  - camera lenses
+  - mirrorless
+  - photography
+  - lens comparison
+  - dataset
+  - data visualization
