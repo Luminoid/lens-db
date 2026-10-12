@@ -13,9 +13,11 @@
   Cross-Origin-Opener-Policy: same-origin
   Cache-Control: public, max-age=0, must-revalidate
 
-# Fingerprinted build assets never change content; cache them hard. This more-specific rule wins
-# over the always-revalidate Cache-Control above for the hashed /_app/immutable/* bundle.
+# Fingerprinted build assets never change content; cache them hard. Pages combines the headers of
+# every matching rule, so the always-revalidate Cache-Control from /* is detached (the ! line) before
+# the hashed /_app/immutable/* bundle gets its own.
 /_app/immutable/*
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
 # Unversioned static assets change rarely; a day of browser cache skips a revalidation round trip
