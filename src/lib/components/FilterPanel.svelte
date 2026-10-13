@@ -2,9 +2,9 @@
   // Faceted filter controls bound to the shared filter store. Multi-selects are toggle chips,
   // booleans are checkboxes, numeric facets are RangeSliders. Everything mutates `filters` in
   // place; the page serializes that to the URL.
-  import { meta, brandsByCount } from '$lib/data/meta';
-  import { filters, resetFilters, hasActiveFilters, FULL, STEP } from '$lib/filters/store.svelte';
-  import { t, tFormat, tType, tBrand, type Locale } from '$lib/i18n/translations';
+  import { meta, brandsByCount } from '#lib/data/meta.js';
+  import { filters, resetFilters, hasActiveFilters, FULL, STEP } from '#lib/filters/store.svelte.js';
+  import { t, tFormat, tType, tBrand, type Locale } from '#lib/i18n/translations.js';
   import RangeSlider from './RangeSlider.svelte';
 
   let { locale }: { locale: Locale } = $props();

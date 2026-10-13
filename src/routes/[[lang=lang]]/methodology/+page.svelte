@@ -2,9 +2,9 @@
   // Static "about the data" page: explains scope, sources, the nulls-over-guesses policy,
   // pricing, optical-performance stance, field coverage (from meta.json), and the data license.
   // Prerendered per locale; linked from the global footer.
-  import Seo from '$lib/components/Seo.svelte';
-  import { meta } from '$lib/data/meta';
-  import { t, localePath, fmtDate, type Locale } from '$lib/i18n/translations';
+  import Seo from '#lib/components/Seo.svelte';
+  import { meta } from '#lib/data/meta.js';
+  import { t, localePath, fmtDate, type Locale } from '#lib/i18n/translations.js';
 
   let { data } = $props();
   const locale = $derived(data.locale as Locale);

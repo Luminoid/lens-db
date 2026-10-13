@@ -2,8 +2,8 @@
   // Dark/light toggle. The palette itself is swapped via the `data-theme` attribute (set by the
   // theme store, applied pre-paint by static/theme-init.js); this control just flips it and shows
   // the icon/label for the *target* theme (sun = "go light" while dark, moon = "go dark" while light).
-  import { themeState, toggleTheme } from '$lib/theme.svelte';
-  import { t, type Locale } from '$lib/i18n/translations';
+  import { themeState, toggleTheme } from '#lib/theme.svelte.js';
+  import { t, type Locale } from '#lib/i18n/translations.js';
 
   let { locale }: { locale: Locale } = $props();
 

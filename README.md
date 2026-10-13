@@ -71,13 +71,13 @@ src/
   lib/theme.svelte.ts  # reactive dark/light theme store (persists to localStorage + data-theme;
                        #   the pre-paint resolver is a hashed inline script in app.html)
   lib/components/   # LensChart, FilterPanel, AxisControls, RangeSlider, CompareTray, LangSwitch, ThemeToggle, TagAxis
-  params/lang.ts   # [[lang=lang]] route matcher (zh only)
+  params.ts        # [[lang=lang]] route matcher (zh only)
   hooks.server.ts  # per-locale <html lang> + 404-shell <title>/noindex at prerender time
   routes/[[lang=lang]]/  # / + /zh: chart, /compare, /lens/[id], /methodology; all prerendered per locale
   routes/+error.svelte   # themed 404 / error boundary (also the static fallback)
   routes/sitemap.xml/    # prerendered sitemap endpoint (all pages, both locales, hreflang)
 static/
-  _headers        # Cloudflare security + cache headers (script/style CSP is a meta tag; see svelte.config.js)
+  _headers        # Cloudflare security + cache headers (script/style CSP is a meta tag; see vite.config.ts)
   robots.txt      # allow-all + Sitemap: pointer
   favicon.svg     # + favicon-16.png / favicon-32.png / apple-touch-icon.png
   og.png          # 1200x630 social preview card
@@ -110,8 +110,8 @@ npm run preview    # serve the production build
 npm run check      # svelte-check (types + a11y)
 ```
 
-The chart loads `data/lenses.json` at build time through the `$data` alias (see
-[`svelte.config.js`](svelte.config.js)) and prerenders, so there is no runtime server; ECharts is
+The chart loads `data/lenses.json` at build time through the `#data` subpath import (declared under
+`imports` in [`package.json`](package.json)) and prerenders, so there is no runtime server; ECharts is
 imported only in the browser.
 
 ### Data tooling
@@ -137,7 +137,7 @@ Hosting is **Cloudflare Pages** on `lens.luminoid.dev`. Build with `npm run buil
 into `build/`); connect the repo for automatic PR previews, or push a one-off with
 `npx wrangler pages deploy build`. Security headers ship in [`static/_headers`](static/_headers); the
 script/style content-security policy is delivered as a `<meta>` tag with build-time hashes (hash mode,
-configured in [`svelte.config.js`](svelte.config.js)), so it stays correct without a server. A GitHub Actions
+configured in [`vite.config.ts`](vite.config.ts)), so it stays correct without a server. A GitHub Actions
 workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs `validate` + `check` + `build`
 on every push, so a malformed database fails CI before it can deploy.
 

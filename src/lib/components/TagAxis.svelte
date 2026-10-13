@@ -4,10 +4,10 @@
   // the focal scale stays visible while scrolling. It reproduces the exact value->pixel mapping the
   // chips ride (synthetic [0, synthWidth] inside the ECharts content rect [gridLeft, width-gridRight])
   // so the ticks line up with the bars above.
-  import { AXES } from '$lib/chart/axes';
-  import { axisTicks, type TagAxisMeta } from '$lib/chart/chartOption';
-  import { PAD_X_EDGE, frac } from '$lib/chart/tagLayout';
-  import { t, type Locale } from '$lib/i18n/translations';
+  import { AXES } from '#lib/chart/axes.js';
+  import { axisTicks, type TagAxisMeta } from '#lib/chart/chartOption.js';
+  import { PAD_X_EDGE, frac } from '#lib/chart/tagLayout.js';
+  import { t, type Locale } from '#lib/i18n/translations.js';
 
   let { axis, width, locale }: { axis: TagAxisMeta; width: number; locale: Locale } = $props();
 

@@ -1,9 +1,9 @@
 <script lang="ts">
   import '../app.css';
-  import { browser } from '$app/environment';
+  import { browser } from '$app/env';
   import { page } from '$app/state';
-  import { filters } from '$lib/filters/store.svelte';
-  import { applyUrlToFilters } from '$lib/filters/url';
+  import { filters } from '#lib/filters/store.svelte.js';
+  import { applyUrlToFilters } from '#lib/filters/url.js';
 
   // Hydrate the shared store from the URL once on the client, so a shared link reproduces its view
   // regardless of entry route (the chart or /compare). No-op during prerender. Filters live in the

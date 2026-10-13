@@ -4,7 +4,7 @@
 // without `better` are never highlighted (no defensible "best", e.g. focal length, element count).
 import type { Lens } from './types';
 import { focalLabel, apertureLabel } from './types';
-import { t, tFormat, tType, type Locale } from '$lib/i18n/translations';
+import { t, tFormat, tType, type Locale } from '#lib/i18n/translations.js';
 
 export interface SpecRow {
   key: string;

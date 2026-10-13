@@ -5,8 +5,8 @@
   // The inputs step on integer indices (0..steps) and map to/from real values, so the handles can
   // always land EXACTLY on min and max regardless of step. A native `<input type=range>` with a
   // fractional step (e.g. 0.1) or an unaligned max otherwise stops a notch short of the extent.
-  import type { Range } from '$lib/filters/types';
-  import { t, type Locale } from '$lib/i18n/translations';
+  import type { Range } from '#lib/filters/types.js';
+  import { t, type Locale } from '#lib/i18n/translations.js';
 
   let {
     label,

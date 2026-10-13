@@ -3,7 +3,7 @@
   // to match the site (the root layout imports app.css). Locale isn't in `data` here, so it's derived
   // from the path: `/zh` or `/zh/...` is ZH, everything else EN.
   import { page } from '$app/state';
-  import { t, localePath, type Locale } from '$lib/i18n/translations';
+  import { t, localePath, type Locale } from '#lib/i18n/translations.js';
 
   const locale = $derived<Locale>(
     page.url.pathname === '/zh' || page.url.pathname.startsWith('/zh/') ? 'zh' : 'en',

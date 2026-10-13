@@ -3,7 +3,7 @@
 // attribute on <html> (the latter drives the CSS palette in app.css and is set pre-paint by
 // static/theme-init.js so there's no flash). This store only exists on the client; during SSR the
 // value is the document default ('dark') and the chart it feeds is never painted server-side anyway.
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 export type Theme = 'dark' | 'light';
 

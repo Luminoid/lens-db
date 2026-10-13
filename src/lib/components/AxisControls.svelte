@@ -1,9 +1,9 @@
 <script lang="ts">
   // Chart configuration toolbar: X / Y axis pickers (each with a log/linear toggle) + color-by.
-  import { filters } from '$lib/filters/store.svelte';
-  import { AXES, AXIS_KEYS, COLOR_BY, COLOR_BY_KEYS, isAxisKey, isColorByKey } from '$lib/chart/axes';
-  import { TAG_DETAIL_KEYS, isTagDetail } from '$lib/chart/tagLayout';
-  import { t, type Locale } from '$lib/i18n/translations';
+  import { filters } from '#lib/filters/store.svelte.js';
+  import { AXES, AXIS_KEYS, COLOR_BY, COLOR_BY_KEYS, isAxisKey, isColorByKey } from '#lib/chart/axes.js';
+  import { TAG_DETAIL_KEYS, isTagDetail } from '#lib/chart/tagLayout.js';
+  import { t, type Locale } from '#lib/i18n/translations.js';
 
   let { locale }: { locale: Locale } = $props();
 

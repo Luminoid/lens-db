@@ -11,8 +11,8 @@ import { AXES, COLOR_BY, groupOrder, type AxisKey, type ColorByKey } from './axe
 import { paletteMap } from './brandColors';
 import type { ChartTheme } from './chartTheme';
 import { layoutTags, APERTURE_STOPS, FOCAL_TICKS, TAG_FONT_SIZE, TAG_FONT_FAMILY, type PlacedTag } from './tagLayout';
-import type { TagDetail } from '$lib/filters/types';
-import { t, tFormat, tType, tBrand, groupLabel, type Locale } from '$lib/i18n/translations';
+import type { TagDetail } from '#lib/filters/types.js';
+import { t, tFormat, tType, tBrand, groupLabel, type Locale } from '#lib/i18n/translations.js';
 
 export interface ChartOpts {
   x: AxisKey;
@@ -227,7 +227,9 @@ export function buildChartOption(data: Lens[], opts: ChartOpts, locale: Locale, 
       formatter: (name: string) => groupLabel(locale, opts.color, name),
       data: order,
     },
-    grid: { ...DOTS_GRID },
+    // ECharts 6 shrinks the grid to keep axis labels/names inside the canvas by default; keep the
+    // exact DOTS_GRID insets instead, since touchRoam.ts maps finger pixels against them.
+    grid: { ...DOTS_GRID, outerBoundsMode: 'none' },
     tooltip: {
       trigger: 'item',
       backgroundColor: theme.tooltipBg,
@@ -503,6 +505,8 @@ export function buildTagChartOption(
       yAxisIndex: 0,
       renderItem: makeTagRenderItem(bucket, theme),
       encode: { x: 0, y: 1 },
+      // Legend swatch color; the chips themselves are painted by renderItem from the same palette.
+      itemStyle: { color: colors[g] ?? theme.fallback },
       data: bucket.map((pt) => ({ name: pt.lens.model, lens: pt.lens, value: [pt.cx, pt.cy] })),
     };
   });
@@ -520,7 +524,9 @@ export function buildTagChartOption(
       formatter: (name: string) => groupLabel(locale, opts.color, name),
       data: order,
     },
-    grid: { left: TAG_GRID.left, right: TAG_GRID.right, top: TAG_GRID.top, bottom: TAG_GRID.bottom, containLabel: false },
+    // outerBoundsMode 'none' (ECharts 6): the content rect must be exactly the TAG_GRID insets so the
+    // synthetic 1:1 pixel axes and the floating TagAxis line up with the chips.
+    grid: { left: TAG_GRID.left, right: TAG_GRID.right, top: TAG_GRID.top, bottom: TAG_GRID.bottom, outerBoundsMode: 'none' },
     tooltip: {
       trigger: 'item',
       confine: true,

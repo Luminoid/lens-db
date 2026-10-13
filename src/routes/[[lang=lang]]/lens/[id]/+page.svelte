@@ -1,15 +1,15 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { afterNavigate } from '$app/navigation';
-  import LensChart from '$lib/components/LensChart.svelte';
-  import Seo from '$lib/components/Seo.svelte';
-  import { lenses } from '$lib/data/lenses';
-  import { filters, togglePin } from '$lib/filters/store.svelte';
-  import { SPEC_ROWS } from '$lib/data/specs';
-  import { focalLabel, apertureLabel } from '$lib/data/types';
-  import { CHART_THEME } from '$lib/chart/chartTheme';
-  import { themeState } from '$lib/theme.svelte';
-  import { t, tFormat, tType, tBrand, localePath, type Locale } from '$lib/i18n/translations';
+  import LensChart from '#lib/components/LensChart.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import { lenses } from '#lib/data/lenses.js';
+  import { filters, togglePin } from '#lib/filters/store.svelte.js';
+  import { SPEC_ROWS } from '#lib/data/specs.js';
+  import { focalLabel, apertureLabel } from '#lib/data/types.js';
+  import { CHART_THEME } from '#lib/chart/chartTheme.js';
+  import { themeState } from '#lib/theme.svelte.js';
+  import { t, tFormat, tType, tBrand, localePath, type Locale } from '#lib/i18n/translations.js';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData & { locale: Locale } } = $props();

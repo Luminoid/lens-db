@@ -1,10 +1,10 @@
 <script lang="ts">
   // Toggles EN <-> ZH by swapping the `/zh` path prefix while preserving the rest of the path AND
   // the query string (so the chart's filter/axis state survives a language switch). Uses
-  // `replaceState` so the back button returns to the previous page, not the other-language twin.
+  // `replace` so the back button returns to the previous page, not the other-language twin.
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
-  import { t, switchLocalePath, type Locale } from '$lib/i18n/translations';
+  import { t, switchLocalePath, type Locale } from '#lib/i18n/translations.js';
 
   let { locale }: { locale: Locale } = $props();
 
@@ -21,7 +21,7 @@
 
   function switchLang(e: MouseEvent) {
     e.preventDefault();
-    goto(switchLocalePath(location.pathname) + location.search, { replaceState: true });
+    goto(switchLocalePath(location.pathname) + location.search, { replace: true });
   }
 </script>
 

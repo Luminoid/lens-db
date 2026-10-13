@@ -2,9 +2,9 @@
   // Locale-group layout: a slim global header (wordmark home link + language switch) above every
   // page. `locale` comes from the layout load (params.lang), available during SSR/prerender, and
   // is passed down to each page via the merged `data` prop.
-  import LangSwitch from '$lib/components/LangSwitch.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-  import { localePath, t, type Locale } from '$lib/i18n/translations';
+  import LangSwitch from '#lib/components/LangSwitch.svelte';
+  import ThemeToggle from '#lib/components/ThemeToggle.svelte';
+  import { localePath, t, type Locale } from '#lib/i18n/translations.js';
 
   let { data, children } = $props();
   const locale = $derived(data.locale as Locale);

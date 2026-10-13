@@ -1,7 +1,7 @@
 // Dataset summary (facets, counts, ranges) WITHOUT the lens records themselves. The filter store
 // and URL codec run in the root layout on every route, so they must import from here — importing
 // anything from ./lenses would pull the full lenses.json chunk into every page's module graph.
-import metaJson from '$data/meta.json';
+import metaJson from '#data/meta.json';
 
 export interface Meta {
   generatedAt: string;

@@ -1,18 +1,18 @@
 <script lang="ts" module>
-  import { browser } from '$app/environment';
+  import { browser } from '$app/env';
 
   // Start fetching the ECharts chunk as soon as this module is evaluated (i.e. while the page is
   // still hydrating) rather than waiting for onMount — it removes one serial hop before the first
   // chart paint. Browser-guarded so prerender never evaluates ECharts (it needs the DOM).
-  const echartsImport = browser ? import('$lib/chart/echarts') : undefined;
+  const echartsImport = browser ? import('#lib/chart/echarts.js') : undefined;
 
-  type EChartsNS = (typeof import('$lib/chart/echarts'))['default'];
+  type EChartsNS = (typeof import('#lib/chart/echarts.js'))['default'];
   type Chart = ReturnType<EChartsNS['init']>;
 </script>
 
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
-  import { attachTouchRoam } from '$lib/chart/touchRoam';
+  import { attachTouchRoam } from '#lib/chart/touchRoam.js';
 
   // ECharts is imported dynamically inside onMount so it never runs during prerender (it needs the DOM).
   //
@@ -56,11 +56,11 @@
   let lastStructureKey: string | undefined;
 
   // ECharts is imported dynamically so it never runs during prerender (it needs the DOM). The
-  // import is the tree-shaken `$lib/chart/echarts` build (only the series/components we use), not
+  // import is the tree-shaken `#lib/chart/echarts.js` build (only the series/components we use), not
   // the full `echarts` package, which roughly halves the chart bundle.
   onMount(() => {
     let disposed = false;
-    (echartsImport ?? import('$lib/chart/echarts')).then((m) => {
+    (echartsImport ?? import('#lib/chart/echarts.js')).then((m) => {
       if (!disposed) echartsMod = m.default;
     });
     return () => {

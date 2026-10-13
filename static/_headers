@@ -1,6 +1,6 @@
 # Cloudflare Pages security + caching headers. Copied verbatim to the build root by adapter-static.
 # The Content-Security-Policy that governs scripts/styles is delivered as a <meta> tag by SvelteKit
-# (hash mode; see svelte.config.js). frame-ancestors can only be enforced via an HTTP header, so it
+# (hash mode; see vite.config.ts). frame-ancestors can only be enforced via an HTTP header, so it
 # lives here alongside X-Frame-Options for older browsers. HSTS carries no `preload` token: the
 # preload list only accepts registrable apex domains, so it would be inert on this subdomain.
 /*

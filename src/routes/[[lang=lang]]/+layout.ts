@@ -1,4 +1,4 @@
-import { getLocale, type Locale } from '$lib/i18n/translations';
+import { getLocale, type Locale } from '#lib/i18n/translations.js';
 import type { LayoutLoad } from './$types';
 
 // Resolve the locale from the optional `[[lang=lang]]` path segment and expose it to every page

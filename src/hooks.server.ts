@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
 
 // Set the document `<html lang>` per locale at prerender/SSR time so the static ZH pages actually
 // report `zh-Hans` (and EN reports `en`) to crawlers and screen readers. The app.html template

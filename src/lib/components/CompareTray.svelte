@@ -3,9 +3,9 @@
   // /compare table. Always rendered (even with nothing pinned) so it is a stable entry point that
   // sits above the chart. Pins live in the shared filter store; the Compare link carries ?pin= so
   // it also works on a fresh load / new tab.
-  import { filters, togglePin, clearPins, MAX_PINS } from '$lib/filters/store.svelte';
-  import { lensById } from '$lib/data/lenses';
-  import { t, tBrand, localePath, type Locale } from '$lib/i18n/translations';
+  import { filters, togglePin, clearPins, MAX_PINS } from '#lib/filters/store.svelte.js';
+  import { lensById } from '#lib/data/lenses.js';
+  import { t, tBrand, localePath, type Locale } from '#lib/i18n/translations.js';
 
   let { locale }: { locale: Locale } = $props();
 

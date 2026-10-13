@@ -3,7 +3,7 @@
   // Twitter card. One component so the four routes cannot drift apart (og:type vs JSON-LD type,
   // og:title vs <title>, missing tags). JSON-LD stays in each page — it is page-shaped data.
   import { page } from '$app/state';
-  import type { Locale } from '$lib/i18n/translations';
+  import type { Locale } from '#lib/i18n/translations.js';
 
   let {
     locale,

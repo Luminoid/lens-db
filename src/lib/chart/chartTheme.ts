@@ -4,7 +4,7 @@
 // chart chrome matches the surrounding page in both themes. The categorical group palette + fallback
 // (brandColors.ts) are theme-specific: the light palette is darkened to clear WCAG non-text contrast
 // on the light chart background (see brandColors.ts).
-import type { Theme } from '$lib/theme.svelte';
+import type { Theme } from '#lib/theme.svelte.js';
 import {
   PALETTE_DARK,
   PALETTE_LIGHT,

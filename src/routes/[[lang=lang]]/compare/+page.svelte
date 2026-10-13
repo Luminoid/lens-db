@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import Seo from '$lib/components/Seo.svelte';
-  import { filters, togglePin, clearPins } from '$lib/filters/store.svelte';
-  import { filtersToSearch } from '$lib/filters/url';
-  import { lensById } from '$lib/data/lenses';
-  import { SPEC_ROWS, type SpecRow } from '$lib/data/specs';
-  import { t, tBrand, localePath, type Locale } from '$lib/i18n/translations';
-  import type { Lens } from '$lib/data/types';
+  import { browser } from '$app/env';
+  import Seo from '#lib/components/Seo.svelte';
+  import { filters, togglePin, clearPins } from '#lib/filters/store.svelte.js';
+  import { filtersToSearch } from '#lib/filters/url.js';
+  import { lensById } from '#lib/data/lenses.js';
+  import { SPEC_ROWS, type SpecRow } from '#lib/data/specs.js';
+  import { t, tBrand, localePath, type Locale } from '#lib/i18n/translations.js';
+  import type { Lens } from '#lib/data/types.js';
 
   let { data } = $props();
   const locale = $derived(data.locale as Locale);

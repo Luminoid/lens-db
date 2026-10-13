@@ -12,7 +12,7 @@
     %sveltekit.head%
     <!-- Theme boot: runs synchronously pre-paint so there is no flash of the wrong palette.
          Placed AFTER %sveltekit.head% so the CSP <meta> is parsed first and governs everything
-         that follows; the script itself is allowed via its sha256 hash in svelte.config.js
+         that follows; the script itself is allowed via its sha256 hash in vite.config.ts
          (csp.directives['script-src']) — if you edit the script, recompute that hash.
          Resolution: saved choice, else OS preference, else dark. When it cannot run (no JS,
          blocked storage) no data-theme is set and app.css's prefers-color-scheme fallback applies. -->
